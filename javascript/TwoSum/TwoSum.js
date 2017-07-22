@@ -14,7 +14,7 @@ TwoSum = function TwoSumF(numbers, target) {
   this.target = target;
 
   this.frequencyOfNumbers = {};
-  this.indices = [0, 0];
+  this.indices = [-1, -1];
 }
 
 /**
@@ -54,23 +54,27 @@ TwoSum.prototype.initIndiecs = function initIndiecsF() {
 
     var frequencyOfNumber2 = frequencyOfNumbers[number2];
 
-
-    // @FIXME 控制跳转需要修改一下
-    // 与number1求和为target的数字存在
-    if (frequcyOfNumber2 >= 1) {
-      _this.indiecs[0] = number1;
-      _this.indiecs[1] = number2;
+    // 两数相等
+    if (number1 === number2) {
+      // 并且该数字除去自身还存在一个
+      if (frequencyOfNumber2 >= 2) {
+        _this.indiecs = [number1, number1];
+      }
+    // 两数不相等
+    } else {
+      // 与number1求和为target的数字存在
+      if (frequcyOfNumber2 >= 1) {
+        _this.indiecs = [number1, number2];
+      }
     }
+
 
     // 处理两数相等的特殊情况
-    if (number1 === number2 && frequencyOfNumber2 >= 2) {
-      _this.indiecs[0] = number1;
-      _this.indiecs[1] = number1;
-    }
   });
 }
 
 /**
+ * O(n)
  * @method
  * @return {Array<Number>} 与求和结果匹配的数组两个元素的下标
  */
