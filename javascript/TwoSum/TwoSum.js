@@ -50,14 +50,16 @@ TwoSum.prototype.initIndiecs = function initIndiecsF() {
   var target = this.target;
   var _this = this;
 
-  numbers.forEach(function traversalNumbers(number1) {
+  numbers.forEach(function traversalNumbers(number) {
     var number2 = target - number1;
+
+    var number1 = number;
 
     var frequencyOfNumber2 = frequencyOfNumbers[number2];
 
     // 两数相等
     if (number1 === number2) {
-      // 并且该数字除去自身还存在一个
+      // 该数字除去自身意外还存在一个
       if (frequencyOfNumber2 >= 2) {
         _this.indiecs = [number1, number1];
       }
