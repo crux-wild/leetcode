@@ -1,4 +1,5 @@
 /**
+ * @file 1.Two Sum 的时间复杂度O(n)解决方案
  * @see https://leetcode.com/problems/two-sum/#/description
  */
 
@@ -67,9 +68,6 @@ TwoSum.prototype.initIndiecs = function initIndiecsF() {
         _this.indiecs = [number1, number2];
       }
     }
-
-
-    // 处理两数相等的特殊情况
   });
 }
 
