@@ -79,13 +79,7 @@ TwoSum.prototype.initIndiecs = function initIndiecsF() {
  * @return {Array<Number>} 与求和结果匹配的数组两个元素的下标
  */
 TwoSum.prototype.getIndices = function getIndicesF() {
-  var target = this.target;
-
-  // 顺序排序
-  this.numbers.sort();
-
   this.initFrequencyOfNumbers();
-
   this.initIndiecs();
 
   return this.indices;
