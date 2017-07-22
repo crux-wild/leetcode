@@ -3,14 +3,17 @@
  * @see https://leetcode.com/problems/two-sum/#/description
  */
 
-var TwoSum;
-
 /**
  * @constructor
  * @param {Array<Number>} numbers - 任意数字类型的数组
  * @param {Number} targer - 数字类型的数组任意两个数字求和的结果
  */
-TwoSum = function TwoSumF(numbers, target) {
+function TwoSum(numbers, target) {
+  // 避免`var twoSum = new twoSum()`错误的初始化`window`
+  if (!(this instanceof TwoSum)) {
+    return new TwoSum();
+  }
+
   this.numbers = numbers;
   this.target = target;
 
