@@ -51,10 +51,8 @@ TwoSum.prototype.initIndiecs = function initIndiecsF() {
   var _this = this;
 
   numbers.forEach(function traversalNumbers(number) {
-    var number2 = target - number1;
-
     var number1 = number;
-
+    var number2 = target - number1;
     var frequencyOfNumber2 = frequencyOfNumbers[number2];
 
     // 两数相等
