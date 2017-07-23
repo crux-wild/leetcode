@@ -2,7 +2,9 @@ import test from 'ava';
 
 test('Leetcode Problems: 1.Two Sum', (it) => {
   // 获取源文件
-  const sourceFile = __filename.replace(/\/spec\//, '\/src\/');
+  const sourceFile = __filename
+    .replace(/\/spec\//, '\/src\/')
+    .replace(/\.spec.js/, '\.js');
   const TwoSum = require(sourceFile).default;
 
   // 自定义测试数据
