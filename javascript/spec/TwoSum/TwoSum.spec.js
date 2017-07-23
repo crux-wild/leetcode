@@ -13,16 +13,15 @@ test('Leetcode Problems: 1.Two Sum;', (it) => {
   });
 
   // 验证算法运行结果
-  const indices = twoSum.getIndices();
+  twoSum.getIndices()
+    .forEach((indice) => {
+      const { numbers, target } = twoSum;
+      const [index1, index2] = indice;
+      const number1 = numbers[index1];
+      const number2 = numbers[index2];
 
-  indices.forEach((indice) => {
-    const { numbers, target } = twoSum;
-    const [index1, index2] = indice;
-    const number1 = numbers[index1];
-    const number2 = numbers[index2];
-
-    // 索引对应的两个数加和应该等于`target`
-    it.deepEqual(number1 + number2, target,
-      'Indices of the two numbers such that they add up to a specific target.');
-  });
+      // 索引对应的两个数加和应该等于`target`
+      it.deepEqual(number1 + number2, target,
+        'Indices of the two numbers such that they add up to a specific target.');
+    });
 });
