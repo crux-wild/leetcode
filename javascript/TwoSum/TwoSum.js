@@ -58,7 +58,31 @@ TwoSum.prototype.initIndiecs = function initIndiecsF() {
   var target = this.target;
   var _this = this;
 
+  var lastIndex = numbers.length - 1;
+
   numbers.forEach(function traversalNumbers(number1, index1) {
+    /**
+     * ## 循环分析
+     *
+     * - 第一次循环
+     *   ```
+     *    || --------------->
+     *    n<1>, n<2>, ..., n<n>
+     *   ```
+     *
+     * - 第N次循环
+     *   ```
+     *                      ||
+     *    n<1>, n<2>, ..., n<n>
+     *   ```
+     * ## 结论
+     *
+     * 为了使用`forEach`并保证结果，第n次循环可以直接略过
+     */
+    if (index1 === lastIndex) {
+      return;
+    }
+
     var number2 = target - number1;
     var slotOfNumber2 = hashOfNumbers[number2] || 0;
     var frequencyOfNumber2 = slotOfNumber2.length;
