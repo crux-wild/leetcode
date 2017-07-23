@@ -19,9 +19,8 @@ test('Leetcode Problems: 1.Two Sum', (it) => {
     const number1 = numbers[index1];
     const number2 = numbers[index2];
 
-    // 索引对应的两个加和应该等于`target`
-    const sumOfTwoNumber = number1 + number2;
-
-    it.deepEqual(sumOfTwoNumber, target, 'Indices of the two numbers such that they add up to a specific target.');
+    // 索引对应的两个数加和应该等于`target`
+    it.deepEqual(number1 + number2, target,
+      'Indices of the two numbers such that they add up to a specific target.');
   });
 });
