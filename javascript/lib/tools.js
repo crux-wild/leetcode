@@ -4,8 +4,7 @@
  * @function
  */
 function getSourceFile(filename = '') {
-  const sourceFile = filename
-    .replace(/\/spec\//, '/src/')
+  const sourceFile = filename.replace(/\/spec\//, '/src/')
     .replace(/\.spec.js/, '.js');
 
   const module = require(sourceFile).default;
@@ -13,4 +12,6 @@ function getSourceFile(filename = '') {
   return module;
 }
 
-export { getSourceFile };
+export {
+  getSourceFile as default,
+};

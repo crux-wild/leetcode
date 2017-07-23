@@ -7,13 +7,13 @@
  * @class
  * @param {Array<Number>} numbers - 任意数字类型的数组
  * @param {Number} targer - 数字类型的数组任意两个数字求和的结果
- * @param {Boolean} isMulti -输出结果是否需要多解
+ * @param {Boolean} isMultiple -输出结果是否需要多解
  */
 class TwoSum {
-  constructor({ numbers = [], target = 0, isMulti = true }) {
+  constructor({ numbers = [], target = 0, isMultiple = true }) {
     this.numbers = numbers;
     this.target = target;
-    this.isMulti = isMulti;
+    this.isMultiple = isMultiple;
 
     this.hashOfNumbers = {};
     // 可能存在多解用数组表示
@@ -73,7 +73,7 @@ class TwoSum {
    * @method
    */
   initIndiecs() {
-    const { numbers, target, hashOfNumbers } = this;
+    const { numbers, target, hashOfNumbers, isMultiple } = this;
     const lastIndex = numbers.length - 1;
 
     numbers.some((number1, index1) => {
@@ -88,7 +88,13 @@ class TwoSum {
 
       if (TwoSum.isOneOfIndices({ number1, number2, frequencyOfNumber2 })) {
         this.appendIndices(index1, slotOfNumber2);
+
+        if (!isMultiple) {
+          return true;
+        }
       }
+
+      return false;
     });
   }
 
@@ -110,21 +116,21 @@ class TwoSum {
    * @param {Array<Number>} arrayOfIndex2
    */
   appendIndices(index1 = 0, arrayOfIndex2 = []) {
-    const { isMulti } = this;
+    const { isMultiple } = this;
 
     arrayOfIndex2.some((index2) => {
-      // 不需要多解
       if (index2 > index1) {
-        if (!isMulti) {
-          this.indices = [index1, index2];
+        // 需要多解
+        this.indices.push([index1, index2]);
 
+        // 不需要多解
+        if (!isMultiple) {
           // 找到一组解就可以停止循环
           return true;
-        // 需要多解
-        } else {
-          this.indices.push([index1, index2]);
         }
       }
+
+      return false;
     });
   }
 
