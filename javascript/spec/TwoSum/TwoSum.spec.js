@@ -3,9 +3,9 @@ import { getSourceFile } from '../../lib/tools';
 import test from 'ava';
 
 test('Leetcode Problems: 1.Two Sum;', (it) => {
-  // 自定义测试数据
   const TwoSum = getSourceFile(__filename);
 
+  // 自定义测试数据
   const twoSum = new TwoSum({
     numbers: [1, 2, 3, 4, 5, 6],
     target: 7,
