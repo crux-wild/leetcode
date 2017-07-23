@@ -2,9 +2,9 @@ import test from 'ava';
 
 import getSourceFile from '../../lib/tools';
 
-test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
-  const TwoSum = getSourceFile(__filename);
+const TwoSum = getSourceFile(__filename);
 
+test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
   // 自定义测试数据
   const twoSum = new TwoSum({
     numbers: [1, 2, 3, 4, 5, 6],
@@ -13,7 +13,6 @@ test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
   });
 
   const indices = twoSum.getIndices();
-
   const indicesCount = indices.length;
 
     // 如果只需要求解一个问题，那么解的个数应该在[0, )区间内
@@ -35,8 +34,6 @@ test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
 });
 
 test('Leetcode Problems: 1.Two Sum[single solution];', (it) => {
-  const TwoSum = getSourceFile(__filename);
-
   // 自定义测试数据
   const twoSum = new TwoSum({
     numbers: [1, 2, 3, 4, 5, 6],
