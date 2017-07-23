@@ -9,7 +9,7 @@
  * @param {Number} targer - 数字类型的数组任意两个数字求和的结果
  */
 class TwoSum {
-  constructor({ numbers = [], target = 0 }) {
+  constructor({ numbers = [], target = 0, needMulti = true }) {
     this.numbers = numbers;
     this.target = target;
 
@@ -49,7 +49,6 @@ class TwoSum {
    */
   initIndiecs() {
     const { hashOfNumbers, numbers, target } = this;
-
     const lastIndex = numbers.length - 1;
 
     numbers.forEach((number1, index1) => {
@@ -93,7 +92,7 @@ class TwoSum {
    * @param {Number} index1
    * @param {Array<Number>} arrayOfIndex2
    */
-  appendIndices(index1, arrayOfIndex2) {
+  appendIndices(index1 = 0, arrayOfIndex2 = []) {
     arrayOfIndex2.forEach((index2) => {
       if (index2 > index1) {
         this.indices.push([index1, index2]);

@@ -1,13 +1,11 @@
+import { getSourceFile } from '../../lib/tools';
+
 import test from 'ava';
 
 // 获取源文件
-const sourceFile = __filename
-  .replace(/\/spec\//, '/src/')
-  .replace(/\.spec.js/, '.js');
+const TwoSum = getSourceFile(__filename);
 
-const TwoSum = require(sourceFile).default;
-
-test('Leetcode Problems: 1.Two Sum', (it) => {
+test('Leetcode Problems: 1.Two Sum;', (it) => {
   // 自定义测试数据
   const twoSum = new TwoSum({
     numbers: [1, 2, 3, 4, 5, 6],
