@@ -108,7 +108,6 @@ TwoSum.prototype.appendIndices =
 }
 
 /**
- * O(n)
  * @public
  * @method
  * @return {Array<Number>} 与求和结果匹配的数组两个元素的下标
