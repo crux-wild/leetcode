@@ -4,12 +4,13 @@
  */
 
 /**
- * @constructor
+ * @class
  * @param {Array<Number>} numbers - 任意数字类型的数组
  * @param {Number} targer - 数字类型的数组任意两个数字求和的结果
+ * @param {Boolean} isMulti -输出结果是否需要多解
  */
 class TwoSum {
-  constructor({ numbers = [], target = 0, needMulti = true }) {
+  constructor({ numbers = [], target = 0, isMulti = true }) {
     this.numbers = numbers;
     this.target = target;
 
@@ -48,7 +49,7 @@ class TwoSum {
    * @method
    */
   initIndiecs() {
-    const { hashOfNumbers, numbers, target } = this;
+    const { numbers, target, hashOfNumbers } = this;
     const lastIndex = numbers.length - 1;
 
     numbers.forEach((number1, index1) => {
@@ -61,18 +62,31 @@ class TwoSum {
       const slotOfNumber2 = hashOfNumbers[number2] || 0;
       const frequencyOfNumber2 = slotOfNumber2.length;
 
-      // 两数相等
-      if (number1 === number2) {
-        // 该数字除去自身意外还存在一个
-        if (frequencyOfNumber2 >= 2) {
-          this.appendIndices(index1, slotOfNumber2);
-        }
-      // 两数不相等
-      } else if (frequencyOfNumber2 >= 1) {
-        // 与number1求和为target的数字存在
+      if (this.isOneOfIndices({ number1, number2, frequencyOfNumber2 })) {
         this.appendIndices(index1, slotOfNumber2);
       }
     });
+  }
+
+  /**
+   * O(1)
+   * @private
+   * @method
+   */
+  isOneOfIndices({  number1 = 0, number2 = 0, frequencyOfNumber2 = 0 }) {
+    // 两数相等
+    if (number1 === number2) {
+      // 该数字除去自身意外还存在一个
+      if (frequencyOfNumber2 >= 2) {
+        return true;
+      }
+    // 两数不相等
+    } else if (frequencyOfNumber2 >= 1) {
+      // 与number1求和为target的数字存在
+      return true;
+    }
+
+    return false;
   }
 
   /**
