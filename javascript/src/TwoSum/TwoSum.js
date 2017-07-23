@@ -30,15 +30,15 @@ class TwoSum {
     const hashOfNumbers = this.hashOfNumbers;
     const numbers = this.numbers;
 
-    numbers.forEach((number) => {
+    numbers.forEach((number, index) => {
       let slot = hashOfNumbers[number];
 
       if (slot === undefined) {
         // 对应槽位不存在，建立一个链表
-        slot = [number];
+        hashOfNumbers[number] = [index];
       } else {
         // 对应槽位存在，向链表添加元素
-        slot.push(number);
+        slot.push(index);
       }
     });
   }
@@ -48,7 +48,7 @@ class TwoSum {
    * @private
    * @method
    */
-  initIndiecsF() {
+  initIndiecs() {
     const hashOfNumbers = this.hashOfNumbers;
     const numbers = this.numbers;
     const target = this.target;
