@@ -80,7 +80,17 @@ TwoSum.prototype.initIndiecs = function initIndiecsF() {
 }
 
 /**
+ * ## 时间复杂度
+ *
+ * ### 多解情况
+ * O(1) ~ O(n)
+ * 这个步骤的时间复杂度受槽位冲突程度影响，如果没有冲突就是O(1)
+ *
+ * ### 单解情况
  * O(1)
+ * 由于索引数组是升序，如果是单解下面的循环至多循环2次(第一次是其本身)，所以，还
+ * 常数级别的
+ *
  * @private
  * @method
  * @param {Number} index1
