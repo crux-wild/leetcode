@@ -3,7 +3,7 @@ import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import ava from 'gulp-ava';
 
-gulp.task('lint', () => {
+gulp.task('eslint', () => {
   // ESLint ignores files with "node_modules" paths.
   // So, it's best to have gulp ignore the directory as well.
   // Also, Be sure to return the stream from the task;
@@ -22,7 +22,7 @@ gulp.task('lint', () => {
   return stream;
 });
 
-gulp.task('test', () => {
+gulp.task('ava-unit-test', () => {
   const stream = gulp.src(['spec/**', '!node_modules/**'])
     // `gulp-ava` needs filepaths, so you can't have any
     // plugins before it.
@@ -31,4 +31,4 @@ gulp.task('test', () => {
   return stream;
 });
 
-gulp.task('default', ['lint']);
+gulp.task('default', ['eslint', 'ava-unit-test']);

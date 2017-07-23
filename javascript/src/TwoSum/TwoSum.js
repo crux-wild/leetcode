@@ -31,7 +31,7 @@ class TwoSum {
     const numbers = this.numbers;
 
     numbers.forEach((number, index) => {
-      let slot = hashOfNumbers[number];
+      const slot = hashOfNumbers[number];
 
       if (slot === undefined) {
         // 对应槽位不存在，建立一个链表
