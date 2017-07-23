@@ -2,19 +2,23 @@ import test from 'ava';
 
 // 获取源文件
 const sourceFile = __filename
-  .replace(/\/spec\//, '/src/').replace(/\.spec.js/, '.js');
+  .replace(/\/spec\//, '/src/')
+  .replace(/\.spec.js/, '.js');
+
 const TwoSum = require(sourceFile).default;
 
 test('Leetcode Problems: 1.Two Sum', (it) => {
   // 自定义测试数据
-  const numbers = [1, 2, 3, 4, 5, 6];
-  const target = 7;
+  const twoSum = new TwoSum({
+    numbers: [1, 2, 3, 4, 5, 6],
+    target: 7,
+  });
 
-  // 验证算法实例
-  const twoSum = new TwoSum(numbers, target);
+  // 验证算法运行结果
   const indices = twoSum.getIndices();
 
   indices.forEach((indice) => {
+    const { numbers, target } = twoSum;
     const [index1, index2] = indice;
     const number1 = numbers[index1];
     const number2 = numbers[index2];

@@ -9,7 +9,7 @@
  * @param {Number} targer - 数字类型的数组任意两个数字求和的结果
  */
 class TwoSum {
-  constructor(numbers, target) {
+  constructor({ numbers = [], target = 0 }) {
     this.numbers = numbers;
     this.target = target;
 
@@ -27,8 +27,7 @@ class TwoSum {
    * @method
    */
   initHashOfNumbers() {
-    const hashOfNumbers = this.hashOfNumbers;
-    const numbers = this.numbers;
+    const { hashOfNumbers, numbers } = this;
 
     numbers.forEach((number, index) => {
       const slot = hashOfNumbers[number];
@@ -49,9 +48,7 @@ class TwoSum {
    * @method
    */
   initIndiecs() {
-    const hashOfNumbers = this.hashOfNumbers;
-    const numbers = this.numbers;
-    const target = this.target;
+    const { hashOfNumbers, numbers, target } = this;
 
     const lastIndex = numbers.length - 1;
 
