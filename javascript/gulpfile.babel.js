@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 
 import eslint from 'gulp-eslint';
-import jasmine from 'gulp-jasmine';
+import ava from 'gulp-ava';
 
 gulp.task('lint', () => {
   // ESLint ignores files with "node_modules" paths.
@@ -22,11 +22,13 @@ gulp.task('lint', () => {
   return stream;
 });
 
-gulp.task('unit-test', () => {
-  const stream = gulp.src('spec/test.js')
-    // gulp-jasmine works on filepaths so you can't have any
+gulp.task('test', () => {
+  const stream = gulp.src('test.js')
+    // `gulp-ava` needs filepaths, so you can't have any
     // plugins before it.
-    .pipe(jasmine());
+    .pipe(ava({
+      verbose: true,
+    }));
 
   return stream;
 });
