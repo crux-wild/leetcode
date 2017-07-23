@@ -9,7 +9,7 @@
  * @param {Number} targer - 数字类型的数组任意两个数字求和的结果
  */
 function TwoSum(numbers, target) {
-  // 避免`var twoSum = new twoSum()`错误的初始化`window`
+  // 避免`var twoSum = twoSum()`错误的初始化`window`
   if (!(this instanceof TwoSum)) {
     return new TwoSum();
   }
@@ -17,35 +17,40 @@ function TwoSum(numbers, target) {
   this.numbers = numbers;
   this.target = target;
 
-  this.frequencyOfNumbers = {};
-  this.indices = [-1, -1];
+  this.hashOfNumbers = {};
+  // 可能存在多解用数组表示
+  this.indices = [];
+
+  this.initHashOfNumbers();
+  this.initIndiecs();
 }
 
 /**
  * O(n)
+ * @private
  * @method
  */
-TwoSum.prototype.initFrequencyOfNumbers = function initFrequencyOfNumbersF() {
-  var frequencyOfNumbers = this.frequencyOfNumbers;
+TwoSum.prototype.initHashOfNumbers = function initHashOfNumbersF() {
+  var hashOfNumbers = this.hashOfNumbers;
   var numbers = this.numbers;
   var _this = this;
 
   numbers.forEach(function traversalNumbers(number) {
-    var beforeFrequency = frequencyOfNumbers[number];
-    var frequency;
+    var slot = HashOfNumbers[number];
 
-    if (beforeFrequency === void 0) {
-      frequency = 1;
+    if (slot === void 0) {
+      // 对应槽位不存在，建立一个链表
+      slot = [number];
     } else {
-      frequency = beforeFrequency + 2;
+      // 对应槽位存在，向链表添加元素
+      slot.push(number);
     }
-
-    _this.frequencyOfNumbers[number] = frequency;
   });
 }
 
 /**
  * O(n)
+ * @private
  * @method
  */
 TwoSum.prototype.initIndiecs = function initIndiecsF() {
@@ -53,35 +58,51 @@ TwoSum.prototype.initIndiecs = function initIndiecsF() {
   var target = this.target;
   var _this = this;
 
-  numbers.forEach(function traversalNumbers(number) {
-    var number1 = number;
+  numbers.forEach(function traversalNumbers(number1, index1) {
     var number2 = target - number1;
-    var frequencyOfNumber2 = frequencyOfNumbers[number2];
+    var slotOfNumber2 = hashOfNumbers[number2] || 0;
+    var frequencyOfNumber2 = slotOfNumber2.length;
 
     // 两数相等
     if (number1 === number2) {
       // 该数字除去自身意外还存在一个
       if (frequencyOfNumber2 >= 2) {
-        _this.indiecs = [number1, number1];
+        _this.appendIndices(index1, slotOfNumber2);
       }
     // 两数不相等
     } else {
       // 与number1求和为target的数字存在
-      if (frequcyOfNumber2 >= 1) {
-        _this.indiecs = [number1, number2];
+      if (frequencyOfNumber2 >= 1) {
+        _this.appendIndices(index1, slotOfNumber2);
       }
     }
   });
 }
 
 /**
+ * O(1)
+ * @private
+ * @method
+ * @param {Number} index1
+ * @param {Array<Number>} arrayOfIndex2
+ */
+TwoSum.prototype.appendIndices =
+  function appendIndicesF(index1, arrayOfIndex2) {
+    var _this = this;
+
+    arrayOfIndex2.forEach(function traversalIndex2(index2) {
+      if (index2 > index1) {
+        _this.indices.push([index1, index2]);
+      }
+    });
+}
+
+/**
  * O(n)
+ * @public
  * @method
  * @return {Array<Number>} 与求和结果匹配的数组两个元素的下标
  */
 TwoSum.prototype.getIndices = function getIndicesF() {
-  this.initFrequencyOfNumbers();
-  this.initIndiecs();
-
   return this.indices;
 }
