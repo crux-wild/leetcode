@@ -61,24 +61,7 @@ TwoSum.prototype.initIndiecs = function initIndiecsF() {
   var lastIndex = numbers.length - 1;
 
   numbers.forEach(function traversalNumbers(number1, index1) {
-    /**
-     * ## 循环分析
-     *
-     * - 第一次循环
-     *   ```
-     *    || --------------->
-     *    n<1>, n<2>, ..., n<n>
-     *   ```
-     *
-     * - 第N次循环
-     *   ```
-     *                      ||
-     *    n<1>, n<2>, ..., n<n>
-     *   ```
-     * ## 结论
-     *
-     * 为了使用`forEach`并保证结果，第n次循环可以直接略过
-     */
+    // 为了使用`forEach`并保证结果，第n次循环可以直接略过
     if (index1 === lastIndex) {
       return;
     }
