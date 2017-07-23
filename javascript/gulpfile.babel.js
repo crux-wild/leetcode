@@ -1,5 +1,7 @@
 import gulp from 'gulp';
+
 import eslint from 'gulp-eslint';
+import jasmine from 'gulp-jasmine';
 
 gulp.task('lint', () => {
   // ESLint ignores files with "node_modules" paths.
@@ -16,6 +18,15 @@ gulp.task('lint', () => {
     // To have the process exit with an error code (1) on
     // lint error, return the stream and pipe to failAfterError last.
     .pipe(eslint.failAfterError());
+
+  return stream;
+});
+
+gulp.task('unit-test', () => {
+  const stream = gulp.src('spec/test.js')
+    // gulp-jasmine works on filepaths so you can't have any
+    // plugins before it.
+    .pipe(jasmine());
 
   return stream;
 });
