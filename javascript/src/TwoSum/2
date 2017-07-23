@@ -86,7 +86,7 @@ class TwoSum {
       const slotOfNumber2 = hashOfNumbers[number2] || 0;
       const frequencyOfNumber2 = slotOfNumber2.length;
 
-      if (TwoSum.isOneOfIndices({ number1, number2, frequencyOfNumber2 })) {
+      if (this.isOneOfIndices({ number1, number2, frequencyOfNumber2 })) {
         this.appendIndices(index1, slotOfNumber2);
       }
     });
@@ -112,20 +112,23 @@ class TwoSum {
   appendIndices(index1 = 0, arrayOfIndex2 = []) {
     const { isMulti } = this;
 
-    arrayOfIndex2.some((index2) => {
-      // 不需要多解
-      if (index2 > index1) {
-        if (!isMulti) {
+    // 不需要多解
+    if (!isMulti) {
+      arrayOfIndex2.some((index2) => {
+        if (index2 > index1) {
           this.indices = [index1, index2];
 
           // 找到一组解就可以停止循环
           return true;
-        // 需要多解
-        } else {
-          this.indices.push([index1, index2]);
         }
-      }
-    });
+      });
+    // 需要多解
+    } else {
+      arrayOfIndex2.forEach((index2) => {
+        // 遍历计算出全部解
+        this.indices.push([index1, index2]);
+      });
+    }
   }
 
   /**
