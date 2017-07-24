@@ -26,7 +26,7 @@ gulp.task('ava-unit-test', () => {
   const stream = gulp.src(['spec/**/*.spec.js', '!node_modules/**'])
     // `gulp-ava` needs filepaths, so you can't have any
     // plugins before it.
-    .pipe(ava());
+    .pipe(ava({ verbose: true }));
 
   return stream;
 });

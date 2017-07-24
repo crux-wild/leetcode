@@ -7,13 +7,15 @@ import getSourceFile from '../../lib/tools';
 
 const TwoSum = getSourceFile(__filename);
 
+// 设置测试上下文
+test.beforeEach((it) => {
+  const context = it.context;
+  context.options = { numbers: [1, 2, 3, 4, 5, 6], target: 7 };
+});
+
 test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
-  // 自定义测试数据
-  const twoSum = new TwoSum({
-    numbers: [1, 2, 3, 4, 5, 6],
-    target: 7,
-    isMultiple: true,
-  });
+  const options = { isMultiple: true };
+  const twoSum = new TwoSum({ ...it.context.options, ...options });
 
   const indices = twoSum.getIndices();
   const indicesCount = indices.length;
@@ -38,11 +40,8 @@ test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
 
 test('Leetcode Problems: 1.Two Sum[single solution];', (it) => {
   // 自定义测试数据
-  const twoSum = new TwoSum({
-    numbers: [1, 2, 3, 4, 5, 6],
-    target: 7,
-    isMultiple: false,
-  });
+  const options = { isMultiple: false };
+  const twoSum = new TwoSum({ ...it.context.options, ...options });
 
   let indices = twoSum.getIndices();
   const indicesCount = indices.length;

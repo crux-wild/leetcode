@@ -35,10 +35,8 @@
     "failFast": true,
     "failWithoutAssertions": false,
     "tap": false,
-    "powerAssert": false,
-    "require": [
-      "babel-register"
-    ],
+    "powerAssert": true,
+    "require": ["babel-register"],
     "babel": "inherit"
   }
 }
