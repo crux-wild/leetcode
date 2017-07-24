@@ -1,10 +1,10 @@
 # Leetcode
 
-|  编号  |            标题            |           解决方案              |  难度 |
-|--------|----------------------------|---------------------------------|-------|
-|   1    |  [Two Sum][Two Sum title]  | [javascript][Two Sum solution]  |  简单 |
+| #          | Title                                        | solutions                         | Difficulty    |
+| ---------- | -------------------------------------------- | --------------------------------- | ------------- |
+| 1          | [Two Sum][Two Sum title]                     | [Javascript][Two Sum solution]    | Easy          |
+| 30         | [Substring with Concatenation of All Words]  | [C][]                             | Hard          |
 
 [Two Sum title]: https://leetcode.com/problems/two-sum/#/description
 [Two Sum solution]: https://github.com/crux-wild/leetcode/blob/master/javascript/src/TwoSum/TwoSum.js
-
----
+[Substring with Concatenation of All Words title]: https://leetcode.com/problems/substring-with-concatenation-of-all-words/#/description
