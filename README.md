@@ -9,4 +9,4 @@
 [Two Sum solution]: https://github.com/crux-wild/leetcode/blob/master/javascript/src/TwoSum/TwoSum.js
 
 [Substring with Concatenation of All Words title]: https://leetcode.com/problems/substring-with-concatenation-of-all-words/#/description
-[Substring with Concatenation of All Words solution]: https://github.com/crux-wild/leetcode/blob/master/c-language/SubstringWithConcatenationOfAllWords/SubstringWithConcatenationOfAllWords.c
+[Substring with Concatenation of All Words solution]: https://github.com/crux-wild/leetcode/blob/master/c-language/findSubstring/findSubstring.c
