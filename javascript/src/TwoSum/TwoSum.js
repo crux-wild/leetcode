@@ -1,5 +1,5 @@
 /**
- * @file 1.Two Sum 的时间复杂度O(n)解决方案
+ * @file 1.Two Sum 数字重复较小情况下时间复杂度O(n)解决方案
  * @see https://leetcode.com/problems/two-sum/#/description
  */
 
@@ -96,7 +96,8 @@ class TwoSum {
   }
 
   /**
-   * O(n)
+   *  外层循环固定为O(n)，时间复杂度主要取决于`appendIndices`执行时间
+   * O(n) ~ O(n^2)
    * @private
    * @method
    */

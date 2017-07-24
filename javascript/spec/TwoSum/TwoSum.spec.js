@@ -1,9 +1,21 @@
+/**
+ * @file 1.Two Sum 算法正确性验证单元测试
+ * @see https://leetcode.com/problems/two-sum/#/description
+ */
 import test from 'ava';
-
 import getSourceFile from '../../lib/tools';
 
 const TwoSum = getSourceFile(__filename);
 
+/**
+ * ## 需要多组解情况下的测使用例
+ *
+ * ### 验证输出数据格式
+ *
+ * ```
+ *  [[n, n], [n, n] ..., [n, n]]
+ * ```
+ */
 test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
   // 自定义测试数据
   const twoSum = new TwoSum({
@@ -33,6 +45,15 @@ test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
     });
 });
 
+/**
+ * ## 需要一组解情况下的测使用例
+ *
+ * ###  验证数据格式
+ *
+ *  ```
+ *  [n, n]
+ *  ```
+ */
 test('Leetcode Problems: 1.Two Sum[single solution];', (it) => {
   // 自定义测试数据
   const twoSum = new TwoSum({
