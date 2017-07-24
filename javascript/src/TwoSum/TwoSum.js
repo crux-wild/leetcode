@@ -10,12 +10,11 @@
  * @prop {Boolean} isMultiple -输出结果是否需要多解
  */
 class TwoSum {
-  constructor(options = { ...TwoSum.getDefaultOptions(), ...options }) {
-    Object.assign(this, options);
+  constructor(options = {}) {
+    const { getDefaultOptions, getDefaultInstances } = this.constructor;
 
-    this.hashOfNumbers = {};
-    // 可能存在多解用数组表示
-    this.indices = [];
+    // 按顺序可配置和不可配置属性设置默认值
+    Object.assign(this, getDefaultOptions(), options, getDefaultInstances());
 
     this.initHashOfNumbers();
     this.initIndiecs();
@@ -25,12 +24,26 @@ class TwoSum {
    * @private
    * @static
    * @method
+   * @return {Object} 用户不能配置的实例属性默认值
+   */
+  static getDefaultInstances() {
+    return {
+      hashOfNumbers: {},
+      /**
+       * @default
+       * 可能存在多解用数组表示
+       */
+      indices: [],
+    };
+  }
+
+  /**
+   * @private
+   * @static
+   * @method
    * @return {Object} 如果用户没有传参的默认配置
    */
   static getDefaultOptions() {
-    /**
-     * @prop {Array<Number>}
-     */
     return {
       numbers: [],
       target: 0,
