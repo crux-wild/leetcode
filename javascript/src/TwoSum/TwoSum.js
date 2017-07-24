@@ -5,15 +5,13 @@
 
 /**
  * @class
- * @param {Array<Number>} numbers - 任意数字类型的数组
- * @param {Number} targer - 数字类型的数组任意两个数字求和的结果
- * @param {Boolean} isMultiple -输出结果是否需要多解
+ * @prop {Array<Number>} numbers - 任意数字类型的数组
+ * @prop {Number} targer - 数字类型的数组任意两个数字求和的结果
+ * @prop {Boolean} isMultiple -输出结果是否需要多解
  */
 class TwoSum {
-  constructor({ numbers = [], target = 0, isMultiple = true }) {
-    this.numbers = numbers;
-    this.target = target;
-    this.isMultiple = isMultiple;
+  constructor(options = { ...TwoSum.getDefaultOptions(), ...options }) {
+    Object.assign(this, options);
 
     this.hashOfNumbers = {};
     // 可能存在多解用数组表示
@@ -21,6 +19,23 @@ class TwoSum {
 
     this.initHashOfNumbers();
     this.initIndiecs();
+  }
+
+  /**
+   * @private
+   * @static
+   * @method
+   * @return {Object} 如果用户没有传参的默认配置
+   */
+  static getDefaultOptions() {
+    /**
+     * @prop {Array<Number>}
+     */
+    return {
+      numbers: [],
+      target: 0,
+      isMultiple: true,
+    };
   }
 
   /**
