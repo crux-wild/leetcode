@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "knuth-morris-pratt.h"
 
-KmpMatcher * createKmpMatcher(char * text, char * pattern) {
+KmpMatcher * createKmpMatcher() {
   KmpMatcher * matcher;
 
   if ((matcher = malloc(sizeof(KmpMatcher))) == NULL) {
