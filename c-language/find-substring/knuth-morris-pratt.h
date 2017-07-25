@@ -1,10 +1,11 @@
 typedef struct KmpMatcher {
   int * prefixFunction;
+
   char * text;
   char * pattern;
 
-  int (*release)(void * kmpMatcher);
+  int (*initPrefixFunction) (struct KmpMatcher * kmpMatcher);
 } KmpMatcher;
 
-KmpMatcher * createKmpMatcher();
-int releaseKmpMatcher(KmpMatcher * kmpMatcher);
+KmpMatcher * createKmpMatcher(char * text, char pattern);
+int initPrefixFunction (KmpMatcher * kmpMatcher);
