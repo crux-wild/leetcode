@@ -1,5 +1,6 @@
 typedef struct KmpMatcher {
   int * prefixFunction;
+  int patternLength;
   char * text;
   char * pattern;
   int (*initPrefixFunction) (struct KmpMatcher * kmpMatcher);

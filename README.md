@@ -6,7 +6,7 @@
 | 30         | [Substring with Concatenation of All Words][Substring with Concatenation of All Words solution]  | [C][Substring with Concatenation of All Words solution] | Hard                                             |
 
 [Two Sum title]: https://leetcode.com/problems/two-sum/#/description
-[Two Sum solution]: https://github.com/crux-wild/leetcode/blob/master/javascript/src/TwoSum/TwoSum.js
+[Two Sum solution]: https://github.com/crux-wild/leetcode/blob/master/javascript/src/two-sum/two-sum.js
 
 [Substring with Concatenation of All Words title]: https://leetcode.com/problems/substring-with-concatenation-of-all-words/#/description
-[Substring with Concatenation of All Words solution]: https://github.com/crux-wild/leetcode/blob/master/c-language/findSubstring/findSubstring.c
+[Substring with Concatenation of All Words solution]: https://github.com/crux-wild/leetcode/blob/master/c-language/find-substring/find-substring.c
