@@ -4,7 +4,7 @@
  */
 import test from 'ava';
 
-import TwoSum from 'two-sum/two-sum';
+import TwoSum from 'two-sum/src/two-sum';
 
 // 设置测试上下文
 test.beforeEach((it) => {
