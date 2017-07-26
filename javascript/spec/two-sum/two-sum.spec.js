@@ -3,9 +3,8 @@
  * @see https://leetcode.com/problems/two-sum/#/description
  */
 import test from 'ava';
-import getSourceFile from '../../lib/tools';
 
-const TwoSum = getSourceFile(__filename);
+import TwoSum from 'two-sum/two-sum';
 
 // 设置测试上下文
 test.beforeEach((it) => {
