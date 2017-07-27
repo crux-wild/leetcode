@@ -4,7 +4,7 @@
 val junitInterfaceTestOption = Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 
 lazy val commonSettings = Seq(
-  organization := "leetcode.com",
+  organization := "com.leetcode",
 
   version := "0.0.1-SNAPSHOT",
 
