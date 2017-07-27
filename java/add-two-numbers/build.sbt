@@ -3,9 +3,6 @@
 
 val junitInterfaceTestOption = Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 
-libraryDependencies += "junit" % "junit" % "4.12" % "test"
-
-libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
 
 lazy val commonSettings = Seq(
   organization := "leetcode.com",
@@ -28,5 +25,9 @@ lazy val root = (project in file("."))
   .settings(
     name := "add-two-numbers",
     commonSettings,
+    libraryDependencies ++= Seq(
+      "junit" % "junit" % "4.12" % "test",
+      "com.novocode" % "junit-interface" % "0.11" % "test"
+    ),
     testOptions += junitInterfaceTestOption
   )

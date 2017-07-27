@@ -11,10 +11,10 @@
  */
 class TwoSum {
   constructor(options = {}) {
-    const { getDefaultOptions, getDefaultInstances } = this.constructor;
+    const { getOptions, getInstances } = this.constructor;
 
     // 按顺序可配置和不可配置属性设置默认值
-    Object.assign(this, getDefaultOptions(), options, getDefaultInstances());
+    Object.assign(this, getOptions(options), getInstances());
 
     this.initHashOfNumbers();
     this.initIndiecs();
@@ -26,7 +26,7 @@ class TwoSum {
    * @method
    * @return {Object} 用户不能配置的实例属性默认值
    */
-  static getDefaultInstances() {
+  static getInstances() {
     return {
       hashOfNumbers: {},
       /**
@@ -41,14 +41,14 @@ class TwoSum {
    * @private
    * @static
    * @method
-   * @return {Object} 如果用户没有传参的默认配置
+   * @return {Object} 如果默认配置和用户配置生成配置项
    */
-  static getDefaultOptions() {
-    return {
+  static getOptions(options) {
+    return Object.assign({
       numbers: [],
       target: 0,
       isMultiple: true,
-    };
+    }, options);
   }
 
   /**
