@@ -1,6 +1,3 @@
-//val junitInterfaceDependence =
-  //"com.novocode" % "junit-interface" % "0.11" % "test"
-
 val junitInterfaceTestOption = Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
 
 lazy val commonSettings = Seq(
