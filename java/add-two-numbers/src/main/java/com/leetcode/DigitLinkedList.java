@@ -44,15 +44,14 @@ public class DigitLinkedList{
     this.updateMiddleList(this.value);
 
     this.representString = getRepresentStringFromMiddleList();
-
     this.updateStatus = updateStatus.UPDATE_ALL;
   }
 
   private void updateValue() {
-    this.updateMiddleList(this.representString);
+    String representString = this.representString;
 
+    this.updateMiddleList(representString);
     this.value = this.getValueFromMiddleList();
-
     this.updateStatus = updateStatus.UPDATE_ALL;
   }
 
@@ -63,7 +62,7 @@ public class DigitLinkedList{
 
     for (; index >= 0; index--) {
       int digit = middleList.get(index);
-      value = (int)(value + (digit * Math.pow(10, index)));
+      sum = (int)(sum + (digit * Math.pow(10, index)));
     }
 
     return sum;
@@ -105,7 +104,6 @@ public class DigitLinkedList{
   }
 
   private void updateMiddleListFromStringArray(List<String> digitStringList) {
-
     LinkedList<Integer> middleList = this.middleList;
     int digitStringListSize = digitStringList.size();
     int middleListSize = this.middleList.size();
@@ -134,7 +132,6 @@ public class DigitLinkedList{
   public String getRepresentString() {
     if (this.updateStatus == UpdateStatus.PENDING_STRING) {
       this.updateRepresentString();
-
       this.updateStatus = UpdateStatus.UPDATE_ALL;
     }
 
@@ -144,7 +141,6 @@ public class DigitLinkedList{
   public int getValue() {
     if (this.updateStatus == UpdateStatus.PENDING_VALUE) {
       this.updateValue();
-
       this.updateStatus = UpdateStatus.UPDATE_ALL;
     }
 
