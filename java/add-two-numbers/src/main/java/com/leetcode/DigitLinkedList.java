@@ -1,6 +1,13 @@
 package com.leetcode;
 
+import static java.lang.Math.pow;
+
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Arrays;
+import java.util.List;
 
 import com.leetcode.UpdateStatus;
 
@@ -16,7 +23,7 @@ public class DigitLinkedList{
     this.middleList = new LinkedList();
     this.updateStatus = UpdateStatus.UPDATE_ALL;
 
-    this.middleList.append(0);
+    this.middleList.add(0);
   }
 
   public DigitLinkedList(String representString) {
@@ -38,28 +45,28 @@ public class DigitLinkedList{
 
     this.representString = getRepresentStringFromMiddleList();
 
-    this.updateStatus = UPDATE_ALL;
+    this.updateStatus = updateStatus.UPDATE_ALL;
   }
 
-  private void udpateValue() {
+  private void updateValue() {
     this.updateMiddleList(this.representString);
 
-    this.value = getValueFromMiddleList();
+    this.value = this.getValueFromMiddleList();
 
-    this.updateStatus = UPDATE_ALL;
+    this.updateStatus = updateStatus.UPDATE_ALL;
   }
 
   private int getValueFromMiddleList() {
-    Array<Integer> middleList = this.middleList;
+    LinkedList<Integer> middleList = this.middleList;
     int index = middleList.size() - 1;
-    int value = 0;
+    int sum = 0;
 
     for (; index >= 0; index--) {
       int digit = middleList.get(index);
-      value = value + (digit * pow(10, index));
+      value = (int)(value + (digit * Math.pow(10, index)));
     }
 
-    reurn value;
+    return sum;
   }
 
   private String getRepresentStringFromMiddleList() {
@@ -80,29 +87,36 @@ public class DigitLinkedList{
 
   private void updateMiddleList(int value) {
     String valueString = Integer.toString(value);
-    Array<String> digitStringArray = valueString.split("");
+    String[] digitStringArray = valueString.split("");
+    List<String> digitStringList = new ArrayList();
+    int index = digitStringArray.length - 1;
+
+    for (; index >= 0; index--) {
+      digitStringList.add(digitStringArray[index]);
+    }
 
     this.updateMiddleListFromStringArray(digitStringList);
   }
 
   private void updateMiddleList(String representString) {
-    Array<String> digitStringList = representString.split(" -> ");
+    List<String> digitStringList = Arrays.asList(representString.split(" -> "));
 
     this.updateMiddleListFromStringArray(digitStringList);
   }
 
-  private void updateMiddleListFromStringArray(Array<String> stringArray) {
-    Iterator iterator = digitStringList.iterator();
-    Array<Integer> middleList = this.middleList;
-    int size = this.middleList.size();
+  private void updateMiddleListFromStringArray(List<String> digitStringList) {
 
-    for (int index = 0; digitStringList.hasNext(); index++) {
-      int value = Integer.parseInt(digitStringList.get(i));
+    LinkedList<Integer> middleList = this.middleList;
+    int digitStringListSize = digitStringList.size();
+    int middleListSize = this.middleList.size();
 
-      if (index <= size) {
+    for (int index = 0; index < digitStringListSize; index++) {
+      int value = Integer.parseInt(digitStringList.get(index));
+
+      if (index < middleListSize) {
         middleList.set(index, value);
       } else {
-        middleList.append(value);
+        middleList.add(value);
       }
     }
   }
@@ -118,20 +132,20 @@ public class DigitLinkedList{
   }
 
   public String getRepresentString() {
-    if (this.updateStatus === UpdateStatus.STRING_PENDING) {
+    if (this.updateStatus == UpdateStatus.PENDING_STRING) {
       this.updateRepresentString();
 
-      this.updateStatus = UpdateStatus.UDATE_ALL;
+      this.updateStatus = UpdateStatus.UPDATE_ALL;
     }
 
     return this.representString;
   }
 
   public int getValue() {
-    if (this.updateStatus === UpdateStatus.VALUE_PENDING) {
+    if (this.updateStatus == UpdateStatus.PENDING_VALUE) {
       this.updateValue();
 
-      this.updateStatus = UpdateStatus.UDATE_ALL;
+      this.updateStatus = UpdateStatus.UPDATE_ALL;
     }
 
     return this.value;
