@@ -1,5 +1,3 @@
-val junitInterfaceTestOption = Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
-
 lazy val commonSettings = Seq(
   organization := "com.leetcode",
 
@@ -25,5 +23,7 @@ lazy val root = (project in file("."))
       "junit" % "junit" % "4.12" % "test",
       "com.novocode" % "junit-interface" % "0.11" % "test"
     ),
-    testOptions += junitInterfaceTestOption
+    testOptions ++= Seq(
+      Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
+    )
   )
