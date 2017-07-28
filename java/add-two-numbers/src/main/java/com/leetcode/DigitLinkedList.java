@@ -79,10 +79,19 @@ public class DigitLinkedList{
   }
 
   private void updateMiddleList(int value) {
+    String valueString = Integer.toString(value);
+    Array<String> digitStringArray = valueString.split("");
+
+    this.updateMiddleListFromStringArray(digitStringList);
   }
 
   private void updateMiddleList(String representString) {
     Array<String> digitStringList = representString.split(" -> ");
+
+    this.updateMiddleListFromStringArray(digitStringList);
+  }
+
+  private void updateMiddleListFromStringArray(Array<String> stringArray) {
     Iterator iterator = digitStringList.iterator();
     Array<Integer> middleList = this.middleList;
     int size = this.middleList.size();
@@ -108,7 +117,7 @@ public class DigitLinkedList{
     this.updateStatus = UpdateStatus.PENDING_STRING;
   }
 
-  public String toString() {
+  public String getRepresentString() {
     if (this.updateStatus === UpdateStatus.STRING_PENDING) {
       this.updateRepresentString();
 
@@ -118,7 +127,7 @@ public class DigitLinkedList{
     return this.representString;
   }
 
-  public int valueOf() {
+  public int getValue() {
     if (this.updateStatus === UpdateStatus.VALUE_PENDING) {
       this.updateValue();
 
