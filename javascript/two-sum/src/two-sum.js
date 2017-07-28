@@ -90,7 +90,6 @@ class TwoSum {
    */
   appendItemToHashOfNumbers(number = 0, index = 0) {
     const { hashOfNumbers } = this;
-
     const slot = hashOfNumbers[number];
 
     if (slot === undefined) {
