@@ -5,9 +5,9 @@
 .cache/
 .history/
 .lib/
-dist/*
+**/dist/*
 **/target/*
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
+**/lib_managed/
+**/src_managed/
+**/project/boot/
+**/project/plugins/project/
