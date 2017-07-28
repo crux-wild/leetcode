@@ -11,6 +11,9 @@ import java.util.List;
 
 import com.leetcode.UpdateStatus;
 
+/**
+ * @see https://leetcode.com/problems/add-two-numbers/tabs/description/
+ */
 public class DigitLinkedList{
   private String representString;
   private int value;
@@ -21,9 +24,8 @@ public class DigitLinkedList{
     this.representString = "0";
     this.value = 0;
     this.middleList = new LinkedList();
-    this.updateStatus = UpdateStatus.UPDATE_ALL;
-
     this.middleList.add(0);
+    this.updateStatus = UpdateStatus.UPDATE_ALL;
   }
 
   public DigitLinkedList(String representString) {
