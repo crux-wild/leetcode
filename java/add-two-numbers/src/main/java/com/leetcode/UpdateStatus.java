@@ -1,9 +1,9 @@
 package com.leetcode;
 
 public enum UpdateStatus {
-  UPDATEALL(0b00),
-  STRING_PENDING(0b10),
-  VALUE_PENDING(0b01);
+  UPDATE_ALL(0b11),
+  PENDING_STRING(0b10),
+  PENDING_VALUE(0b01);
 
   private int status;
 
