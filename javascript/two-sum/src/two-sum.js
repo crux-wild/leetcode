@@ -1,7 +1,18 @@
 /**
- * @file 1.Two Sum 数字重复较小情况下时间复杂度O(n)解决方案
+ * @file 1.Two Sum 时间复杂度O(n)解决方案
  * @see https://leetcode.com/problems/two-sum/#/description
  */
+
+/**
+ * 用户输入的参数无法返回一个解
+ * @private
+ * @class
+ */
+class InvalidArgumentException extends Error {
+  constructor(message = 'No two sum solution') {
+    super(message);
+  }
+}
 
 /**
  * @class
@@ -16,8 +27,12 @@ class TwoSum {
     // 按顺序可配置和不可配置属性设置默认值
     Object.assign(this, getOptions(options), getInstances());
 
-    this.initHashOfNumbers();
+    //this.initHashOfNumbers();
     this.initIndiecs();
+
+    if (this.indices.length === 0) {
+      throw new InvalidArgumentException();
+    }
   }
 
   /**
@@ -54,45 +69,37 @@ class TwoSum {
   /**
    * O(1)
    * @private
-   * @static
    * @method
    * @return {Boolean} 这组数组是否复合要求
    */
-  static isOneOfIndices({ number1 = 0, number2 = 0, frequencyOfNumber2 = 0 }) {
-    // 两数相等
-    if (number1 === number2) {
-      // 该数字除去自身意外还存在一个
-      if (frequencyOfNumber2 >= 2) {
-        return true;
-      }
-    // 两数不相等
-    } else if (frequencyOfNumber2 >= 1) {
-      // 与number1求和为target的数字存在
-      return true;
+  isOneOfIndices(number1 = 0, number2 = 0) {
+    const frequencyOfNumber2 = this.hashOfNumbers[number2];
+    let flag = false;
+
+    if (Array.isArray(frequencyOfNumber2) && frequencyOfNumber2.length >= 1) {
+      flag = true;
     }
 
-    return false;
+    return flag;
   }
 
   /**
-   * O(n)
+   * O(1)
    * @private
    * @method
    */
-  initHashOfNumbers() {
-    const { hashOfNumbers, numbers } = this;
+  appendItemToHashOfNumbers(number, index) {
+    const { hashOfNumbers } = this;
 
-    numbers.forEach((number, index) => {
-      const slot = hashOfNumbers[number];
+    const slot = hashOfNumbers[number];
 
-      if (slot === undefined) {
-        // 对应槽位不存在，建立一个链表
-        hashOfNumbers[number] = [index];
-      } else {
-        // 对应槽位存在，向链表添加元素
-        slot.push(index);
-      }
-    });
+    if (slot === undefined) {
+      // 对应槽位不存在，建立一个链表
+      hashOfNumbers[number] = [index];
+    } else {
+      // 对应槽位存在，向链表添加元素
+      slot.push(index);
+    }
   }
 
   /**
@@ -103,24 +110,18 @@ class TwoSum {
    */
   initIndiecs() {
     const { numbers, target, hashOfNumbers, isMultiple } = this;
-    const lastIndex = numbers.length - 1;
 
     numbers.some((number1, index1) => {
-      // 第n个元素后面没有元素，不需要次循环
-      if (index1 === lastIndex) {
-        return true;
-      }
-
       const number2 = target - number1;
-      const slotOfNumber2 = hashOfNumbers[number2] || 0;
-      const frequencyOfNumber2 = slotOfNumber2.length;
 
-      if (TwoSum.isOneOfIndices({ number1, number2, frequencyOfNumber2 })) {
-        this.appendIndices(index1, slotOfNumber2);
+      if (this.isOneOfIndices(number1, number2)) {
+        this.appendIndices(index1, number2);
 
         if (!isMultiple) {
           return true;
         }
+      } else {
+        this.appendItemToHashOfNumbers(number1, index1);
       }
 
       return false;
@@ -142,15 +143,23 @@ class TwoSum {
    * @private
    * @method
    * @param {Number} index1
-   * @param {Array<Number>} arrayOfIndex2
+   * @param {Number} number2
    */
-  appendIndices(index1 = 0, arrayOfIndex2 = []) {
-    const { isMultiple } = this;
+  appendIndices(index1 = 0, number2 = 0) {
+    const { isMultiple, hashOfNumbers } = this;
+    const arrayOfIndex2 = hashOfNumbers[number2];
 
     arrayOfIndex2.some((index2) => {
-      if (index2 > index1) {
+      /**
+       *
+       * 从前向后遍历
+       * <------------ *
+       * n1, n2, ..., ptr
+       */
+      if (index2 < index1) {
         // 需要多解
         this.indices.push([index1, index2]);
+        arrayOfIndex2.shift();
 
         // 不需要多解
         if (!isMultiple) {
@@ -166,6 +175,7 @@ class TwoSum {
   /**
    * @public
    * @method
+   * @throws {InvalidArgumentException}
    * @return {Array<Number>} 与求和结果匹配的数组两个元素的下标
    */
   getIndices() {

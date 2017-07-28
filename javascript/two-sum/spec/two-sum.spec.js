@@ -9,11 +9,13 @@ import TwoSum from 'two-sum/src/two-sum';
 // 设置测试上下文
 test.beforeEach((it) => {
   const context = it.context;
-  context.options = { numbers: [1, 2, 3, 4, 5, 6], target: 7 };
+
+  context.options = { numbers: [1, 2, 3, 4, 5, 6] };
 });
 
+// 测试多解情况
 test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
-  const options = { isMultiple: true };
+  const options = { isMultiple: true, target: 7 };
   const twoSum = new TwoSum({ ...it.context.options, ...options });
 
   const indices = twoSum.getIndices();
@@ -37,9 +39,10 @@ test('Leetcode Problems: 1.Two Sum[multiple solutions];', (it) => {
     });
 });
 
+// 测试单解情况
 test('Leetcode Problems: 1.Two Sum[single solution];', (it) => {
   // 自定义测试数据
-  const options = { isMultiple: false };
+  const options = { isMultiple: false, target: 7 };
   const twoSum = new TwoSum({ ...it.context.options, ...options });
 
   let indices = twoSum.getIndices();
@@ -66,4 +69,19 @@ test('Leetcode Problems: 1.Two Sum[single solution];', (it) => {
     it.deepEqual(number1 + number2, target,
       'Indices of the two numbers such that they add up to a specific target;');
   }
+});
+
+// 测试无解情况情况
+test('Leetcode Problems: 1.Two Sum[none solution];', (it) => {
+  // 自定义测试数据
+  const options = { isMultiple: true, target: 0 };
+
+  /**
+   * 不满足`number1 + number2 = target`的情况，应该抛出异常
+   * `InvalidArgumentException`是私有的，所以这里断言错误信息这个表征
+   * @see https://github.com/avajs/ava#throwsfunctionpromise-error-message
+   */
+  it.throws(() => {
+    new TwoSum({ ...it.context.options, ...options });
+  }, 'No two sum solution');
 });
