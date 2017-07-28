@@ -11,7 +11,7 @@ public enum UpdateStatus {
     this.status = status;
   }
 
-  public int valueOf() {
+  public int getStatus() {
     return this.status;
   }
 }

@@ -30,21 +30,18 @@ public class DigitLinkedList{
 
   public DigitLinkedList(String representString) {
     this();
-
     this.representString = representString;
     this.updateStatus = UpdateStatus.PENDING_VALUE;
   }
 
   public DigitLinkedList(int value) {
     this();
-
     this.value = value;
     this.updateStatus = UpdateStatus.PENDING_STRING;
   }
 
   private void updateRepresentString() {
     this.updateMiddleList(this.value);
-
     this.representString = getRepresentStringFromMiddleList();
     this.updateStatus = updateStatus.UPDATE_ALL;
   }
@@ -100,7 +97,8 @@ public class DigitLinkedList{
   }
 
   private void updateMiddleList(String representString) {
-    List<String> digitStringList = Arrays.asList(representString.split(" -> "));
+    String[] digitStringArray = representString.split(" -> ");
+    List<String> digitStringList = Arrays.asList(digitStringArray);
 
     this.updateMiddleListFromStringArray(digitStringList);
   }
