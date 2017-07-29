@@ -16,7 +16,7 @@
 
 ### 模型抽象
 
-`digitStringList`多次操作可以抽象为:
+对象`digitStringList`多次操作可以抽象为:
 
 ```
             <-- get操作组0 -->  <-- set操作组0 -->
