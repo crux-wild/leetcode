@@ -14,7 +14,9 @@ import com.leetcode.UpdateStatus;
 /**
  * 2.Add Two Numbers  实现算法
  * @see https://leetcode.com/problems/add-two-numbers/tabs/description/
- * {@link}
+ *
+ * 具体时间复杂度分析链接
+ * {@link} https://github.com/crux-wild/leetcode/blob/master/java/add-two-numbers/doc/timeComplexityAnalysis.md
  */
 public class DigitLinkedList{
   private String representString;
