@@ -12,20 +12,9 @@ import java.util.List;
 import com.leetcode.UpdateStatus;
 
 /**
+ * 2.Add Two Numbers  实现算法
  * @see https://leetcode.com/problems/add-two-numbers/tabs/description/
- *
- * ## 算法上下界
- *
- * |  算法      | constructor()     | getProp()          | setProp()           |
- * |------------|-------------------|--------------------|---------------------|
- * |  直接同步  | O(n)              | O(1)               | O(n)                |
- * |  需时同步  | O(1)              | O(1) ~ O(n)        | O(1)                |
- *
- * - 这里的`n`指的是更新的`representString`或者是`value`对应的链表长度
- * - 需时同步时`construcotr()`或是`setProp()`都只是更新实例属性，没有触发同步
- *
- * ## 摊还成本
- *
+ * {@link}
  */
 public class DigitLinkedList{
   private String representString;
