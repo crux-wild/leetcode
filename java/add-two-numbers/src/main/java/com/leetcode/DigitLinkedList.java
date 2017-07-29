@@ -14,14 +14,17 @@ import com.leetcode.UpdateStatus;
 /**
  * @see https://leetcode.com/problems/add-two-numbers/tabs/description/
  *
- * ## 算法分析
+ * ## 算法上下界
  *
  * |  算法      | constructor()     | getProp()          | setProp()           |
  * |------------|-------------------|--------------------|---------------------|
  * |  直接同步  | O(n)              | O(1)               | O(n)                |
  * |  需时同步  | O(1)              | O(1) ~ O(n)        | O(1)                |
  *
- * **这里的`n`指的是更新的`representString`或者是`value`对应的链表长度**
+ * - 这里的`n`指的是更新的`representString`或者是`value`对应的链表长度
+ * - 需时同步时`construcotr()`或是`setProp()`都只是更新实例属性，没有触发同步
+ *
+ * ## 摊还成本
  *
  */
 public class DigitLinkedList{
@@ -30,6 +33,9 @@ public class DigitLinkedList{
   private UpdateStatus updateStatus;
   private LinkedList<Integer> middleList;
 
+  /**
+   * O(1)
+   */
   public DigitLinkedList() {
     this.representString = "0";
     this.value = 0;
@@ -39,6 +45,7 @@ public class DigitLinkedList{
   }
 
   /**
+   * O(n)
    * @param {String} representString - 用户传入字符串表征
    */
   public DigitLinkedList(String representString) {
@@ -48,6 +55,7 @@ public class DigitLinkedList{
   }
 
   /**
+   * O(n)
    * @param {String} representString - 用户传入整数数值
    */
   public DigitLinkedList(int value) {
@@ -100,14 +108,17 @@ public class DigitLinkedList{
   }
 
   /**
+   * O(n)
    * @param {Integer} value - 用于更新中间链表的数值
    */
   private void updateMiddleList(int value) {
+    // O(n)
     String valueString = Integer.toString(value);
     String[] digitStringArray = valueString.split("");
     List<String> digitStringList = new ArrayList();
     int index = digitStringArray.length - 1;
 
+    // O(n)
     for (; index >= 0; index--) {
       digitStringList.add(digitStringArray[index]);
     }
@@ -116,9 +127,11 @@ public class DigitLinkedList{
   }
 
   /**
+   * O(n)
    * @param {String} representString - 用于更新中间链表的字符串表征
    */
   private void updateMiddleList(String representString) {
+    // O(n)
     String[] digitStringArray = representString.split(" -> ");
     List<String> digitStringList = Arrays.asList(digitStringArray);
 
@@ -126,6 +139,7 @@ public class DigitLinkedList{
   }
 
   /**
+   * O(n)
    * @param {List<String>} digitStringList - 用于更新中间链表的字符串链表
    */
   private void updateMiddleListFromStringList(List<String> digitStringList) {
