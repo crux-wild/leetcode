@@ -13,6 +13,16 @@ import com.leetcode.UpdateStatus;
 
 /**
  * @see https://leetcode.com/problems/add-two-numbers/tabs/description/
+ *
+ * ## 算法分析
+ *
+ * |  算法      | constructor()     | getProp()          | setProp()           |
+ * |------------|-------------------|--------------------|---------------------|
+ * |  直接同步  | O(n)              | O(1)               | O(n)                |
+ * |  需时同步  | O(1)              | O(1) ~ O(n)        | O(1)                |
+ *
+ * **这里的`n`指的是更新的`representString`或者是`value`对应的链表长度**
+ *
  */
 public class DigitLinkedList{
   private String representString;
@@ -28,12 +38,18 @@ public class DigitLinkedList{
     this.updateStatus = UpdateStatus.UPDATE_ALL;
   }
 
+  /**
+   * @param {String} representString - 用户传入字符串表征
+   */
   public DigitLinkedList(String representString) {
     this();
     this.representString = representString;
     this.updateStatus = UpdateStatus.PENDING_VALUE;
   }
 
+  /**
+   * @param {String} representString - 用户传入整数数值
+   */
   public DigitLinkedList(int value) {
     this();
     this.value = value;
@@ -83,6 +99,9 @@ public class DigitLinkedList{
     return builder.toString();
   }
 
+  /**
+   * @param {Integer} value - 用于更新中间链表的数值
+   */
   private void updateMiddleList(int value) {
     String valueString = Integer.toString(value);
     String[] digitStringArray = valueString.split("");
@@ -93,17 +112,23 @@ public class DigitLinkedList{
       digitStringList.add(digitStringArray[index]);
     }
 
-    this.updateMiddleListFromStringArray(digitStringList);
+    this.updateMiddleListFromStringList(digitStringList);
   }
 
+  /**
+   * @param {String} representString - 用于更新中间链表的字符串表征
+   */
   private void updateMiddleList(String representString) {
     String[] digitStringArray = representString.split(" -> ");
     List<String> digitStringList = Arrays.asList(digitStringArray);
 
-    this.updateMiddleListFromStringArray(digitStringList);
+    this.updateMiddleListFromStringList(digitStringList);
   }
 
-  private void updateMiddleListFromStringArray(List<String> digitStringList) {
+  /**
+   * @param {List<String>} digitStringList - 用于更新中间链表的字符串链表
+   */
+  private void updateMiddleListFromStringList(List<String> digitStringList) {
     LinkedList<Integer> middleList = this.middleList;
     int digitStringListSize = digitStringList.size();
     int middleListSize = this.middleList.size();
@@ -119,11 +144,17 @@ public class DigitLinkedList{
     }
   }
 
+  /**
+   * @param {String} representString - 用于更新的字符串表征
+   */
   public void setRepresentString(String representString) {
     this.representString = representString;
     this.updateStatus = UpdateStatus.PENDING_VALUE;
   }
 
+  /**
+   * @param {Integer} value - 用于更新的整数数值
+   */
   public void setValue(int value) {
     this.value = value;
     this.updateStatus = UpdateStatus.PENDING_STRING;
