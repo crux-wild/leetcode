@@ -1,7 +1,9 @@
+package com.leetcode.java;
+
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import com.leetcode.DigitLinkedList;
+import com.leetcode.java.DigitLinkedList;
 
 public class DigitLinkedListTest {
   @Test

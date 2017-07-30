@@ -12,7 +12,7 @@ lazy val commonSettings = Seq(
 
 lazy val root = (project in file("."))
   .settings(
-    name := "add-two-numbers",
+    name := "Add two Numbers",
     commonSettings,
     libraryDependencies ++= Seq(
       "junit" % "junit" % "4.12" % "test",

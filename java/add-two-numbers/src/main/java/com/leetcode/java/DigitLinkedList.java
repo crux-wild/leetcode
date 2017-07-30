@@ -1,4 +1,4 @@
-package com.leetcode;
+package com.leetcode.java;
 
 import static java.lang.Math.pow;
 
@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Arrays;
 import java.util.List;
 
-import com.leetcode.UpdateStatus;
+import com.leetcode.java.UpdateStatus;
 
 /**
  * 2.Add Two Numbers  实现算法

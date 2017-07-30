@@ -1,4 +1,4 @@
-package com.leetcode;
+package com.leetcode.java;
 
 public enum UpdateStatus {
   UPDATE_ALL(0b11),
