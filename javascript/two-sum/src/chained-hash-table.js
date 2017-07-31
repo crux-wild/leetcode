@@ -21,6 +21,8 @@ class ChainedHashTable {
       // 对应槽位存在，向链表添加元素
       slot.push(value);
     }
+
+    return this;
   }
 
   /**
@@ -42,6 +44,8 @@ class ChainedHashTable {
         list.splice(index, 1);
       }
     });
+
+    return this;
   }
 
   /**
