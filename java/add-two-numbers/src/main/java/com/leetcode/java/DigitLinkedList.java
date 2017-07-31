@@ -47,7 +47,6 @@ public class DigitLinkedList {
 
     // 防御型校验
     DigitLinkedList.checkDigitString(representString);
-
     this.representString = representString;
     this.updateStatus = UpdateStatus.PENDING_VALUE;
   }
@@ -64,6 +63,7 @@ public class DigitLinkedList {
     this.value = value;
     this.updateStatus = UpdateStatus.PENDING_STRING;
   }
+
 
   /**
    * O(1)
@@ -116,7 +116,12 @@ public class DigitLinkedList {
 
     for (; index >= 0; index--) {
       int digit = middleList.get(index);
-      sum = (int)(sum + (digit * Math.pow(10, index)));
+
+      if (this.isDigit(digit)) {
+        sum = (int)(sum + (digit * Math.pow(10, index)));
+      } else {
+        continue;
+      }
     }
 
     return sum;
@@ -128,13 +133,25 @@ public class DigitLinkedList {
 
     for (int index = 0; index < size; index++) {
       int digit = this.middleList.get(index);
-      if (index != size - 1) {
-        builder.append(digit).append(" -> ");
+
+      // 存在借位情况
+      if (this.isDigit(digit)) {
+        if ((index != size - 1)) {
+          builder.append(digit).append(" -> ");
+        } else {
+          builder.append(digit);
+        }
+      // 不存在借位情况
       } else {
-        builder.append(digit);
+        int lastIndex = builder.length();
+
+        // 移除长度为4的" -> "字符串
+        builder.delete(lastIndex - 4, lastIndex) ;
+        break;
       }
     }
 
+    System.out.println(builder.length());
     return builder.toString();
   }
 
@@ -170,6 +187,20 @@ public class DigitLinkedList {
   }
 
   /**
+   * O(1)
+   * @param {Integer} integer
+   */
+  private boolean isDigit(int digit) {
+    boolean flag = false;
+
+    if (digit >= 0 && digit <= 9) {
+      flag = true;
+    }
+
+    return flag;
+  }
+
+  /**
    * O(n)
    * @param {List<String>} digitStringList - 用于更新中间链表的字符串链表
    */
@@ -177,14 +208,20 @@ public class DigitLinkedList {
     LinkedList<Integer> middleList = this.middleList;
     int digitStringListSize = digitStringList.size();
     int middleListSize = this.middleList.size();
+    int maxSize = Math.max(digitStringListSize, middleListSize);
 
-    for (int index = 0; index < digitStringListSize; index++) {
-      int value = Integer.parseInt(digitStringList.get(index));
+    for (int index = 0; index < maxSize; index++) {
+      if (index < digitStringListSize) {
+        int digit = Integer.parseInt(digitStringList.get(index));
 
-      if (index < middleListSize) {
-        middleList.set(index, value);
-      } else {
-        middleList.add(value);
+        if (index < middleListSize) {
+          middleList.set(index, digit);
+        } else {
+          middleList.add(digit);
+        }
+      } else if (index >= digitStringListSize) {
+        // digit的范围是[0, 9],超出范围的数字表示借位
+        middleList.set(index, 10);
       }
     }
   }
