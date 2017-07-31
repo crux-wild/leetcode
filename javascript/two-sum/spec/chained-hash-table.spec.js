@@ -64,9 +64,9 @@ test('Chained hash table: [Search]', (it) => {
   const key = 1;
   let list;
 
+  // 查找不存在的键值应该返回空数组
   list = hashTable.search({ key });
 
-  // 查找不存在的键值应该返回空数组
   it.deepEqual(list, [],
     '[HashTable] search unexist key, list should be []');
 });
