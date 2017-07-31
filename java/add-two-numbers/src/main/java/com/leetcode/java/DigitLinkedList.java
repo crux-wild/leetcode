@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.Arrays;
 import java.util.List;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.leetcode.java.UpdateStatus;
 
 /**
@@ -18,7 +21,7 @@ import com.leetcode.java.UpdateStatus;
  * 具体时间复杂度分析链接
  * {@link} https://github.com/crux-wild/leetcode/blob/master/java/add-two-numbers/doc/timeComplexityAnalysis.md
  */
-public class DigitLinkedList{
+public class DigitLinkedList {
   private String representString;
   private int value;
   private UpdateStatus updateStatus;
@@ -36,23 +39,60 @@ public class DigitLinkedList{
   }
 
   /**
-   * O(n)
+   * O(1)
    * @param {String} representString - 用户传入字符串表征
    */
   public DigitLinkedList(String representString) {
     this();
+
+    // 防御型校验
+    DigitLinkedList.checkDigitString(representString);
+
     this.representString = representString;
     this.updateStatus = UpdateStatus.PENDING_VALUE;
   }
 
   /**
-   * O(n)
+   * O(1)
    * @param {String} representString - 用户传入整数数值
    */
   public DigitLinkedList(int value) {
     this();
+
+    // 防御型校验
+    DigitLinkedList.checkInteger(value);
     this.value = value;
     this.updateStatus = UpdateStatus.PENDING_STRING;
+  }
+
+  /**
+   * O(1)
+   * @param {String} representString
+   */
+  private static void checkDigitString(String representString) {
+    String size = Integer.toString(Integer.SIZE - 1);
+    String regex = "^([0-9]\\s->\\s){0,size}[0-9]{1}$";
+    Pattern pattern;
+    Matcher matcher;
+
+    regex = regex.replaceAll("size", size);
+    pattern = Pattern.compile(regex);
+    matcher = pattern.matcher(representString);
+
+    if (!matcher.matches()) {
+      throw new IllegalArgumentException("Argument is not an digit string");
+    }
+  }
+
+  /**
+   * O(1)
+   * @param {Integer} integer
+   */
+  private static void checkInteger(int integer) {
+    // 不再最大最小范围内
+    if (!(integer >= Integer.MIN_VALUE && integer <= Integer.MAX_VALUE)) {
+      throw new IllegalArgumentException("Argument is not an integer");
+    }
   }
 
   private void updateRepresentString() {
@@ -153,6 +193,9 @@ public class DigitLinkedList{
    * @param {String} representString - 用于更新的字符串表征
    */
   public void setRepresentString(String representString) {
+    // 防御型校验
+    DigitLinkedList.checkDigitString(representString);
+
     this.representString = representString;
     this.updateStatus = UpdateStatus.PENDING_VALUE;
   }
@@ -161,6 +204,9 @@ public class DigitLinkedList{
    * @param {Integer} value - 用于更新的整数数值
    */
   public void setValue(int value) {
+    // 防御型校验
+    DigitLinkedList.checkInteger(value);
+
     this.value = value;
     this.updateStatus = UpdateStatus.PENDING_STRING;
   }

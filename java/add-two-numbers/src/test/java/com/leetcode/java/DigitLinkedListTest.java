@@ -7,7 +7,7 @@ import com.leetcode.java.DigitLinkedList;
 
 public class DigitLinkedListTest {
   @Test
-  public void checkSumOfTwoNumbers() {
+  public void sumOfTwoNumbersSpec() {
     DigitLinkedList digitLinkedList1 = new DigitLinkedList("2 -> 4 -> 3");
     DigitLinkedList digitLinkedList2 = new DigitLinkedList("5 -> 6 -> 4");
 
