@@ -2,17 +2,8 @@
  * @file 1.Two Sum 数字重复情况下时间复杂度O(n)解决方案
  * @see https://leetcode.com/problems/two-sum/#/description
  */
-
-/**
- * 用户输入的参数无法返回一个解
- * @private
- * @class
- */
-class InvalidArgumentException extends Error {
-  constructor(message = 'No two sum solution') {
-    super(message);
-  }
-}
+import InvalidArgumentException from './invalid-argument-exception';
+import ChainedHashTable from './chained-hash-table';
 
 /**
  * @class
@@ -27,7 +18,6 @@ class TwoSum {
     // 按顺序可配置和不可配置属性设置默认值
     Object.assign(this, getOptions(options), getInstances());
 
-    //this.initHashOfNumbers();
     this.initIndiecs();
 
     if (this.indices.length === 0) {
@@ -43,7 +33,7 @@ class TwoSum {
    */
   static getInstances() {
     return {
-      hashOfNumbers: {},
+      hashOfNumbers: new ChainedHashTable(),
       /**
        * @default
        * 可能存在多解用数组表示
@@ -73,32 +63,15 @@ class TwoSum {
    * @return {Boolean} 这组数组是否复合要求
    */
   isOneOfIndices(number1 = 0, number2 = 0) {
-    const frequencyOfNumber2 = this.hashOfNumbers[number2];
+    const { hashOfNumbers } = this;
+    const listOfNumber2 = hashOfNumbers.search({ key: number2 });
     let flag = false;
 
-    if (Array.isArray(frequencyOfNumber2) && frequencyOfNumber2.length >= 1) {
+    if (listOfNumber2.length >= 1) {
       flag = true;
     }
 
     return flag;
-  }
-
-  /**
-   * O(1)
-   * @private
-   * @method
-   */
-  appendItemToHashOfNumbers(number = 0, index = 0) {
-    const { hashOfNumbers } = this;
-    const slot = hashOfNumbers[number];
-
-    if (slot === undefined) {
-      // 对应槽位不存在，建立一个链表
-      hashOfNumbers[number] = [index];
-    } else {
-      // 对应槽位存在，向链表添加元素
-      slot.push(index);
-    }
   }
 
   /**
@@ -120,7 +93,7 @@ class TwoSum {
           return true;
         }
       } else {
-        this.appendItemToHashOfNumbers(number1, index1);
+        hashOfNumbers.insert({ key: number1, value: index1 });
       }
 
       return false;
@@ -145,9 +118,9 @@ class TwoSum {
    */
   appendIndices(index1 = 0, number2 = 0) {
     const { isMultiple, hashOfNumbers } = this;
-    const arrayOfIndex2 = hashOfNumbers[number2];
+    const listOfNumber2 = hashOfNumbers.search({ key: number2 });
 
-    arrayOfIndex2.some((index2) => {
+    listOfNumber2.some((index2) => {
       /**
        *
        * 从前向后遍历
@@ -157,7 +130,7 @@ class TwoSum {
       if (index2 < index1) {
         // 需要多解
         this.indices.push([index1, index2]);
-        arrayOfIndex2.shift();
+        hashOfNumbers.delete({ key: number2, value: index2  });
 
         // 不需要多解
         if (!isMultiple) {
