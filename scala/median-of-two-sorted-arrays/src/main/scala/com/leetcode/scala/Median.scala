@@ -7,29 +7,51 @@ class Median(var start: Int, var end: Int) {
   private var _two = 0
 
   def one = _one
-  def one_= (newOne: Int): Unit = {
-  }
-
   def two = _two
-  def two_= (newValue: Int): Unit = {
+
+  def updateSection(var section: Section): Unit {
+    start = section.start;
+    end = section.end;
   }
 
-  private def calculateMedian() {
-    val difference = end - start;
+  def updateSection(var newStart: Int, var newEnd: Int) {
+    if newStart <= newEnd
+      start = newStart
+      end = newEnd
+    else
+      // @TODO error handling
+  }
+
+  private def calculateMedian(): Unit {
+    val length = getLength();
 
     // 如果是偶数
-    if (isEven(difference))
-      one = difference / 2;
-      two = difference / 2;
+    if (isEvenNumber(length))
+      var pointer = length / 2;
+
+      one = getIndex(pointer);
+      two = getIndex(pointer);
     // 不是偶数
     else
-      val floor = math.floor(difference / 2);
+      val pointer = math.floor(length / 2);
 
-      one = floor;
-      two = floor + 1;
+      one = getIndex(pointer);
+      two = getIndex(pointer + 1);
   }
 
-  private isEven(val value: Int): Boolean {
+  private def getIndex(offset): Int {
+    var index = start + offset;
+
+    return index;
+  }
+
+  private def getLength(): Int {
+    var length = end = start;
+
+    return length;
+  }
+
+  private def isEvenNumber(val value: Int): Boolean {
     var flag = false;
 
     if ((value % 2) ==  0) {
