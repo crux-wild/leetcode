@@ -2,22 +2,24 @@ package com.leetcode.scala
 
 import scala.math
 
-class Median(var start: Int = 0, var end: Int = 0) {
+class Median(val start: Int = 0, val end: Int = 0) {
   private var _one = 0
   private var _two = 0
+  private var _start = start
+  private var _end = end
 
   def one = _one
   def two = _two
 
   def updateSection(section: Section): Unit = {
-    start = section.start
-    end = section.end
+    _start = section.start
+    _end = section.end
   }
 
   def updateSection(newStart: Int, newEnd: Int): Unit = {
     if (newStart <= newEnd) {
-      start = newStart
-      end = newEnd
+      _start = newStart
+      _end = newEnd
     } else {
       throw new Exception("End should be geater start")
     }
@@ -28,15 +30,15 @@ class Median(var start: Int = 0, var end: Int = 0) {
 
     // 如果是偶数
     if (isEvenNumber(length)) {
-      var pointer = (length / 2)
-      _one = getIndex(pointer)
-      _two = getIndex(pointer)
+      var offset = (length / 2)
+      _one = getIndex(offset)
+      _two = getIndex(offset)
     }
     // 不是偶数
     else {
-        var pointer = math.floor(length / 2).toInt;
-        _one = getIndex(pointer)
-        _two = getIndex(pointer + 1)
+        var offset = math.floor(length / 2).toInt
+        _one = getIndex(offset)
+        _two = getIndex(offset + 1)
     }
   }
 

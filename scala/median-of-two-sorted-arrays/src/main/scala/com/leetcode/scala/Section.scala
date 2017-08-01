@@ -1,10 +1,9 @@
 package com.leetcode.scala
 
-class Section {
-  private var _start = 0
-  private var _end = 0
+class Section(val start: Int = 0, val end: Int = 0) {
+  private var _start = start
+  private var _end = end
 
-  def start = _start
   def start_= (newStart: Int): Unit = {
     if (newStart <= _end) {
       _start = newStart
@@ -13,7 +12,6 @@ class Section {
     }
   }
 
-  def end = _end
   def end_= (newEnd: Int): Unit = {
     if (_start <= newEnd) {
       _end = newEnd

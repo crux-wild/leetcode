@@ -1,5 +1,4 @@
 package com.leetcode.scala
 
-class ElementPointer (
-  var array: Int =  0, var range: Int = 0, var offset: Int = 0) {
+class ElementPointer (val area: Int = 0, val offset: Int = 0) {
 }
