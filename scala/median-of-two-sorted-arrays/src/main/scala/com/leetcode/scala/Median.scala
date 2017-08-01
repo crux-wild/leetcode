@@ -1,8 +1,8 @@
-package com.leetcode.scala;
+package com.leetcode.scala
 
-import scala.math;
+import scala.math
 
-class Median(var start: Int, var end: Int) {
+class Median(var start: Int = 0, var end: Int = 0) {
   private var _one = 0
   private var _two = 0
 
@@ -15,11 +15,12 @@ class Median(var start: Int, var end: Int) {
   }
 
   def updateSection(newStart: Int, newEnd: Int): Unit = {
-    if (newStart <= newEnd)
+    if (newStart <= newEnd) {
       start = newStart
       end = newEnd
-    //else
-      // @TODO error handling
+    } else {
+      throw new Exception("End should be geater start")
+    }
   }
 
   private def calculateMedian(): Unit = {
@@ -40,13 +41,13 @@ class Median(var start: Int, var end: Int) {
   }
 
   private def getIndex(offset: Int): Int = {
-    var index = start + offset;
+    val index = start + offset;
 
     return index;
   }
 
   private def getLength(): Int = {
-    var length = end - start;
+    val length = end - start;
 
     return length;
   }

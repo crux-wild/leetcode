@@ -1,4 +1,4 @@
-package com.leetcode.scala;
+package com.leetcode.scala
 
 class Section {
   private var _start = 0
