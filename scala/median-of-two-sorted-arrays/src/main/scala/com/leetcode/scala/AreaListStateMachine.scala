@@ -6,6 +6,6 @@ import com.leetcode.scala.Area
 import com.leetcode.scala.ElementPointer
 
 class AreaListStateMachine {
-  private val sectionList = new MutableList[Area]()
-  private val elementPointer = new ElementPointer()
+  val areaList = new MutableList[Area]()
+  val elementPointer = new ElementPointer()
 }
