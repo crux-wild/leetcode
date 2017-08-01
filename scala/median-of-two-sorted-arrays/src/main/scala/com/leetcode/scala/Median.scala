@@ -9,49 +9,49 @@ class Median(var start: Int, var end: Int) {
   def one = _one
   def two = _two
 
-  def updateSection(var section: Section): Unit {
-    start = section.start;
-    end = section.end;
+  def updateSection(section: Section): Unit = {
+    start = section.start
+    end = section.end
   }
 
-  def updateSection(var newStart: Int, var newEnd: Int) {
-    if newStart <= newEnd
+  def updateSection(newStart: Int, newEnd: Int): Unit = {
+    if (newStart <= newEnd)
       start = newStart
       end = newEnd
-    else
+    //else
       // @TODO error handling
   }
 
-  private def calculateMedian(): Unit {
-    val length = getLength();
+  private def calculateMedian(): Unit = {
+    val length = getLength()
 
     // 如果是偶数
-    if (isEvenNumber(length))
-      var pointer = length / 2;
-
-      one = getIndex(pointer);
-      two = getIndex(pointer);
+    if (isEvenNumber(length)) {
+      var pointer = (length / 2)
+      _one = getIndex(pointer)
+      _two = getIndex(pointer)
+    }
     // 不是偶数
-    else
-      val pointer = math.floor(length / 2);
-
-      one = getIndex(pointer);
-      two = getIndex(pointer + 1);
+    else {
+        var pointer = math.floor(length / 2).toInt;
+        _one = getIndex(pointer)
+        _two = getIndex(pointer + 1)
+    }
   }
 
-  private def getIndex(offset): Int {
+  private def getIndex(offset: Int): Int = {
     var index = start + offset;
 
     return index;
   }
 
-  private def getLength(): Int {
-    var length = end = start;
+  private def getLength(): Int = {
+    var length = end - start;
 
     return length;
   }
 
-  private def isEvenNumber(val value: Int): Boolean {
+  private def isEvenNumber(value: Int): Boolean = {
     var flag = false;
 
     if ((value % 2) ==  0) {
