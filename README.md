@@ -4,7 +4,6 @@
 | ---------- | -------------------------------------------------------------------------------------------------| --------------------------------------------------------| -------------------------------------------------|
 | 1          | [Two Sum][Two Sum title]                                                                         | [Javascript][Two Sum solution]                          | Easy                                             |
 | 2          | [Add Two Numbers][Add Two Numbers title]                                                         | [Java][Add Two Numbers solution]                        | Medium                                           |
-| 30         | [Substring with Concatenation of All Words][Substring with Concatenation of All Words title]     | [C][Substring with Concatenation of All Words solution] | Hard                                             |
 
 [Two Sum title]: https://leetcode.com/problems/two-sum/#/description
 [Two Sum solution]: https://github.com/crux-wild/leetcode/blob/master/javascript/two-sum/src/two-sum.js
