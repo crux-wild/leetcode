@@ -2,7 +2,7 @@ package com.leetcode.scala
 
 import scala.math
 
-import com.leetcode.scala.MixtrueListStateMachine
+import com.leetcode.scala.SectionCompare
 import com.leetcode.scala.Area
 import com.leetcode.scala.Section
 
@@ -24,7 +24,9 @@ class MedianOfTwoSortedArrays(val arr1: Array[Int], val arr2: Array[Int]) {
     val section1 = area1.section
     val section2 = area2.section
 
-    Section.compareSection(section1, seciton2)
+    Section.compareSection(section1, seciton2) match {
+      case SectionCompare.LESSER =>
+    }
   }
 
   def getMedian(): Double = {
