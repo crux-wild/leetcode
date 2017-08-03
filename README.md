@@ -12,8 +12,8 @@
 [Add Two Numbers title]: https://leetcode.com/problems/add-two-numbers/tabs/description/
 [Add Two Numbers solution]: https://github.com/crux-wild/leetcode/blob/master/java/add-two-numbers/src/main/java/com/leetcode/java/DigitLinkedList.java
 
-[Median of Two Sorted Arrays title] https://leetcode.com/problems/median-of-two-sorted-arrays/description/
-[Median of Two Sorted Arrays solution] https://github.com/crux-wild/leetcode/blob/master/scala/median-of-two-sorted-arrays/draft/MedianOfTwoSortedArraysDraft.js
+[Median of Two Sorted Arrays title]: https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+[Median of Two Sorted Arrays solution]: https://github.com/crux-wild/leetcode/blob/master/scala/median-of-two-sorted-arrays/draft/MedianOfTwoSortedArraysDraft.js
 
 [Substring with Concatenation of All Words title]: https://leetcode.com/problems/substring-with-concatenation-of-all-words/#/description
 [Substring with Concatenation of All Words solution]: https://github.com/crux-wild/leetcode/blob/master/c-language/find-substring/find-substring.c
