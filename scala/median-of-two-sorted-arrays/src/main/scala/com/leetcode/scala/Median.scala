@@ -14,7 +14,6 @@ class Median(val start: Int, val end: Int) {
   def two = _two
   def number = _number
 
-
   private def getLength(): Int =
     if (end > start)
       end - start + 1
@@ -32,4 +31,5 @@ class Median(val start: Int, val end: Int) {
 
 case class IllegalArgumentException(
   val message: String = "",
-  val cause: Throwable = None.orNull) extends Exception(message, cause)
+  val cause: Throwable = None.orNull)
+extends Exception(message, cause)
