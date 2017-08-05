@@ -86,3 +86,13 @@ def *(multi: Int): Section = {
       tail - head + 1
   }
 }
+
+object Section {
+  def statisticCount(sectionSeq: Seq[Section]): Int = {
+    var count = 0
+    for (section <- sectionSeq) {
+      count = count + section.length
+    }
+    count
+  }
+}
