@@ -37,8 +37,13 @@ class Median(val start: Int, val end: Int) {
 }
 
 object Median {
-  def calculateValue(one: Int, two: Int): Int = {
-    // @TODO
-    0
+  def calculateValue(one: Int, two: Int): Double = {
+    if (one + 1 == two)
+      (one + two) / 2
+    else if (one == two)
+      one
+    else
+      throw IllegalArgumentException(
+        "Argument two should with interval [one, one + 1]")
   }
 }

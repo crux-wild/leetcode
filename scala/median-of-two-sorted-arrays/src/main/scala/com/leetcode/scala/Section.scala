@@ -101,16 +101,17 @@ object Section {
     section1: Section, section2: Section): HashMap[String, Section] = {
     val diffMap = new HashMap[String, Section]()
 
-    // @TODO Replace `Section(start, end)` with right value
-    if (section1.start > section2.start)
-      diffMap += "start_increment" -> new Section(0, 0)
+    if (section1.start >= section2.start)
+      diffMap +=
+        "start_increment" -> new Section(section2.start, section1.start)
     else if (section1.start < section2.start)
-      diffMap += "start_decrement" -> new Section(0, 0)
+      diffMap +=
+        "start_decrement" -> new Section(section1.start, section2.start)
 
-    if (section1.end > section2.end)
-      diffMap += "end_increment" -> new Section(0, 0)
+    if (section1.end >= section2.end)
+      diffMap += "end_increment" -> new Section(section2.end, section1.end)
     else if (section1.end < section2.end)
-      diffMap += "end_decrement" -> new Section(0, 0)
+      diffMap += "end_decrement" -> new Section(section1.end, section2.end)
     diffMap
   }
 }
