@@ -38,7 +38,10 @@ def *(multi: Int): Section = {
     val length = quotients
     val head = _start
     val tail = getEnd(start = _start , length = _length)
-    new Section(head, tail)
+    if head > tail
+        "Result head shouldn't lesser than start")
+    else
+      new Section(head, tail)
   }
 
   def +=(plus: Int): this.type = {
@@ -56,7 +59,11 @@ def *(multi: Int): Section = {
   def *=(multi: Int): this.type = {
     val product = _length * multi
     _length = product
-    _end = getEnd(start = _start , length = _length)
+    val end = getEnd(start = _start , length = _length)
+    if end < _start
+        "Result end shouldn't lesser than start")
+    else
+      _end = end
     this
   }
 
