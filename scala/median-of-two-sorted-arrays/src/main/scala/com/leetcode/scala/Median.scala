@@ -37,7 +37,7 @@ class Median(val start: Int, val end: Int) {
 }
 
 object Median {
-  def calculateValue(one: Int, two: Int): Double = {
+  def calculateValue[T](one: T, two: T): T = {
     if (one + 1 == two)
       (one + two) / 2
     else if (one == two)
