@@ -20,6 +20,7 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
     }
   }
 
+  /** Need reconsitution start **/
   private def getPortionOfSection
     (portion: String)(section: Section, bound: Int) = {
 
@@ -56,6 +57,7 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
 
     Section.statisticCount(Array(section1, section2))
   }
+  /** Need reconsitution end **/
 
   private def updatePortionOfSections(portion: String)(total: Int) = {
     val bound = portion {
