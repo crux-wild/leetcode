@@ -24,7 +24,10 @@ class Median(val start: Int, val end: Int) {
         "constructor param:[end] is lesser than param:[start];")
     else 2
   private def getOffset(): Int =
-    if (_isEven) _length / 2 else math.ceil(_length / 2).toInt
+    if (_isEven)
+      _length / 2
+    else
+      math.ceil(_length / 2).toInt
 }
 
 case class IllegalArgumentException(
