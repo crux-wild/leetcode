@@ -19,8 +19,8 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
 
     def before = _before
     def after: Section = {
-    Section.diffTwoSection(section, _before)
-      .getOrElse("end(+)", new Section(head = 0, tail = 0))
+      Section.diffTwoSection(section, _before)
+        .getOrElse("end(+)", Nil)
     }
   }
 

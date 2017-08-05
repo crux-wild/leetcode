@@ -114,4 +114,6 @@ object Section {
       diffMap += "end(-)" -> new Section(section1.end, section2.end)
     diffMap
   }
+
+  implicit def anyRef2section(ref: AnyRef) = new Section(head = 0, tail = 0)
 }
