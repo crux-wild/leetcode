@@ -57,7 +57,6 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
 
     Section.statisticCount(Array(section1, section2))
   }
-  /** Need reconsitution end **/
 
   private def updatePortionOfSections(portion: String)(total: Int) = {
     val bound = portion {
@@ -84,6 +83,7 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
 
     val lazy binarySplitSection = new BinarySplitSection(section1)
   }
+  /** Need reconsitution end **/
 
   private getMedian(): T = {
     val median = new Median(start = 1, end = _total)
