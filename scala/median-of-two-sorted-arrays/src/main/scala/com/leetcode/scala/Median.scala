@@ -2,6 +2,8 @@ package com.leetcode.scala
 
 import _root_.scala.math
 
+import scala.IllegalArgumentException
+
 class Median(val start: Int, val end: Int) {
   private val _length = getLength()
   private val _isEven = (_length % 2) == 0
@@ -16,22 +18,20 @@ class Median(val start: Int, val end: Int) {
   def value = _value
   def number = _number
 
-  private def getLength(): Int =
+  private def getLength(): Int = {
     if (end < start)
       throw IllegalArgumentException(
         "Argument end shouldn't lesser than argument start")
     else if (end > start)
       end - start + 1
     else 2
-  private def getOffset(): Int =
+  }
+
+  private def getOffset(): Int = {
     val median = _length / 2
     if (_isEven)
       median
     else
       math.ceil(median).toInt
+  }
 }
-
-case class IllegalArgumentException(
-  val message: String = "",
-  val cause: Throwable = None.orNull)
-extends Exception(message, cause)
