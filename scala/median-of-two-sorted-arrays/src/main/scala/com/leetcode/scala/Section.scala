@@ -15,13 +15,15 @@ class Section(val head: Int, val tail: Int) {
 
   def *=(multi: Int): this.type = {
     val product = _length * multi
-    _end = product
+    _length = product
+    _end = getEnd(start = _start , length = _length)
     this
   }
 
   def /=(divisor: Int): this.type = {
     val quotients = math.ceil(_length / divisor).toInt
-    _end = quotients
+    _length = quotients
+    _end = getEnd(start = _start , length = _length)
     this
   }
 
@@ -35,6 +37,10 @@ class Section(val head: Int, val tail: Int) {
     _end = _end - sub
     _start = _start - sub
     this
+  }
+
+  private def getEnd(start: Int, length: Int): Int = {
+    start + length - 1
   }
 
   private def getLength(): Int = {
