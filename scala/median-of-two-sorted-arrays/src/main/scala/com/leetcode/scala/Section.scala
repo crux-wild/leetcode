@@ -13,24 +13,28 @@ class Section(val head: Int, val tail: Int) {
   def end = _end
   def length = _length
 
-  def *=(multi: Int): Unit = {
+  def *=(multi: Int): this.type = {
     val product = _length * multi
     _end = product
+    this
   }
 
-  def /=(divisor: Int): Unit = {
+  def /=(divisor: Int): this.type = {
     val quotients = math.ceil(_length / divisor).toInt
     _end = quotients
+    this
   }
 
-  def +=(plus: Int): Unit = {
+  def +=(plus: Int): this.type = {
     _end = _end + plus
     _start = _start + plus
+    this
   }
 
-  def -=(sub: Int): Unit = {
+  def -=(sub: Int): this.type = {
     _end = _end - sub
     _start = _start - sub
+    this
   }
 
   private def getLength(): Int = {
