@@ -19,8 +19,8 @@ class Median(val start: Int, val end: Int) {
     else if (end == start)
       2
     else
-      throw new IllegalArgumentException(
-        message = "Constrcutor param:[end] lesser than param:[start];")
+      throw IllegalArgumentException(
+        "Constrcutor param:[end] lesser than param:[start];")
   }
 
   private def isEvenNumber(count: Int): Boolean = (count % 2) == 0
@@ -35,5 +35,6 @@ class Median(val start: Int, val end: Int) {
     if (_isEven) count / 2 else math.ceil(count / 2).toInt
 }
 
-case class IllegalArgumentException(val message: String = "")
-  extends Exception(message)
+case class IllegalArgumentException(
+  val message: String = "",
+  val cause: Throwable = None.orNull) extends Exception(message, cause)
