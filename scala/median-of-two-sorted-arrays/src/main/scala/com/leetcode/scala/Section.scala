@@ -1,6 +1,7 @@
 package com.leetcode.scala
 
 import _root_.scala.math
+import _root_.scala.collection.mutable.HashMap
 
 import scala.IllegalArgumentException
 
@@ -94,5 +95,21 @@ object Section {
       count = count + section.length
     }
     count
+  }
+
+  def diffTwoSection(
+    section1: Section, section2: Section): HashMap[String, Section] = {
+    val diffMap = new HashMap[String, Section]()
+
+    if (section1.start > section2.start)
+      diffMap += "start_increment" -> new Section(0, 0)
+    else if (section1.start < section2.start)
+      diffMap += "start_decrement" -> new Section(0, 0)
+
+    if (section1.end > section2.end)
+      diffMap += "end_increment" -> new Section(0, 0)
+    else if (section1.end < section2.end)
+      diffMap += "end_decrement" -> new Section(0, 0)
+    diffMap
   }
 }
