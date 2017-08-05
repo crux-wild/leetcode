@@ -1,6 +1,7 @@
 package com.leetcode.scala
 
 import _root_.scala.math
+import _root_.scala.Array
 import _root_.scala.collection.mutable.HashMap
 
 import scala.IllegalArgumentException
@@ -89,9 +90,9 @@ def *(multi: Int): Section = {
 }
 
 object Section {
-  def statisticCount(sectionSeq: Seq[Section]): Int = {
+  def statisticCount(sectionArray: Array[Section]): Int = {
     var count = 0
-    for (section <- sectionSeq) {
+    for (section <- sectionArray) {
       count = count + section.length
     }
     count

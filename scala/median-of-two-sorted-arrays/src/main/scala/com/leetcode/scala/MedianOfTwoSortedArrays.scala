@@ -1,14 +1,16 @@
 package com.leetcode.scala
 
+import _root_.scala.Array
+
 class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
   private val _arr1 = arr1
   private val _arr2 = arr2
   private var _len1 = arr1.length
   private var _len2 = arr2.length
-  private val _count = _len1 + _len2
   private val _area1 = new Area(arr = arr1, start = 0, end = _len1)
   private val _area2 = new Area(arr = arr2, start = 0, end = _len2)
-  private val _medianOfCount = new Median(start = 1, end = _count)
+  private val _total = Section.statisticCount(Array(_area1, _area2))
+  private val _medianOfTotal = new Median(start = 1, end = _medianOfTotal)
   private val _number = _medianOfCount.number
   private val _median = getMedian()
 
@@ -54,17 +56,33 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
     val section1Before = binarySplitSection.before
     val section2Before =
       getSectionBefore(section = section2, end = section1Before.end)
+    val beforeTotal =
+      Section.statisticCount(Array(section1Before, section2Before))
+
+    if (_medianOfTotal == 2 && beforeTotal >= before + 1)
+      // @TODO
+    else if (beforeTotal == _medianOfCount)
+      // @TODO
+    else if (beforeTotal >= before + _medianOfCount)
+      // @TODO
 
     val section1After = binarySplitSection.after
     val section2After =
       getSectionAfter(section = section1, start = section1After.start)
+    val afterTotal =
+      Section.statisticCount(Array(section1After, section2After))
 
-    return 0.0
+    if (_medianOfTotal == 2 && afterTotal >= after + 1)
+      // @TODO
+    else if (beforeTotal == _medianOfCount)
+      // @TODO
+    else if (beforeTotal >= before + _medianOfCount)
+      // @TODO
   }
 
   private def getMedian(): Double = {
     val before = _medianOfCount.one - 1
-    val after = _count - _medianOfCount.two
+    val after = _medianOfTotal - _medianOfCount.two
     recursiveAreas(_area1, _area2, before, after)
     return 0.0
   }
