@@ -24,7 +24,6 @@ class Median(val start: Int, val end: Int) {
     else 2
   private def getOffset(): Int =
     val median = _length / 2
-
     if (_isEven)
       median
     else
