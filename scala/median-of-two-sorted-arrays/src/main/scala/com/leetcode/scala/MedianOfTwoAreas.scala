@@ -22,17 +22,17 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
 
   private def getPortionOfSection(portion: String)(section: Section, bound: Int) {
     val sectionBound = portion match {
-      case "before" => section.before
-      case "after" => section.after
+      case "before" => section.start
+      case "after" => section.end
     }
 
     if (sectionBound <= bound) {
       section
     } else {
-      val sections = new BinarySplitSection(section)
-      val section = portion.match {
-        case "before" => section.before
-        case "after" => section.after
+      val binarySplitSections = new BinarySplitSection(section)
+      val binarySplitSections = portion.match {
+        case "before" => binarySplitSections.before
+        case "after" => binarySplitSections.after
       }
       getPortionOfSection(portion)(section, bound)
     }
