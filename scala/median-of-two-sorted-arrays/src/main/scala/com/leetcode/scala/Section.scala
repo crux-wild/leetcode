@@ -103,15 +103,15 @@ object Section {
 
     if (section1.start >= section2.start)
       diffMap +=
-        "start_increment" -> new Section(section2.start, section1.start)
+        "start(+)" -> new Section(section2.start, section1.start)
     else if (section1.start < section2.start)
       diffMap +=
-        "start_decrement" -> new Section(section1.start, section2.start)
+        "start(-)" -> new Section(section1.start, section2.start)
 
     if (section1.end >= section2.end)
-      diffMap += "end_increment" -> new Section(section2.end, section1.end)
+      diffMap += "end(+)" -> new Section(section2.end, section1.end)
     else if (section1.end < section2.end)
-      diffMap += "end_decrement" -> new Section(section1.end, section2.end)
+      diffMap += "end(-)" -> new Section(section1.end, section2.end)
     diffMap
   }
 }
