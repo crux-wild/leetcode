@@ -7,11 +7,11 @@ class Median(val start: Int, val end: Int) {
   private val _isEven = isEvenNumber(_count)
   private val _one = getMedianOne()
   private val _two = getMedianTwo()
-
-  val number = if (_isEven) 2 else 1
+  private val _number = if (_isEven) 2 else 1
 
   def one = _one
   def two = _two
+  def number = _number
 
   private def getCount(): Int = {
     if (end > start)
