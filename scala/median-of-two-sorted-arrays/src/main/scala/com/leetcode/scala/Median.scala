@@ -32,5 +32,4 @@ class Median(val start: Int, val end: Int) {
 
 case class IllegalArgumentException(
   val message: String = "",
-  val cause: Throwable = None.orNull)
-extends Exception(message, cause)
+  val cause: Throwable = None.orNull) extends Exception(message, cause)
