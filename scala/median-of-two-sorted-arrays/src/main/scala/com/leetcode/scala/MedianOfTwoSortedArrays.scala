@@ -12,6 +12,7 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
   private val _total = Section.statisticCount(Array(_area1, _area2))
   private val _medianOfTotal = new Median(start = 1, end = _medianOfTotal)
   private val _number = _medianOfCount.number
+  private val _isSplitMedian = false
   private val _median = getMedian()
 
   def median = _median
@@ -51,33 +52,41 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
     val section1 = _area1.section
     val section2 = _area2.section
 
-    val binarySplitSection = new BinarySplitSection(section1)
+    val lazy binarySplitSection = new BinarySplitSection(section1)
 
-    val section1Before = binarySplitSection.before
-    val section2Before =
+    val lazy section1Before = binarySplitSection.before
+    val lazy section2Before =
       getSectionBefore(section = section2, end = section1Before.end)
-    val beforeTotal =
+    val lazy beforeTotal =
       Section.statisticCount(Array(section1Before, section2Before))
 
-    if (_medianOfTotal == 2 && beforeTotal >= before + 1)
-      // @TODO
-    else if (beforeTotal == _medianOfCount)
-      // @TODO
-    else if (beforeTotal >= before + _medianOfCount)
-      // @TODO
-
-    val section1After = binarySplitSection.after
-    val section2After =
+    val lazy section1After = binarySplitSection.after
+    val lazy section2After =
       getSectionAfter(section = section1, start = section1After.start)
-    val afterTotal =
+    val lazy afterTotal =
       Section.statisticCount(Array(section1After, section2After))
 
-    if (_medianOfTotal == 2 && afterTotal >= after + 1)
-      // @TODO
-    else if (beforeTotal == _medianOfCount)
+    if (_medianOfTotal == 2 && beforeTotal >= before + 1)
+      _isSplitMedian = true
+    else if (
+      (_isSplitMedian == true && beforeTotal == 1) ||
+      (beforeTotal == _medianOfCount))
       // @TODO
     else if (beforeTotal >= before + _medianOfCount)
+      recursiveAreas(
+        area1 = section1Before, area2 = section2Before, before,
+        after = after - afterTotal)
+
+    if (_medianOfTotal == 2 && afterTotal >= after + 1)
+      _isSplitMedian = true
+    else if (
+      (_isSplitMedian == true && beforeTotal == 1) ||
+      (beforeTotal == _medianOfCount))
       // @TODO
+    else if (beforeTotal >= before + _medianOfCount)
+      recursiveAreas(
+        area1 = section1After, area2 = section2After,
+        before = before - beforeTotal, after = after - afterTotal)
   }
 
   private def getMedian(): Double = {
