@@ -11,7 +11,9 @@ class MedianValueStateMachine[T](total: Int) {
   private var _isFinished = false
   private var _median = 0
 
+  def total = _total
   def isFinished = _isFinished
+
   def median: T = {
     if (_isFinish == false)
       throw IllegalArgumentException(

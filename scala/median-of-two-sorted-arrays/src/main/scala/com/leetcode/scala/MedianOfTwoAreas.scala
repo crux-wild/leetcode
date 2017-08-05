@@ -1,35 +1,40 @@
 package com.leetcode.scala
 
-class MedianOfTwoSections(area1: Area, area2: Area) {
+class MedianOfTwoAreas[T](area1: Area, area2: Area) {
   private var _section1 = area1.section
   private var _section2 = area2.section
   private val _total = Section.statisticCount(Array(section1, section2))
-  private val _medianOfTotal = new Median(start = 1, end = _medianOfTotal)
-  private val _toalOfMedian = _medianOfCount.number
-  private val _resolvedOfMedian = 0
+  private val _medianValue = new MedianValueStateMachine(_total)
   private val _flag = false
+  private var _median = getMedian()
 
-  private val before = _medianOfCount.one - 1
-  private val after = _medianOfTotal - _medianOfCount.two
-    recursiveAreas(_area1, _area2, before, after)
+  def median = _median
 
-  private def getSectionBefore(section: Section, end: Int): Section = {
-    if (section.end <= end) {
-      section
-    } else {
-      val binarySplitSection = new BinarySplitSection(section)
-      val sectionBefore = binarySplitSection.before
-      getSectionBefore(section = sectionBefore, end)
+  private class BinarySplitSection(section: Section) {
+    private lazy val _before = section / 2
+
+    def before = _before
+    def after: Section = {
+      Section.diffTwoSection(section, _before)
+        .getOrElse("end(+)", Nil)
     }
   }
 
-  private def getSectionAfter(section: Section, start: Int): Section = {
-    if (section.start >= start) {
+  private def getPortionOfSection(portion: String)(section: Section, bound: Int) {
+    val sectionBound = portion match {
+      case "before" => section.before
+      case "after" => section.after
+    }
+
+    if (sectionBound <= bound) {
       section
     } else {
-      val binarySplitSection = new BinarySplitSection(section)
-      val sectionAfter = binarySplitSection.after
-      getSectionBefore(section = sectionAfter, start)
+      val sections = new BinarySplitSection(section)
+      val section = portion.match {
+        case "before" => section.before
+        case "after" => section.after
+      }
+      getPortionOfSection(portion)(section, bound)
     }
   }
 
@@ -73,5 +78,13 @@ class MedianOfTwoSections(area1: Area, area2: Area) {
       recursiveAreas(
         area1 = section1After, area2 = section2After,
         before = before - beforeTotal, after = after - afterTotal)
+  }
+
+  private getMedian(): T = {
+    val median = new Median(start = 1, end = _total)
+    val before = median.one - 1
+    val after = _total - median.two
+
+    recursiveAreas(_area1, _area2, before, after)
   }
 }

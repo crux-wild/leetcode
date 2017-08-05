@@ -12,6 +12,6 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
   def median = _median
 
   private def getMedian(): Double = {
-    return 0.0
+    new MedianOfTwoAreas(area1, area2).median
   }
 }
