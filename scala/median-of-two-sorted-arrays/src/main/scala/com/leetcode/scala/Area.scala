@@ -1,6 +1,6 @@
 package com.leetcode.scala
 
-import com.leetcode.scala.Section
+import scala.Section
 
 class Area(val reference: AnyRef, val start: Int, val end: Int) {
   private val _ref = reference
