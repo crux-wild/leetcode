@@ -9,7 +9,7 @@ class Median(val start: Int, val end: Int) {
   private val _one = _offset + start - 1
   private val _two = if (_isEven) _one + 1 else _one
   private val _number = if (_isEven) 2 else 1
-  private val _value = if(_isEven) (_one + _two) / 2 else _one
+  private val _value = if (_isEven) (_one + _two) / 2 else _one
 
   def one = _one
   def two = _two
@@ -20,14 +20,15 @@ class Median(val start: Int, val end: Int) {
     if (end > start)
       end - start + 1
     else if (end < start)
-      throw IllegalArgumentException(
-        "constructor param:[end] is lesser than param:[start];")
+      throw IllegalArgumentException("End shouldn't lesser than start")
     else 2
   private def getOffset(): Int =
+    val median = _length / 2
+
     if (_isEven)
-      _length / 2
+      median
     else
-      math.ceil(_length / 2).toInt
+      math.ceil(median).toInt
 }
 
 case class IllegalArgumentException(
