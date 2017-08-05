@@ -45,12 +45,14 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
       case "before" => section1.end
       case "after" => section1.start
     }
+
     val section1 = portion match {
       case "before" => splitSection.before
       case "after" => splitSection.after
     }
+
     val getSection2 = getPortionOfSection(portion)
-    val section2 = getSection2(portion, section2, bound)
+    val section2 = getSection2(portion, section1, bound)
 
     Section.statisticCount(Array(section1, section2))
   }
