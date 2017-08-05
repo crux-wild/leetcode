@@ -38,8 +38,8 @@ def *(multi: Int): Section = {
     val length = quotients
     val head = _start
     val tail = getEnd(start = _start , length = _length)
-    if head > tail
-        "Result head shouldn't lesser than start")
+    if (head > tail)
+      throw IllegalArgumentException("head shouldn't lesser than tail")
     else
       new Section(head, tail)
   }
@@ -60,8 +60,8 @@ def *(multi: Int): Section = {
     val product = _length * multi
     _length = product
     val end = getEnd(start = _start , length = _length)
-    if end < _start
-        "Result end shouldn't lesser than start")
+    if (end < _start)
+      throw IllegalArgumentException("end shouldn't lesser than start")
     else
       _end = end
     this
