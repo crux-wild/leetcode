@@ -17,10 +17,11 @@ class Median(val start: Int, val end: Int) {
   def number = _number
 
   private def getLength(): Int =
-    if (end > start)
+    if (end < start)
+      throw IllegalArgumentException(
+        "Argument end shouldn't lesser than argument start")
+    else if (end > start)
       end - start + 1
-    else if (end < start)
-      throw IllegalArgumentException("End shouldn't lesser than start")
     else 2
   private def getOffset(): Int =
     val median = _length / 2
