@@ -36,8 +36,23 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
         case "before" => splitSections.before
         case "after" => splitSections.after
       }
-      getPortionOfSection(portion)(section, bound)
+      getPortionOfSection(portion, section, bound)
     }
+  }
+
+  private getTotalOfPortion(portion: String)(splitSection: Section) {
+    val bound = portion match {
+      case "before" => section1.end
+      case "after" => section1.start
+    }
+    val section1 = portion match {
+      case "before" => splitSection.before
+      case "after" => splitSection.after
+    }
+    val getSection2 = getPortionOfSection(portion);
+    val section2 = getSection2(portion, section2, bound)
+
+    Section.statisticCount(Array(section1, section2))
   }
 
   private def recursiveAreas(
@@ -46,18 +61,6 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
     val section2 = _area2.section
 
     val lazy binarySplitSection = new BinarySplitSection(section1)
-
-    val lazy section1Before = binarySplitSection.before
-    val lazy section2Before =
-      getSectionBefore(section = section2, end = section1Before.end)
-    val lazy beforeTotal =
-      Section.statisticCount(Array(section1Before, section2Before))
-
-    val lazy section1After = binarySplitSection.after
-    val lazy section2After =
-      getSectionAfter(section = section1, start = section1After.start)
-    val lazy afterTotal =
-      Section.statisticCount(Array(section1After, section2After))
 
     if (_medianOfTotal == 2 && beforeTotal >= before + 1)
       _isSplitMedian = true
