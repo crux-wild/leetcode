@@ -35,3 +35,10 @@ class Median(val start: Int, val end: Int) {
       math.ceil(median).toInt
   }
 }
+
+object Median {
+  def calculateValue(one: Int, two: Int): Int = {
+    // @TODO
+    0
+  }
+}
