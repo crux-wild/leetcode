@@ -28,9 +28,9 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
       case "after" => section.start
     }
 
-    if (sectionBound <= bound)
+    if (sectionBound <= bound) {
       section
-    else {
+    } else {
       val splitSections = new BinarySplitSection(section)
       val section = portion.match {
         case "before" => splitSections.before
