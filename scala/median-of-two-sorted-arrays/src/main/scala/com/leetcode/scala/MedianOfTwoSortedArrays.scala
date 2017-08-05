@@ -80,10 +80,10 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
     if (_medianOfTotal == 2 && afterTotal >= after + 1)
       _isSplitMedian = true
     else if (
-      (_isSplitMedian == true && beforeTotal == 1) ||
-      (beforeTotal == _medianOfCount))
+      (_isSplitMedian == true && afterTotal == 1) ||
+      (afterTotal == _medianOfCount))
       // @TODO
-    else if (beforeTotal >= before + _medianOfCount)
+    else if (afterTotal >= after + _medianOfCount)
       recursiveAreas(
         area1 = section1After, area2 = section2After,
         before = before - beforeTotal, after = after - afterTotal)
