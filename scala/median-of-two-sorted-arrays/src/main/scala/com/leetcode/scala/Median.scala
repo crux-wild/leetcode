@@ -13,6 +13,9 @@ class Median(val start: Int, val end: Int) {
   def two = _two
   def number = _number
 
+
+  private def getOffset(length: Int): Int =
+    if (_isEven) length / 2 else math.ceil(length / 2).toInt
   private def getLength(): Int =
     if (end > start)
       end - start + 1
@@ -20,13 +23,10 @@ class Median(val start: Int, val end: Int) {
       throw IllegalArgumentException(
         "param:[end] is lesser than param:[start];")
     else 2
-
-  private def getOffset(length: Int): Int =
-    if (_isEven) length / 2 else math.ceil(length / 2).toInt
-
   private def getIndex(offset: Int): Int = offset + start - 1
 }
 
 case class IllegalArgumentException(
   val message: String = "",
-  val cause: Throwable = None.orNull) extends Exception(message, cause)
+  val cause: Throwable = None.orNull)
+extends Exception(message, cause)
