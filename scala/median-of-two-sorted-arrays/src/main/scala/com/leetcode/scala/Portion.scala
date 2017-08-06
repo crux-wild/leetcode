@@ -8,4 +8,3 @@ object Portion extends Enumeration {
     portion == Before || portion == After
   }
 }
-}

@@ -23,13 +23,21 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
   }
 
   private class BinarySearchSection
-    (portion: Portion)(section: Section, bound: Int) {
+  (portion: Portion, section: Section, sectionClips: BinarySplitSection) {
 
-    private val _bound = bound
+    private val _sectionClips = sectionClips
+    private val _bound = getBound()
     private val _portion = getPortion()
     private var _section = getSection(section)
 
     def section = _section
+
+    private def getBound(): Int = {
+      _portion.match {
+        case Before => _sectionClips.end
+        case After => _sectionClips.start
+      }
+    }
 
     private def getPortion(): Portion = {
       if (!(Portion.isPortion(portion)))
@@ -60,7 +68,7 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
     }
   }
 
-  private class StatisticSectionsOfPortion(portion: Portion)(section2: Section,
+  private class StatisticCountOfSections(portion: Portion, section2: Section,
     section1Clips : BinarySplitSection) {
 
     private val _section1Clips = section1Clips
@@ -99,7 +107,61 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
 
     def median = _median
 
-    def getMedian(): T = {
+    private def getMedian(): T = {
+      recursiveControlFlow(_area1, _area2, _before, _after)
+    }
+
+    private def processSplitMedian(): Conditon = {
+        Condition.SPLIT_MEDIAN
+    }
+
+    private def processResolvedMedian(): Condition = {
+        Condition.RESOLVE_MEDIAN
+    }
+
+    private def processContainMedian(): Condition = {
+        Condition CONTAIN_MEDIAN
+    }
+
+    private def processNoneMedian(): Condition = {
+        Condition.NONE_MEIDAN
+    }
+
+    private def controlFlowOfBranch(count: Int, base: Int): Condition = {
+      if ((medianValue.count == 2) && (count == base + 1))
+        processSplitMedian()
+      else if ((count == _medianValue.count + base) ||
+        (_flag == true && count == base + 1))
+        processResolvedMedian()
+      else if (count > _medianValue.count + base)
+        processContainMedian()
+      else
+        processNoneMedian()
+    }
+
+    private def processBranch(before: Int, after: Int)
+      (portion: Portion, section1Clips: BinarySplitSection): Conditon = {
+
+      val baseOfBranch = portion match {
+        Before => before
+        After => after
+      }
+
+      val section2Clip =
+        new BinarySearchSection(portion, section1Clips)
+      val countOfBranch =
+        new StatisticCountOfSections(portion, section2Clip, section1Clips)
+
+      controlFlowOfBranch(countOfBranch, baseOfBranch)
+    }
+
+    private def recursiveControlFlow(area1: Area, area2: Area, before: Int,
+      after: Int): Unit = {
+
+      val section1 = area1.section
+      val section1Clips = new BinarySplitSection(section1)
+
+      processBranch(Portion.Before, section1Clips)
     }
   }
 
