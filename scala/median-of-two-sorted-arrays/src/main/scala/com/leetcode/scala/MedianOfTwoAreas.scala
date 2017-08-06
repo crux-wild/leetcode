@@ -20,27 +20,47 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
     }
   }
 
-  /** Need reconsitution start **/
-  private def getPortionOfSection
-    (portion: String)(section: Section, bound: Int) = {
+  private class BinarySearchSection
+    (portion: Portion, section: Section, bound: Int) {
 
-    val sectionBound = portion match {
-      case "before" => section.end
-      case "after" => section.start
+    private val _bound = bound
+    private val _portion = getPortion()
+    private var _section = getSection(section)
+
+    def section = _section
+
+    private getPortion(): Portion = {
+      if (!(Portion.isPortion(portion)))
+        throw IllegalArgumentException(
+          "Argument portion should be a member of Portion")
+      else
+        portion
     }
 
-    if (sectionBound <= bound) {
-      section
-    } else {
-      val splitSections = new BinarySplitSection(section)
-      val section = portion.match {
-        case "before" => splitSections.before
-        case "after" => splitSections.after
+    private def getSectionOfPortion(section: Section): Section = {
+      val binarySplitSections = new BinarySplitSection(section)
+
+      _portion.match {
+        case Before => binarySplitSections.before
+        case After => binarySplitSections.after
       }
-      getPortionOfSection(portion, section, bound)
+    }
+
+    private def getSection(section: Section): Section = {
+      val sectionBound = _portion match {
+        case Before => section.end
+        case After => section.start
+      }
+
+      if sectionBound <= bound)
+        section
+      else
+        section = getSectionOfPortion(section)
+        getSection(section)
     }
   }
 
+  /** Need reconsitution start **/
   private getTotalOfPortion(portion: String)(splitSection: Section) = {
     val bound = portion match {
       case "before" => section1.end
