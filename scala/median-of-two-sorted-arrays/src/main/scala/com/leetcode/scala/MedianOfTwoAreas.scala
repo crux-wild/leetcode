@@ -21,7 +21,7 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
   }
 
   private class BinarySearchSection
-    (portion: Portion, section: Section, bound: Int) {
+    (portion: Portion)(section: Section, bound: Int) {
 
     private val _bound = bound
     private val _portion = getPortion()
@@ -29,7 +29,7 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
 
     def section = _section
 
-    private getPortion(): Portion = {
+    private def getPortion(): Portion = {
       if (!(Portion.isPortion(portion)))
         throw IllegalArgumentException(
           "Argument portion should be a member of Portion")
@@ -38,11 +38,10 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
     }
 
     private def getSectionOfPortion(section: Section): Section = {
-      val binarySplitSections = new BinarySplitSection(section)
-
+      val clipsOfSection = new BinarySplitSection(section)
       _portion.match {
-        case Before => binarySplitSections.before
-        case After => binarySplitSections.after
+        case Before => clipsOfSection.before
+        case After => clipsOfSection.after
       }
     }
 
@@ -51,7 +50,6 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
         case Before => section.end
         case After => section.start
       }
-
       if sectionBound <= bound)
         section
       else
@@ -60,25 +58,34 @@ class MedianOfTwoAreas[T](area1: Area, area2: Area) {
     }
   }
 
-  /** Need reconsitution start **/
-  private getTotalOfPortion(portion: String)(splitSection: Section) = {
-    val bound = portion match {
-      case "before" => section1.end
-      case "after" => section1.start
+  private class StatisticSectionsOfPortion(portion: Portion)(section2: Section,
+    clipsOfSection1 : BinarySplitSection) {
+
+    private val _clipsOfSection1 = clipsOfSection1
+    private val _portion = getPortion()
+    private var _count = getCount()
+
+    def count = _count
+
+    private def getPortion(): Portion = {
+      if (!(Portion.isPortion(portion)))
+        throw IllegalArgumentException(
+          "Argument portion should be a member of Portion")
+      else
+        portion
     }
 
-    val section1 = portion match {
-      case "before" => splitSection.before
-      case "after" => splitSection.after
+    private def getCount(): Int = {
+      val section1 = _portion match {
+        case Before =>  _clipsOfSection1.before
+        case After => _clipsOfSection1.after
+      }
+      Section.statisticCount(Array(section1, section2))
     }
-
-    val getSection2 = getPortionOfSection(portion)
-    val section2 = getSection2(portion, section1, bound)
-
-    Section.statisticCount(Array(section1, section2))
   }
 
-  private def updatePortionOfSections(portion: String)(total: Int) = {
+  /** Need reconsitution start **/
+  private def updateSections(portion: String)(total: Int) = {
     val bound = portion {
       case "before" => after + 1
       case "after" => before + 1
