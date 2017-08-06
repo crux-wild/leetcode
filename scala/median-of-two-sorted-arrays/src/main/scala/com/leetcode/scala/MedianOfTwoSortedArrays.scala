@@ -14,8 +14,6 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
 
   def median = _median
 
-
-
   private def getTotal(): Int = {
     val section1 = _area1.section
     val section2 = _area2.section
@@ -27,6 +25,6 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
     val before = median.one - 1
     val after = _total - median.two
 
-    new BinarySplitSolution(_area1, _area2, before, after, _total).median
+    new BinarySplitSolution(_area1, _area2, before, after).median
   }
 }

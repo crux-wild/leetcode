@@ -3,9 +3,10 @@ package com.leetcode.scala
 import _root_.scala.Array
 
 class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
-  before: Int, after: Int, total: Int) {
+  before: Int, after: Int) {
 
-  private val _medianValue = new MedianValueStateMachine[T](total)
+  private val _total = getTotal()
+  private val _medianValue = new MedianValueStateMachine[T](_total)
   private val _medianCount = _medianValue.total
   private val _area1 = area1
   private val _area2 = area2
@@ -15,6 +16,12 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
   private val _median = getMedian()
 
   def median = _median
+
+  private def getTotal(): Int = {
+    val section1 = _area1.section
+    val section2 = _area2.section
+    Section.statisticCount(Array(section1, section2))
+  }
 
   private def getMedian(): T = {
     recursiveControlFlow(_area1, _area2, _before, _after)
