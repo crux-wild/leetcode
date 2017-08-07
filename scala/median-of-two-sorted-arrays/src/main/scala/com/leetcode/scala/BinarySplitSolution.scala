@@ -132,8 +132,8 @@ private class BinarySearchSection(portion: Portion.Value, section2: Section,
 
   private def getBound(): Int = {
     _portion match {
-      case Portion.BEFORE => _section.end
-      case Portion.AFTER => _section.start
+      case Portion.BEFORE => sectionClips.before.end
+      case Portion.AFTER => sectionClips.after.start
     }
   }
 
