@@ -109,7 +109,6 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     val section1Clips = new BinarySplitSection(section1)
 
     val condition = processBranch(Portion.BEFORE, section1Clips, before)
-
     if ((condition == Condition.SPLIT_MEDIAN) ||
       (condition == Condition.NONE_MEDIAN) ||
       (_flag == true && condition ==  Condition.RESOLVED_MEDIAN))

@@ -74,6 +74,13 @@ def *(multi: Double): Section = {
     this
   }
 
+  def isEmptySection(section: Section): Boolean = {
+    if (_start.isNaN || _end.isNaN)
+      true
+    else
+      false
+  }
+
   private def getEnd(start: Double, length: Double): Double = {
     start + length - 1.0
   }
@@ -88,13 +95,6 @@ def *(multi: Double): Section = {
 }
 
 object Section {
-  def isEmptySection(section: Section): Boolean = {
-    if (section.start.isNaN || section.end.isNaN)
-      true
-    else
-      false
-  }
-
   def statisticCount(sectionArray: Array[Section]): Double = {
     var count = 0.0
     for (section <- sectionArray) {
