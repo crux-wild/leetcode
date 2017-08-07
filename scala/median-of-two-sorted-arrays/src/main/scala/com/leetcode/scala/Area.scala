@@ -1,9 +1,11 @@
 package com.leetcode.scala
 
-class Area[T](val arr: Array[T], val start: Int = -1, val end: Int = -1) {
+class Area[T](val arr: Array[T], val start: Double = Double.NaN,
+  val end: Double = Double.NaN) {
+
   private lazy val _arr = arr
-  private lazy val _start = if (start == -1) 0 else start
-  private lazy val _end = if (end == -1) _arr.length - 1 else end
+  private lazy val _start = start
+  private lazy val _end = end
   private var _section = new Section(head = _start, tail = _end)
 
   def section = _section
@@ -21,7 +23,7 @@ class Area[T](val arr: Array[T], val start: Int = -1, val end: Int = -1) {
     this
   }
 
-  def :=(start: Int = -1, end: Int = -1): this.type = {
+  def :=(start: Double = -1, end: Double = -1): this.type = {
     _section = new Section(head = start, tail = end)
     this
   }

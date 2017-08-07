@@ -4,7 +4,7 @@ import _root_.scala.math
 import _root_.scala.Array
 import _root_.scala.collection.mutable.HashMap
 
-class Section(val head: Int, val tail: Int) {
+class Section(val head: Double, val tail: Double) {
   private var _length = getLength()
   private var _start = head
   private var _end = tail
@@ -13,19 +13,19 @@ class Section(val head: Int, val tail: Int) {
   def end = _end
   def length = _length
 
-  def +(plus: Int): Section = {
+  def +(plus: Double): Section = {
     val head = _start + plus
     val tail = _end + plus
     new Section(head, tail)
   }
 
-  def -(sub: Int): Section = {
+  def -(sub: Double): Section = {
     val head = _start - sub
     val tail = _end - sub
     new Section(head, tail)
   }
 
-def *(multi: Int): Section = {
+def *(multi: Double): Section = {
     val product = _length * multi
     val length = product
     val head = _start
@@ -33,8 +33,8 @@ def *(multi: Int): Section = {
     new Section(head, tail)
   }
 
-  def /(divisor: Int): Section = {
-    val quotients = math.ceil(_length / divisor).toInt
+  def /(divisor: Double): Section = {
+    val quotients = math.ceil(_length / divisor)
     val length = quotients
     val head = _start
     val tail = getEnd(start = _start , length = _length)
@@ -44,19 +44,19 @@ def *(multi: Int): Section = {
       new Section(head, tail)
   }
 
-  def +=(plus: Int): this.type = {
+  def +=(plus: Double): this.type = {
     _end = _end + plus
     _start = _start + plus
     this
   }
 
-  def -=(sub: Int): this.type = {
+  def -=(sub: Double): this.type = {
     _end = _end - sub
     _start = _start - sub
     this
   }
 
-  def *=(multi: Int): this.type = {
+  def *=(multi: Double): this.type = {
     val product = _length * multi
     _length = product
     val end = getEnd(start = _start , length = _length)
@@ -67,29 +67,36 @@ def *(multi: Int): Section = {
     this
   }
 
-  def /=(divisor: Int): this.type = {
-    val quotients = math.ceil(_length / divisor).toInt
+  def /=(divisor: Double): this.type = {
+    val quotients = math.ceil(_length / divisor)
     _length = quotients
     _end = getEnd(start = _start , length = _length)
     this
   }
 
-  private def getEnd(start: Int, length: Int): Int = {
-    start + length - 1
+  private def getEnd(start: Double, length: Double): Double = {
+    start + length - 1.0
   }
 
-  private def getLength(): Int = {
+  private def getLength(): Double = {
     if (end < start)
       throw IllegalArgumentException(
         "Argument end shouldn't lesser than argument start")
     else
-      tail - head + 1
+      tail - head + 1.0
   }
 }
 
 object Section {
-  def statisticCount(sectionArray: Array[Section]): Int = {
-    var count = 0
+  def isEmptySection(section: Section): Boolean = {
+    if (section.start.isNaN || section.end.isNaN)
+      true
+    else
+      false
+  }
+
+  def statisticCount(sectionArray: Array[Section]): Double = {
+    var count = 0.0
     for (section <- sectionArray) {
       count = count + section.length
     }
@@ -114,5 +121,7 @@ object Section {
     diffMap
   }
 
-  implicit def anyRef2section(ref: AnyRef) = new Section(head = 0, tail = -1)
+  implicit def anyRef2section(ref: AnyRef): Section = {
+    new Section(head = Double.NaN, tail = Double.NaN)
+  }
 }

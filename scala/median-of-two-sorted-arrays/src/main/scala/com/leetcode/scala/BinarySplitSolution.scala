@@ -20,18 +20,18 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
   private def getTotal(): Int = {
     val section1 = _area1.section
     val section2 = _area2.section
-    Section.statisticCount(Array(section1, section2))
+    Section.statisticCount(Array(section1, section2)).toInt
   }
 
-  private def getMedian(): Double = {
+  private def getMedian(): Int = {
     recursiveControlFlow(_area1, _area2, _before, _after)
-    _medianValue.median
+    _medianValue.median.toInt
   }
 
   private def processSplitMedian(
     section1: Section, section2: Section, base: Int): Condition.Value = {
 
-    val total = Section.statisticCount(Array(section1, section2))
+    val total = Section.statisticCount(Array(section1, section2)).toInt
     _flag = true
     area1 := section1
     area2 := section2
@@ -41,12 +41,19 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
 
   private def processResolvedMedian(
     section1: Section, section2: Section): Condition.Value = {
+
     area1 := section1
     area2 := section2
-    for (index <- area1.section.start to area1.section.end) {
+
+    val start1 = area1.section.start.toInt
+    val end1 = area1.section.end.toInt
+    for (index <- start1 to end1) {
       _medianValue += area1.apply(index)
     }
-    for (index <- area2.section.start to area2.section.end) {
+
+    val start2 = area2.section.start.toInt
+    val end2 = area2.section.end.toInt
+    for (index <- start2 to end2) {
       _medianValue += area1.apply(index)
     }
     Condition.RESOLVED_MEDIAN
@@ -55,7 +62,7 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
   private def processContainMedian(
     section1: Section, section2: Section, base: Int): Condition.Value = {
 
-    val total = Section.statisticCount(Array(section1, section2))
+    val total = Section.statisticCount(Array(section1, section2)).toInt
     area1 := section1
     area2 := section2
     recursiveControlFlow(area1, area2, before, total - base)
@@ -95,8 +102,8 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
       countOfBranch, base, section1Clips.before, section2Clip)
   }
 
-  private def recursiveControlFlow(area1: Area[T], area2: Area[T], before: Int,
-    after: Int): Unit = {
+  private def recursiveControlFlow(area1: Area[T], area2: Area[T],
+    before: Int, after: Int): Unit = {
 
     val section1 = area1.section
     val section1Clips = new BinarySplitSection(section1)
@@ -131,10 +138,11 @@ private class BinarySearchSection(portion: Portion.Value, section2: Section,
   def section = _section
 
   private def getBound(): Int = {
-    _portion match {
+    val bound = _portion match {
       case Portion.BEFORE => sectionClips.before.end
       case Portion.AFTER => sectionClips.after.start
     }
+    bound.toInt
   }
 
   private def getPortion(): Portion.Value = {
@@ -183,6 +191,6 @@ private class StatisticCountOfSections(portion: Portion.Value, section2: Section
       case Portion.BEFORE =>  _section1Clips.before
       case Portion.AFTER => _section1Clips.after
     }
-    Section.statisticCount(Array(section1, section2))
+    Section.statisticCount(Array(section1, section2)).toInt
   }
 }
