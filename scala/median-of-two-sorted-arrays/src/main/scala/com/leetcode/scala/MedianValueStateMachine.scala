@@ -14,7 +14,7 @@ class MedianValueStateMachine[T](count: Int) {
   def total = _total
   def isFinished = _isFinished
 
-  def median: T = {
+  def median: Double = {
     if (_isFinished == false) {
       throw IllegalArgumentException(
         "Get property of median, the isFinished must be true")

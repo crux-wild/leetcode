@@ -23,7 +23,7 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     Section.statisticCount(Array(section1, section2))
   }
 
-  private def getMedian(): T = {
+  private def getMedian(): Double = {
     recursiveControlFlow(_area1, _area2, _before, _after)
     _medianValue.median
   }

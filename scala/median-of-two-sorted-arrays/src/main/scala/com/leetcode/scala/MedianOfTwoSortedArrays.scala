@@ -20,7 +20,7 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
     Section.statisticCount(Array(section1, section2))
   }
 
-  private def getMedian(): T = {
+  private def getMedian(): Double = {
     val median = new Median(start = 1, end = _total)
     val before = median.one - 1
     val after = _total - median.two
