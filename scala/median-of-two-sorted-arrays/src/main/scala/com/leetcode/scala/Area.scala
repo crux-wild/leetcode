@@ -8,7 +8,7 @@ class Area[T](val arr: Array[T], val start: Int = -1, val end: Int = -1) {
   private val _start = if (start == -1) 0 else start
   private val _end = if (end == -1) _arr.length - 1 else end
 
-  private var _section = new Section(head = start, tail = end)
+  private var _section = new Section(head = _start, tail = _end)
 
   def section = _section
 

@@ -5,11 +5,11 @@ import _root_.scala.Array
 class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
   before: Int, after: Int) {
 
+  private val _area1 = area1
+  private val _area2 = area2
   private val _total = getTotal()
   private val _medianValue = new MedianValueStateMachine[T](_total)
   private val _medianCount = _medianValue.total
-  private val _area1 = area1
-  private val _area2 = area2
   private val _before = before
   private val _after = after
   private var _flag = false
@@ -124,8 +124,8 @@ private class BinarySearchSection(portion: Portion.Value, section2: Section,
   sectionClips: BinarySplitSection) {
 
   private val _sectionClips = sectionClips
-  private val _bound = getBound()
   private val _portion = getPortion()
+  private val _bound = getBound()
   private var _section = getSection(section2)
 
   def section = _section
