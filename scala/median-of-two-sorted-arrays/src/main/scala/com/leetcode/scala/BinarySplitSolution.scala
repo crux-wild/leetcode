@@ -138,11 +138,8 @@ private class BinarySearchSection(portion: Portion.Value, section2: Section,
   }
 
   private def getPortion(): Portion.Value = {
-    if (!(Portion.isPortion(portion)))
-      throw IllegalArgumentException(
-        "Argument portion should be a member of Portion")
-    else
-      portion
+    Portion.checkPortion(portion)
+    portion
   }
 
   private def getSectionOfPortion(section: Section): Section = {
@@ -177,11 +174,8 @@ private class StatisticCountOfSections(portion: Portion.Value, section2: Section
   def count = _count
 
   private def getPortion(): Portion.Value = {
-    if (!(Portion.isPortion(portion)))
-      throw IllegalArgumentException(
-        "Argument portion should be a member of Portion")
-    else
-      portion
+    Portion.checkPortion(portion)
+    portion
   }
 
   private def getCount(): Int = {

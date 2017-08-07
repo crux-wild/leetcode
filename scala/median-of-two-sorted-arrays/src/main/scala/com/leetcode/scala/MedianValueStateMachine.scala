@@ -2,11 +2,9 @@ package com.leetcode.scala
 
 import _root_.scala.collection.mutable.ListBuffer
 
-import scala.IllegalArgumentException
-
 class MedianValueStateMachine[T](count: Int) {
-  private val _total = getTotal()
-  private val _resolvedList = new ListBuffer[T]()
+  private lazy val _total = getTotal()
+  private lazy val _resolvedList = new ListBuffer[T]()
   private var _resolved = 0
   private var _isFinished = false
   private var _median = 0

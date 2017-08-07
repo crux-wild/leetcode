@@ -4,8 +4,6 @@ import _root_.scala.math
 import _root_.scala.Array
 import _root_.scala.collection.mutable.HashMap
 
-import scala.IllegalArgumentException
-
 class Section(val head: Int, val tail: Int) {
   private var _length = getLength()
   private var _start = head
@@ -116,5 +114,5 @@ object Section {
     diffMap
   }
 
-  implicit def anyRef2section(ref: AnyRef) = new Section(head = 0, tail = 0)
+  implicit def anyRef2section(ref: AnyRef) = new Section(head = 0, tail = -1)
 }

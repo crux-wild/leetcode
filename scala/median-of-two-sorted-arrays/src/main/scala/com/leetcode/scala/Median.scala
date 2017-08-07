@@ -2,8 +2,6 @@ package com.leetcode.scala
 
 import _root_.scala.math
 
-import scala.IllegalArgumentException
-
 class Median(val start: Int, val end: Int) {
   private lazy val _length = getLength()
   private lazy val _isEven = (_length % 2) == 0

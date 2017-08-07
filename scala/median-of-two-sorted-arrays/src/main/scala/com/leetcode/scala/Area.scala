@@ -1,7 +1,5 @@
 package com.leetcode.scala
 
-import scala.IllegalArgumentException
-
 class Area[T](val arr: Array[T], val start: Int = -1, val end: Int = -1) {
   private lazy val _arr = arr
   private lazy val _start = if (start == -1) 0 else start
