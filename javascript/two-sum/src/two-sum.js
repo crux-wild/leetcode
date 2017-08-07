@@ -1,5 +1,5 @@
 /**
- * @file 1.Two Sum 数字重复情况下时间复杂度O(n)解决方案
+ * @file 1.Two Sum 数字重复较小情况下时间复杂度O(n)解决方案
  * @see https://leetcode.com/problems/two-sum/#/description
  */
 import InvalidArgumentException from './invalid-argument-exception';

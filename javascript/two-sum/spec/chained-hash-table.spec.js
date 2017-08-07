@@ -25,6 +25,14 @@ test('Chained hash table: [Insert]', (it) => {
 
   it.deepEqual(list, [value],
     '[HashTable] After first insert value, list should be equals [value]');
+
+  list = hashTable
+    .insert({ key, value })
+    .search({ key });
+
+  it.deepEqual(list, [value],
+    '[HashTable] After insert a already existed value, list should be' +
+    ' equals before [value]');
 });
 
 test('Chained hash table: [Delete]', (it) => {

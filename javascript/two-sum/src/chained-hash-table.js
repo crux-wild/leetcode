@@ -18,8 +18,17 @@ class ChainedHashTable {
       // 对应槽位不存在，建立一个链表
       hashTable[key] = [value];
     } else {
+      const flag = slot.some((elem) => {
+        // 如果已经存在则忽略这次插入操作
+        if (elem === value) {
+          return true;
+        }
+      });
+
       // 对应槽位存在，向链表添加元素
-      slot.push(value);
+      if (flag === false) {
+        slot.push(value);
+      }
     }
 
     return this;

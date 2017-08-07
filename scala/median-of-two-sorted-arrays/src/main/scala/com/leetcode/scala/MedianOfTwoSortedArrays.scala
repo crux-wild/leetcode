@@ -7,8 +7,8 @@ class MedianOfTwoSortedArrays[T](val arr1: Array[T], val arr2: Array[T]) {
   private val _arr2 = arr2
   private val _len1 = arr1.length
   private val _len2 = arr2.length
-  private val _area1 = new Area(arr = arr1, start = 0, end = _len1)
-  private val _area2 = new Area(arr = arr2, start = 0, end = _len2)
+  private val _area1 = new Area(arr = arr1, start = 0, end = _len1 - 1)
+  private val _area2 = new Area(arr = arr2, start = 0, end = _len2 - 1)
   private val _total = getTotal()
   private var _median = getMedian()
 
