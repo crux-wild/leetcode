@@ -22,8 +22,7 @@ class Median(val start: Int, val end: Int) {
         "Argument end shouldn't lesser than argument start")
     else if (end > start)
       end - start + 1
-    else
-      2
+    else 2
   }
 
   private def getOffset(): Int = {

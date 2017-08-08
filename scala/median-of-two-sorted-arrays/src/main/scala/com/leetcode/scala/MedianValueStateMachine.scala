@@ -17,9 +17,13 @@ class MedianValueStateMachine[T](count: Int) {
       throw IllegalArgumentException(
         "Get property of median, the isFinished must be true")
     } else {
-      val one = _resolvedList.apply(0)
-      val two = _resolvedList.apply(1)
-      Median.calculateValue[T](one, two)
+      if (_total == 1) {
+        _resolvedList.apply(0).asInstanceOf[Double]
+      } else {
+        val one = _resolvedList.apply(0)
+        val two = _resolvedList.apply(1)
+        Median.calculateValue[T](one, two)
+      }
     }
   }
 
@@ -37,10 +41,8 @@ class MedianValueStateMachine[T](count: Int) {
   }
 
   private def getTotal(): Int = {
-    if ((count >= 1) || (count <= 2))
-      count
-    else
-      throw IllegalArgumentException(
-        "Total count of median should within interval [1, 2]")
+    val median = new Median(start = 1, end = count)
+    if (median.one == median.two) 1
+    else 2
   }
 }

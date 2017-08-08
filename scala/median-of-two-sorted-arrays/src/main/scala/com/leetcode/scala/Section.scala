@@ -25,7 +25,7 @@ class Section(val head: Double, val tail: Double) {
     new Section(head, tail)
   }
 
-def *(multi: Double): Section = {
+  def *(multi: Double): Section = {
     val product = _length * multi
     val length = product
     val head = _start
@@ -34,15 +34,27 @@ def *(multi: Double): Section = {
   }
 
   def /(divisor: Double): Section = {
-    val quotients = math.ceil(_length / divisor)
-    val length = quotients
+    val quotients = _length / divisor
+    val length = _start + quotients
     val head = _start
-    val tail = getEnd(start = _start , length = _length)
+    val tail = getEnd(start = _start , length = length)
     if (head > tail)
       throw IllegalArgumentException("head shouldn't lesser than tail")
     else
       new Section(head, tail)
   }
+
+  def /(divisor: Int): Section = {
+    val quotients = math.ceil(_length / divisor)
+    val length = _start + quotients
+    val head = _start
+    val tail = getEnd(start = _start , length = length)
+    if (head > tail)
+      throw IllegalArgumentException("head shouldn't lesser than tail")
+    else
+      new Section(head, tail)
+  }
+
 
   def +=(plus: Double): this.type = {
     _end = _end + plus
@@ -74,7 +86,7 @@ def *(multi: Double): Section = {
     this
   }
 
-  def isEmptySection(section: Section): Boolean = {
+  def isNull(section: Section): Boolean = {
     if (_start.isNaN || _end.isNaN)
       true
     else
@@ -109,15 +121,15 @@ object Section {
 
     if (section1.start >= section2.start)
       diffMap +=
-        "start(+)" -> new Section(section2.start, section1.start)
+        "start(+)" -> new Section(section2.start, section1.start - 1)
     else if (section1.start < section2.start)
       diffMap +=
-        "start(-)" -> new Section(section1.start, section2.start)
+        "start(-)" -> new Section(section1.start, section2.start - 1)
 
     if (section1.end >= section2.end)
-      diffMap += "end(+)" -> new Section(section2.end, section1.end)
+      diffMap += "end(+)" -> new Section(section2.end + 1, section1.end)
     else if (section1.end < section2.end)
-      diffMap += "end(-)" -> new Section(section1.end, section2.end)
+      diffMap += "end(-)" -> new Section(section1.end + 1, section2.end)
     diffMap
   }
 
