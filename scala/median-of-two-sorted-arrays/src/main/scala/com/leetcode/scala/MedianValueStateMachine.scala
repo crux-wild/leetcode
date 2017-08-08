@@ -9,6 +9,7 @@ class MedianValueStateMachine[T](count: Int) {
   private var _isFinished = false
   private var _median = 0
 
+  def surplus = _total - _resolved
   def total = _total
   def isFinished = _isFinished
 

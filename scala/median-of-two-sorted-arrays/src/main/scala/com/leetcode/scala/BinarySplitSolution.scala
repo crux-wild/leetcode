@@ -99,9 +99,12 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     section1Clips: BinarySplitSection, base: Int): Condition.Value = {
 
     val section2Clip =
-      new BinarySearchSection(portion, _area2.section, section1Clips).section
+      new BinarySearchSection[T](portion, _area2.section, section1Clips,
+        _area1, _area2).section
     val countOfBranch =
       new StatisticCountOfSections(portion, section2Clip, section1Clips).count
+    println("count: " + countOfBranch)
+
 
     controlFlowOfBranch(
       countOfBranch, base, section1Clips.before, section2Clip)
@@ -152,6 +155,34 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     }
   }
 
+  private def appendValue[T](i: Int, index: Int): Unit = {
+    if (i == 1)
+      _medianValue += area2.apply(index)
+    else
+      _medianValue += area1.apply(index)
+  }
+
+  private def processSectionInTheGap(area: Area[T],
+    sectionClips: BinarySplitSection): Boolean = {
+
+    val sectionArray = Array(sectionClips.before, area.section,
+      sectionClips.after)
+    var before = _before
+    var flag = false
+    for (index <- 0 to 2) {
+      val section =  sectionArray.apply(index)
+      if (_medianValue.surplus > 0)
+        if ((_medianValue.surplus == 2) &&
+          (section.length >= before + _medianValue.surplus))
+          appendValue(index, (before + _medianValue.surplus) - 1)
+        else if (section.length >= before + 1)
+          appendValue(index, (before + 1) - 1)
+        else
+          before = before - section.length.toInt
+    }
+    _medianValue.isFinished == true
+  }
+
   private def recursiveControlFlow(area1: Area[T], area2: Area[T],
     before: Int, after: Int): Unit = {
 
@@ -165,15 +196,15 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
       }
     }
 
-    val sectionClips = new BinarySplitSection(area1.section)
-    println("before: " + sectionClips.before.start + " : " + sectionClips.before.end)
-    println("after: " + sectionClips.after.start + " : " + sectionClips.after.end)
-    val condition = processBranch(Portion.BEFORE, sectionClips, before)
-    println("condition: " + condition)
+    val section1Clips = new BinarySplitSection(area1.section)
+    if (processSectionInTheGap(area2, section1Clips)) return
+
+    val condition = processBranch(Portion.BEFORE, section1Clips, before)
     if ((condition == Condition.SPLIT_MEDIAN) ||
       (condition == Condition.NONE_MEDIAN) ||
       (_flag == true && condition ==  Condition.RESOLVED_MEDIAN))
-      processBranch(Portion.AFTER , sectionClips, after)
+      println("condition: " + condition)
+      processBranch(Portion.AFTER , section1Clips, after)
   }
 }
 
@@ -198,8 +229,8 @@ private class BinarySplitSection(section: Section) {
   }
 }
 
-private class BinarySearchSection(portion: Portion.Value, section2: Section,
-  sectionClips: BinarySplitSection) {
+private class BinarySearchSection[T](portion: Portion.Value, section2: Section,
+  sectionClips: BinarySplitSection, area1: Area[T], area2: Area[T]) {
 
   private val _sectionClips = sectionClips
   private val _portion = getPortion()
@@ -208,12 +239,12 @@ private class BinarySearchSection(portion: Portion.Value, section2: Section,
 
   def section = _section
 
-  private def getBound(): Int = {
-    val bound = _portion match {
+  private def getBound(): Double = {
+    var index = _portion match {
       case Portion.BEFORE => sectionClips.before.end
       case Portion.AFTER => sectionClips.after.start
     }
-    bound.toInt
+    area1.apply(index.toInt).asInstanceOf[Double]
   }
 
   private def getPortion(): Portion.Value = {
@@ -222,7 +253,7 @@ private class BinarySearchSection(portion: Portion.Value, section2: Section,
   }
 
   private def getSectionOfPortion(section: Section): Section = {
-    val sectionClips = new BinarySplitSection(section)
+    var sectionClips = new BinarySplitSection(section)
     _portion match {
       case Portion.BEFORE => sectionClips.before
       case Portion.AFTER => sectionClips.after
@@ -230,15 +261,23 @@ private class BinarySearchSection(portion: Portion.Value, section2: Section,
   }
 
   private def getSection(section: Section): Section = {
-    val sectionBound = _portion match {
+    var index = _portion match {
       case Portion.BEFORE => section.end
       case Portion.AFTER => section.start
     }
+    val sectionBound = area2.apply(index.toInt).asInstanceOf[Double]
     if (sectionBound <= _bound) {
       section
     } else {
-      val sectionOfPortion = getSectionOfPortion(section)
-      getSection(sectionOfPortion)
+      try {
+        val sectionOfPortion = getSectionOfPortion(section)
+        return getSection(sectionOfPortion)
+      } catch {
+        // 发生不可分割情况
+        case exception:IllegalArgumentException => {
+          return new Section(Double.NaN, Double.NaN)
+        }
+      }
     }
   }
 }
