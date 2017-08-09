@@ -164,7 +164,7 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
         return prcoessIndivisibleAreas(before, after)
       }
     }
-    val section1Clips = new BinarySplitSection(_area1.section)
+    val section1Clips = new BinarySplitSection(_area1.section, true)
     val condition = processBranch(Portion.BEFORE, section1Clips, before)
     println(condition)
     if ((condition == Condition.SPLIT_MEDIAN) ||

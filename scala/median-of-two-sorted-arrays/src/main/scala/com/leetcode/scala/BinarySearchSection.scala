@@ -25,7 +25,7 @@ class BinarySearchSection[T](portion: Portion.Value, section2: Section,
   }
 
   private def getSectionOfPortion(section: Section): Section = {
-    var sectionClips = new BinarySplitSection(section)
+    var sectionClips = new BinarySplitSection(section, false)
     _portion match {
       case Portion.BEFORE => sectionClips.before
       case Portion.AFTER => sectionClips.after
