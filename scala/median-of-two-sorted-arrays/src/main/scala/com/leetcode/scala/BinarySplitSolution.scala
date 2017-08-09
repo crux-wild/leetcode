@@ -79,7 +79,7 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     val baseMedian = base + _medianValue.surplus
     val baseOne = base + 1
 
-    if (_medianValue.surplus == 0)
+    if (_medianValue.isFinished == true)
       processNoneMedian()
     else if ((count == _medianValue.surplus) || (_flag == true && count == 1))
       processResolvedMedian(section1, section2)
@@ -147,7 +147,7 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
       listBuffer += area2.apply(index.toInt)
     }
     listBuffer = listBuffer.sortWith((A, B) => A.asInstanceOf[Double] < B.asInstanceOf[Double])
-    for (index <- (before)  to (before + _medianValue.surplus)) {
+    for (index <- (before)  to (before + _medianValue.surplus - 1)) {
       _medianValue += listBuffer.apply(index)
     }
   }
