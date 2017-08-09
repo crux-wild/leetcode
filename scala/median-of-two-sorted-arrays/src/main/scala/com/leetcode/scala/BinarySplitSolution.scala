@@ -10,7 +10,6 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
   private var _area2 = area2
   private val _total = getTotal()
   private val _medianValue = new MedianValueStateMachine[T](_total)
-  private val _surplus = _medianValue.surplus
   private val _before = before
   private val _after = after
   private var _flag = false
@@ -77,12 +76,12 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     count: Int, base: Int, section1: Section, section2: Section
     ): Condition.Value = {
 
-    val baseMedian = base + _medianValue.total
+    val baseMedian = base + _medianValue.surplus
     val baseOne = base + 1
 
-    if ((count == _medianValue.total) || (_flag == true && count == 1))
+    if ((count == _medianValue.surplus) || (_flag == true && count == 1))
       processResolvedMedian(section1, section2)
-    else if ((_medianValue.total == 2) && (count == baseOne))
+    else if ((_medianValue.surplus == 2) && (count == baseOne))
       processSplitMedian(section1, section2, base)
     else if (count >= baseMedian)
       processContainMedian(section1, section2, base)
