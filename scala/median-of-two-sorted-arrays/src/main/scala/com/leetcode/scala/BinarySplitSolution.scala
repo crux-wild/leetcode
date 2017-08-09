@@ -1,5 +1,6 @@
 package com.leetcode.scala
 
+import _root_.scala.collection.mutable.ListBuffer
 import _root_.scala.Array
 import _root_.scala.math
 
@@ -44,7 +45,6 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
 
     _area1 := section1
     _area2 := section2
-
     val start1 = _area1.section.start.toInt
     val end1 = _area1.section.end.toInt
     for (index <- start1 to end1) {
@@ -94,16 +94,14 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
   private def processBranch(portion: Portion.Value,
     section1Clips: BinarySplitSection, base: Int): Condition.Value = {
 
-    val section2Clip =
-      new BinarySearchSection[T](portion, _area2.section, section1Clips,
-        _area1, _area2).section
-    val countOfBranch =
-      new StatisticCountOfSections(portion, section2Clip, section1Clips).count
+    val section2Clip = new BinarySearchSection[T](portion, _area2.section,
+      section1Clips, _area1, _area2).section
+    val countOfBranch = new StatisticCountOfSections(portion, section2Clip,
+      section1Clips).count
     val section1 = portion match {
       case Portion.BEFORE => section1Clips.before
       case Portion.AFTER => section1Clips.after
     }
-
     controlFlowOfBranch(
       countOfBranch, base, section1, section2Clip)
   }
@@ -118,37 +116,16 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     lazy val section1 = _area1.section
     lazy val section2 = _area2.section
 
-    if ((section1.length == 1) && (section2.length == 1)) {
+    if ((section1.length <= 2) && (section2.length <= 2))
       throw new IllegalArgumentException(
         "Both area1 and area2 can't be indivisible")
-    }
-    else if (section1.length == 1) {
+    else if (section2.length <= 2)
+      section1
+    else if (section1.length <= 2)
       switchArea()
       _area1.section
-    }
-    else {
-      section1
-    }
   }
 
-  private def prcoessIndivisibleAreas(before: Int, after: Int): Unit = {
-
-    val elem1 = _area1.head
-    val elem2 = _area2.head
-
-    if (_medianValue.surplus == 2) {
-      _medianValue += elem1
-      _medianValue += elem2
-    } else if (_medianValue.surplus == 1) {
-      if (before == 1) {
-        _medianValue += math.max(
-          elem1.asInstanceOf[Double], elem2.asInstanceOf[Double]).asInstanceOf[T]
-      } else if (after ==  1) {
-        _medianValue += math.min(
-          elem1.asInstanceOf[Double], elem2.asInstanceOf[Double]).asInstanceOf[T]
-      }
-    }
-  }
 
   private def appendValue[T](i: Int, index: Int): Unit = {
     if (i == 1)
@@ -157,34 +134,22 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
       _medianValue += _area1.apply(index)
   }
 
-  private def processSectionInTheGap(
-    sectionClips: BinarySplitSection): Boolean = {
-
-    val beforeSection = sectionClips.before
-    val afterSection = sectionClips.after
-    // 这个方法处理的事区间没有重复的情况
-    if (!(
-      (_area2.head.asInstanceOf[Double] > _area1.head(beforeSection).asInstanceOf[Double]) &&
-      (_area2.tail.asInstanceOf[Double] < _area1.head(afterSection).asInstanceOf[Double]))
-    ) {
-      return false
+  private def prcoessIndivisibleAreas(before: Int, after: Int): Unit = {
+    var listBuffer = new ListBuffer[T]()
+    val start1 = _area1.section.start.toInt
+    val end1 = _area1.section.end.toInt
+    for (index <- start1 to end1) {
+      listBuffer += area1.apply(index.toInt)
     }
-
-    val sectionArray = Array(beforeSection, _area2.section, afterSection)
-    var before = _before
-    var flag = false
-    for (index <- 0 to 2) {
-      val section =  sectionArray.apply(index)
-      if (_medianValue.surplus > 0)
-        if ((_medianValue.surplus == 2) &&
-          (section.length >= before + _medianValue.surplus))
-          appendValue(index, (before + _medianValue.surplus) - 1)
-        else if (section.length >= before + 1)
-          appendValue(index, (before + 1) - 1)
-        else
-          before = before - section.length.toInt
+    val start2 = _area2.section.start.toInt
+    val end2 = _area2.section.end.toInt
+    for (index <- start2 to end2) {
+      listBuffer += area2.apply(index.toInt)
     }
-    _medianValue.isFinished == true
+    listBuffer = listBuffer.sortWith((A, B) => A.asInstanceOf[Double] < B.asInstanceOf[Double])
+    for (index <- (before)  to (before + _medianValue.surplus)) {
+      _medianValue += listBuffer.apply(index)
+    }
   }
 
   private def recursiveControlFlow(before: Int, after: Int): Unit = {
@@ -194,17 +159,14 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
       section = getDivisibleSection()
     } catch {
       // area长度为1的情况无法进行二分
-      // 如果执行到这步骤说明两个area长度都为1
+      // 如果执行到这步骤说明两个area长度都为2或者1
       case exception:IllegalArgumentException => {
         return prcoessIndivisibleAreas(before, after)
       }
     }
-
     val section1Clips = new BinarySplitSection(_area1.section)
-    // section1落在section1before和section2after之间可以在线性时间内得出结果
-    if (processSectionInTheGap(section1Clips)) return
-
     val condition = processBranch(Portion.BEFORE, section1Clips, before)
+    println(condition)
     if ((condition == Condition.SPLIT_MEDIAN) ||
       (condition == Condition.NONE_MEDIAN) ||
       (_flag == true && condition ==  Condition.RESOLVED_MEDIAN))

@@ -55,6 +55,12 @@ class Section(val head: Double, val tail: Double) {
       new Section(head, tail)
   }
 
+  def ++(): this.type = {
+    _end = _end + 1
+    _length = _length + 1
+    this
+  }
+
   def +=(plus: Double): this.type = {
     _end = _end + plus
     _start = _start + plus
