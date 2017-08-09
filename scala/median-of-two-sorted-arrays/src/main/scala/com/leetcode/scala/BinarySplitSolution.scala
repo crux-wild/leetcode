@@ -79,7 +79,9 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     val baseMedian = base + _medianValue.surplus
     val baseOne = base + 1
 
-    if ((count == _medianValue.surplus) || (_flag == true && count == 1))
+    if (_medianValue.surplus == 0)
+      processNoneMedian()
+    else if ((count == _medianValue.surplus) || (_flag == true && count == 1))
       processResolvedMedian(section1, section2)
     else if ((_medianValue.surplus == 2) && (count == baseOne))
       processSplitMedian(section1, section2, base)
