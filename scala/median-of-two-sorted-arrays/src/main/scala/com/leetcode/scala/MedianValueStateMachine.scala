@@ -7,7 +7,6 @@ class MedianValueStateMachine[T](count: Int) {
   private lazy val _resolvedList = new ListBuffer[T]()
   private var _resolved = 0
   private var _isFinished = false
-  private var _median = 0
 
   def surplus = _total - _resolved
   def total = _total
@@ -35,9 +34,7 @@ class MedianValueStateMachine[T](count: Int) {
 
     if (_resolved == _total)
       _isFinished = true
-    else
-      throw IllegalArgumentException(
-        "Resolved count of median shouldn't greater than total")
+
     this
   }
 

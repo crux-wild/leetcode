@@ -55,7 +55,6 @@ class Section(val head: Double, val tail: Double) {
       new Section(head, tail)
   }
 
-
   def +=(plus: Double): this.type = {
     _end = _end + plus
     _start = _start + plus
@@ -86,7 +85,7 @@ class Section(val head: Double, val tail: Double) {
     this
   }
 
-  def isNull(section: Section): Boolean = {
+  def isNull(): Boolean = {
     if (_start.isNaN || _end.isNaN)
       true
     else
@@ -101,6 +100,8 @@ class Section(val head: Double, val tail: Double) {
     if (end < start)
       throw IllegalArgumentException(
         "Argument end shouldn't lesser than argument start")
+    if (isNull())
+      0
     else
       tail - head + 1.0
   }

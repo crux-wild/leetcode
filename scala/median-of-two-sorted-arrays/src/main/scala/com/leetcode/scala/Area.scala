@@ -10,6 +10,22 @@ class Area[T](val arr: Array[T], val start: Double = Double.NaN,
 
   def section = _section
 
+  def head: T = {
+    apply(_start.toInt)
+  }
+
+  def head(section: Section): T = {
+    apply(section.start.toInt)
+  }
+
+  def tail: T = {
+    apply(_end.toInt)
+  }
+
+  def tail(section: Section): T = {
+    apply(section.head.toInt)
+  }
+
   def apply(index: Int): T = {
     if (!(index >= _start && index <= _end))
       throw IllegalArgumentException(
