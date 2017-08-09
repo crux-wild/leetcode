@@ -3,10 +3,10 @@ package com.leetcode.scala
 class Area[T](val arr: Array[T], val start: Double = Double.NaN,
   val end: Double = Double.NaN) {
 
+  private var _section = new Section(head = _start, tail = _end)
   private lazy val _arr = arr
   private lazy val _start = start
   private lazy val _end = end
-  private var _section = new Section(head = _start, tail = _end)
 
   def section = _section
 

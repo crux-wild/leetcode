@@ -24,10 +24,10 @@ class MedianOfTwoSortedArraysSpec extends FlatSpec with Matchers {
     assert(median === 2.5)
   }
 
-  behavior of "The median of [-2, 2] and [2, 4] "
+  behavior of "The median of [-100, 100] and [2, 4] "
 
-  it should "equals 2" in {
+  it should "equals 3" in {
     val median = new MedianOfTwoSortedArrays(Array(-2.0, 2.0), Array(2.0, 4.0)).median
-    assert(median === 2.0)
+    assert(median === 3.0)
   }
 }
