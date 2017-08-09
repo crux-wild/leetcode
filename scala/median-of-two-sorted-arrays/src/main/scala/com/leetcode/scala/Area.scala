@@ -23,7 +23,7 @@ class Area[T](val arr: Array[T], val start: Double = Double.NaN,
   }
 
   def tail(section: Section): T = {
-    apply(section.head.toInt)
+    apply(section.end.toInt)
   }
 
   def apply(index: Int): T = {
