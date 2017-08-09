@@ -15,7 +15,7 @@ class BinarySearchSection[T](portion: Portion.Value, section2: Section,
     val afterSection = sectionClips.after
     _portion match {
       case Portion.BEFORE => area1.tail(beforeSection).asInstanceOf[Double]
-      case Portion.AFTER => area1.tail(afterSection).asInstanceOf[Double]
+      case Portion.AFTER => area1.head(afterSection).asInstanceOf[Double]
     }
   }
 

@@ -29,14 +29,17 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     _medianValue.median
   }
 
-  private def processSplitMedian(
-    section1: Section, section2: Section, base: Int): Condition.Value = {
+  private def processSplitMedian(portion: Portion.Value, section1: Section,
+    section2: Section, base: Int): Condition.Value = {
 
     val total = Section.statisticCount(Array(section1, section2)).toInt
     _flag = true
     _area1 := section1
     _area2 := section2
-    recursiveControlFlow(before, total - base - 1)
+    portion match {
+      case Portion.BEFORE => recursiveControlFlow(base, total - base - 1)
+      case Portion.AFTER => recursiveControlFlow(total - base - 1, base)
+    }
     Condition.SPLIT_MEDIAN
   }
 
@@ -58,13 +61,16 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     Condition.RESOLVED_MEDIAN
   }
 
-  private def processContainMedian(
-    section1: Section, section2: Section, base: Int): Condition.Value = {
+  private def processContainMedian(portion: Portion.Value, section1: Section,
+    section2: Section, base: Int): Condition.Value = {
 
     val total = Section.statisticCount(Array(section1, section2)).toInt
     _area1 := section1
     _area2 := section2
-    recursiveControlFlow(before, total - base)
+    portion match {
+      case Portion.BEFORE => recursiveControlFlow(base, total - base - _medianValue.surplus)
+      case Portion.AFTER => recursiveControlFlow(total - base - _medianValue.surplus, base)
+    }
     Condition CONTAIN_MEDIAN
   }
 
@@ -72,8 +78,8 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     Condition.NONE_MEDIAN
   }
 
-  private def controlFlowOfBranch(
-    count: Int, base: Int, section1: Section, section2: Section
+  private def controlFlowOfBranch(portion: Portion.Value, count: Int, base: Int,
+    section1: Section, section2: Section
     ): Condition.Value = {
 
     val baseMedian = base + _medianValue.surplus
@@ -84,9 +90,9 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     else if ((count == _medianValue.surplus) || (_flag == true && count == 1))
       processResolvedMedian(section1, section2)
     else if ((_medianValue.surplus == 2) && (count == baseOne))
-      processSplitMedian(section1, section2, base)
+      processSplitMedian(portion, section1, section2, base)
     else if (count >= baseMedian)
-      processContainMedian(section1, section2, base)
+      processContainMedian(portion, section1, section2, base)
     else
       processNoneMedian()
   }
@@ -102,8 +108,7 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
       case Portion.BEFORE => section1Clips.before
       case Portion.AFTER => section1Clips.after
     }
-    controlFlowOfBranch(
-      countOfBranch, base, section1, section2Clip)
+    controlFlowOfBranch(portion, countOfBranch, base, section1, section2Clip)
   }
 
   private def switchArea(): Unit = {
@@ -154,6 +159,10 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
 
   private def recursiveControlFlow(before: Int, after: Int): Unit = {
 
+    println("before: " + before)
+    println("after: " + after)
+    println("section1: " + _area1.section.start + " : " + _area1.section.end)
+    println("section2: " + _area2.section.start + " : " + _area2.section.end)
     var section: Section = Nil
     try {
       section = getDivisibleSection()
