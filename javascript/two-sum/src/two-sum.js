@@ -12,11 +12,11 @@ import ChainedHashTable from './chained-hash-table';
  * @prop {Boolean} isMultiple -输出结果是否需要多解
  */
 class TwoSum {
-  constructor(options = {}) {
-    const { getOptions, getInstances } = this.constructor;
+  constructor(options = { number: [], target: 0, isMultiple: true }) {
+    const { getInstances } = this.constructor;
 
     // 按顺序可配置和不可配置属性设置默认值
-    Object.assign(this, getOptions(options), getInstances());
+    Object.assign(this, options, getInstances());
 
     this.initIndiecs();
 
@@ -40,20 +40,6 @@ class TwoSum {
        */
       indices: [],
     };
-  }
-
-  /**
-   * @private
-   * @static
-   * @method
-   * @return {Object} 如果默认配置和用户配置生成配置项
-   */
-  static getOptions(options) {
-    return Object.assign({
-      numbers: [],
-      target: 0,
-      isMultiple: true,
-    }, options);
   }
 
   /**
