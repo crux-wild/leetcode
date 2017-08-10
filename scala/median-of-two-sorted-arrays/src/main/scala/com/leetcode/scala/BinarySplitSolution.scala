@@ -159,10 +159,6 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
 
   private def recursiveControlFlow(before: Int, after: Int): Unit = {
 
-    println("before: " + before)
-    println("after: " + after)
-    println("section1: " + _area1.section.start + " : " + _area1.section.end)
-    println("section2: " + _area2.section.start + " : " + _area2.section.end)
     var section: Section = Nil
     try {
       section = getDivisibleSection()
@@ -175,7 +171,6 @@ class BinarySplitSolution[T](area1: Area[T], area2: Area[T],
     }
     val section1Clips = new BinarySplitSection(_area1.section, true)
     val condition = processBranch(Portion.BEFORE, section1Clips, before)
-    println(condition)
     if ((condition == Condition.SPLIT_MEDIAN) ||
       (condition == Condition.NONE_MEDIAN) ||
       (_flag == true && condition ==  Condition.RESOLVED_MEDIAN))

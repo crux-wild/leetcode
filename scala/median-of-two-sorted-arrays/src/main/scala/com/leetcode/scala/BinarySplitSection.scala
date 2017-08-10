@@ -1,7 +1,8 @@
 package com.leetcode.scala
 
 class BinarySplitSection(section: Section, disjoint: Boolean = false) {
-  private lazy val _before = if (disjoint == true) getBefore()++ else getBefore()
+  //private lazy val _before = if (disjoint == true) getBefore()++ else getBefore()
+  private lazy val _before = getBefore()
   private lazy val _after = getAfter()
 
   def before = _before

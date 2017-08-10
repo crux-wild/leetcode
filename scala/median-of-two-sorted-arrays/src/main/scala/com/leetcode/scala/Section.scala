@@ -35,7 +35,7 @@ class Section(val head: Double, val tail: Double) {
 
   def /(divisor: Double): Section = {
     val quotients = _length / divisor
-    val length = _start + quotients
+    val length = quotients
     val head = _start
     val tail = getEnd(start = _start , length = length)
     if (head > tail)
@@ -46,7 +46,7 @@ class Section(val head: Double, val tail: Double) {
 
   def /(divisor: Int): Section = {
     val quotients = math.ceil(_length / divisor)
-    val length = _start + quotients
+    val length = quotients
     val head = _start
     val tail = getEnd(start = _start , length = length)
     if (head > tail)

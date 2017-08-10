@@ -8,10 +8,12 @@ class MedianValueStateMachine[T](count: Int) {
   private var _resolved = 0
   private var _isFinished = false
 
-  def surplus = _total - _resolved
   def total = _total
   def isFinished = _isFinished
 
+  def surplus: Int = {
+    _total - _resolved
+  }
   def median: Double = {
     if (_isFinished == false) {
       throw IllegalArgumentException(
