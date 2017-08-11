@@ -30,6 +30,7 @@ class MedianValueStatusMachine {
   }
 
   /**
+   * 根据区间计算中位数
    * @public
    * @static
    * @method

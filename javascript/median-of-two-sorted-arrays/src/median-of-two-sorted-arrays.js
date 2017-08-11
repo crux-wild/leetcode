@@ -5,6 +5,7 @@ import Area from './area';
 
 /**
  * 获取两个排序数组的中位数数值表征算法类
+ * @see https://leetcode.com/problems/median-of-two-sorted-arrays/description/
  * @class
  */
 class MedianOfTwoSortedArrays {
@@ -35,6 +36,7 @@ class MedianOfTwoSortedArrays {
   }
 
   /**
+   * 统计两个区域的总个数
    * @private
    * @method
    */
@@ -85,6 +87,7 @@ class MedianOfTwoSortedArrays {
   }
 
   /**
+   * 基于中位数进行二分查找
    * @private
    * @method
    */
@@ -148,6 +151,7 @@ class MedianOfTwoSortedArrays {
   }
 
   /**
+   * 根据当前上下文获取遍历方向
    * @private
    * @static
    * @method
@@ -176,6 +180,7 @@ class MedianOfTwoSortedArrays {
   }
 
   /**
+   * 解析两个不可分割区域
    * @private
    * @static
    * @method
@@ -235,6 +240,7 @@ class MedianOfTwoSortedArrays {
   }
 
   /**
+   * 获取可分割区域
    * @private
    * @static
    * @method

@@ -3,7 +3,7 @@ import NullSetException from './null-set-exception';
 import Section from './section';
 
 /**
- * 表示区间数据类
+ * 表示区域数据类
  * @class
  */
 class Area {
@@ -90,7 +90,7 @@ class Area {
   }
 
   /**
-   * 遍历区间
+   * 遍历区域
    * @public
    * @method
    */
@@ -111,7 +111,7 @@ class Area {
 
 
   /**
-   * 获取区间总长度
+   * 获取区域总长度
    * @public
    * @method
    */
@@ -120,7 +120,7 @@ class Area {
   }
 
   /**
-   * 获取区间总长度
+   * 获取区域总长度
    * @public
    * @method
    */

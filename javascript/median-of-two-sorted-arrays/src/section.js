@@ -55,6 +55,7 @@ class Section {
   }
 
   /**
+   * 检验区间是否是空集
    * @public
    * @method
    */
