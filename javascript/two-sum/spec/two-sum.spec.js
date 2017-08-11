@@ -83,5 +83,5 @@ test('Leetcode Problems: 1.Two Sum[none solution];', (it) => {
    */
   it.throws(() => {
     new TwoSum({ ...it.context.options, ...options });
-  }, 'No two sum solution');
+  }, 'No two sum solution;');
 });

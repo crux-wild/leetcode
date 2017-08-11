@@ -2,7 +2,7 @@
  * @file 1.Two Sum 数字重复较小情况下时间复杂度O(n)解决方案
  * @see https://leetcode.com/problems/two-sum/#/description
  */
-import InvalidArgumentException from './invalid-argument-exception';
+import IllegalArgumentException from './illegal-argument-exception';
 import ChainedHashTable from './chained-hash-table';
 
 /**
@@ -21,7 +21,7 @@ class TwoSum {
     this.initIndiecs();
 
     if (this.indices.length === 0) {
-      throw new InvalidArgumentException();
+      throw new IllegalArgumentException('No two sum solution;');
     }
   }
 
