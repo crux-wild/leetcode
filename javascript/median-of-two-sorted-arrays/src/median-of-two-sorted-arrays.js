@@ -4,6 +4,7 @@ import Section from './section';
 import Area from './area';
 
 /**
+ * O(log(n)log(m))
  * 获取两个排序数组的中位数数值表征算法类
  * @see https://leetcode.com/problems/median-of-two-sorted-arrays/description/
  * @class
@@ -47,6 +48,9 @@ class MedianOfTwoSortedArrays {
   }
 
   /**
+   * O(log(n))
+   * 注: 其中n指的是被二分的区域的总个数
+   *
    * 基于中位数和是否需要交集进行分割
    * @private
    * @method
@@ -87,6 +91,9 @@ class MedianOfTwoSortedArrays {
   }
 
   /**
+   * O(log(n))
+   * 注: 其中n是指的查找边界的区域的总个数
+   *
    * 基于中位数进行二分查找
    * @private
    * @method
@@ -199,11 +206,14 @@ class MedianOfTwoSortedArrays {
       unionSet.push(elem);
     });
 
+    /**
+     * O(1)
+     * 这里排序是元素个数小于4个情况, 所以是常数级别
+     */
     unionSet.sort((a, b) => {
       if (a < b) {
         return -1;
       }
-
       if (a > b) {
         return 1;
       }
@@ -384,6 +394,16 @@ class MedianOfTwoSortedArrays {
   }
 
   /**
+   * O(log(n)log(m))
+   *
+   * 获取中位数除了对二分拆分和二分查找都是常数级别的
+   * 其中二分拆分至多执行O(log(n))次对区域一进行拆分
+   * 每次拆分之后，需要执行O(log(m))次二分查找对区域二进行拆分
+   * 叠加起来的来说是O(log(n)log(m))
+   *
+   * 由于二分拆分进行的是深度优先遍历，如果一次遍历只找到一个解，
+   * 需要回溯查找第二个至多是2O(log(n - 1)log(m)),忽略常数仍然是O(log(n)log(m))
+   *
    * 计算中位数数值表征
    * @private
    * @method
