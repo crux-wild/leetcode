@@ -7,7 +7,21 @@ import test from 'ava';
 
 import MedianOfTwoSortedArrays from 'median-of-two-sorted-arrays/src/median-of-two-sorted-arrays';
 
-// 测试间隔间隔较大的情况
+// 测试包含相等的数字
+test('Leetcode Problems: 4. Median of Two Sorted Arrays: [contain equals number]', (it) => {
+  const arr1 = [-33.33, 33.33, 33.33];
+  const arr2 = [33.33, 33.33, 66.66];
+
+  const givenValue = 33.33;
+
+  const medianOfTwoSortedArrays = new MedianOfTwoSortedArrays({ arr1, arr2 });
+  const median = medianOfTwoSortedArrays.getMedian();
+
+  it.is(median, givenValue, 'The median of the two sorted array should be equal to' +
+    `given value{${givenValue}};`);
+});
+
+// 测试浮点数
 test('Leetcode Problems: 4. Median of Two Sorted Arrays: [floating number]', (it) => {
   const arr1 = [-33.33, -22.22, -11.10];
   const arr2 = [-5.5, 99.99, 222.22, 333.33, 999.99];
