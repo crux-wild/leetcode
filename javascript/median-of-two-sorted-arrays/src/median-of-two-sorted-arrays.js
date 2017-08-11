@@ -58,7 +58,6 @@ class MedianOfTwoSortedArrays {
     let before;
     let after;
 
-
     // 奇数个数
     if (count == 1) {
       // 需要交集
@@ -182,11 +181,10 @@ class MedianOfTwoSortedArrays {
    * @method
    */
   processIndivisbleAreas(area1 = null, area2 = null, before = 0,
-    after = 0) {
+    after = 0, medianCount = 0) {
 
     const { getDirection } = this.constructor;
     const { medianValue } = this;
-    const surplus = medianValue.getSurplus();
     const unionSet = [];
 
     area1.forEach((elem) => {
@@ -214,7 +212,7 @@ class MedianOfTwoSortedArrays {
     if (direction == 'after') {
       const length = unionSet.length;
       const end = length - 1 - after;
-      const start = end - (surplus - 1);
+      const start = end - (medianCount - 1);
 
       for (let index = end; index >= start; index--) {
         const median = unionSet[index];
@@ -226,7 +224,7 @@ class MedianOfTwoSortedArrays {
     // 从后遍历
     if (direction == 'before') {
       const start = before;
-      const end = start + surplus - 1;
+      const end = start + medianCount - 1;
 
       for (let index = start; index <= end && index <unionSet.length; index++) {
         const median = unionSet[index];
@@ -276,12 +274,34 @@ class MedianOfTwoSortedArrays {
 
   /**
    * @private
+   * @static
+   * @method
+   */
+  static getMedianCount(bound, count, surplus) {
+    let medianCount = 0;
+
+    if (surplus == 2) {
+      if (count >= bound + 2) {
+        medianCount = 2;
+      }
+    } else if (surplus == 1) {
+      if (count >= bound + 1) {
+        medianCount = 1;
+      }
+    }
+
+    return medianCount;
+  }
+
+  /**
+   * @private
    * @method
    */
   seekMedianInPortion(portion = 'before', areaClips = null,
     area = null, before = 0, after = 0, total = 0) {
 
     const surplus = this.medianValue.getSurplus();
+    const { getMedianCount } = this.constructor;
     // 所有解已经求解
     if (surplus == 0) { return false; }
 
@@ -295,15 +315,20 @@ class MedianOfTwoSortedArrays {
     const area1 = areaClips[portion];
     const count = statisticsCountOfAreas(area1, area2);
     const anotherCount = total - count;
+    let medianCount;
 
     checkPortion(portion);
     if (portion == 'before') {
-      if (count >= before + 1) {
-        this.seekMedianInAreas(area1, area2, before, after - anotherCount);
+      medianCount = getMedianCount(before, count, surplus);
+      if (medianCount >= 0) {
+        const newAfter = after - anotherCount;
+        this.seekMedianInAreas(area1, area2, before, newAfter, medianCount);
       }
     } else if (portion == 'after') {
-      if (count >= after + 1) {
-        this.seekMedianInAreas(area1, area2, before - anotherCount, after);
+      medianCount = getMedianCount(before, count, surplus);
+      if (medianCount >= 0) {
+        const newBefore = before - anotherCount;
+        this.seekMedianInAreas(area1, area2, newBefore , after, medianCount);
       }
     }
   }
@@ -313,7 +338,8 @@ class MedianOfTwoSortedArrays {
    * @static
    * @method
    */
-  seekMedianInAreas(area1 = null, area2 = null, before = 0, after = 0) {
+  seekMedianInAreas(area1 = null, area2 = null, before = 0, after = 0,
+    medianCount = 0) {
     const {
       getDivisibleArea,
       binarySplitArea,
@@ -328,7 +354,7 @@ class MedianOfTwoSortedArrays {
       divisbleArea = getDivisibleArea(area1, area2);
       total = statisticsCountOfAreas(area1, area2);
     } catch (e) {
-      this.processIndivisbleAreas(area1, area2, before, after);
+      this.processIndivisbleAreas(area1, area2, before, after, medianCount);
       return false;
     }
 
@@ -364,10 +390,9 @@ class MedianOfTwoSortedArrays {
     const before = median.one - 1;
     const after = total - median.two;
 
-    this.seekMedianInAreas(area1, area2, before, after);
+    this.seekMedianInAreas(area1, area2, before, after, median.count);
     this.median = medianValue.calculateMedianValue();
   }
-
 
   /**
    * 获取算法运行实例中位数结果
