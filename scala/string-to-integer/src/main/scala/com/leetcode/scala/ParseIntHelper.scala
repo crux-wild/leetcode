@@ -8,12 +8,14 @@ implicit class ParseIntHelper(val sc: StringContext) extends AnyVal {
   def int(args: Any*): AnyVal = {
     val strings = sc.parts.iterator
     var buf = new StringBuffer(strings.next)
-    while (string.hasNext) {
+    while (strings.hasNext) {
       buf append strings.next
     }
+    parseInt(buf)
   }
 
   def parseInt(builder: StringBuffer): AnyVal = {
-    // @TODO
+    0
+    //// @TODO
   }
 }

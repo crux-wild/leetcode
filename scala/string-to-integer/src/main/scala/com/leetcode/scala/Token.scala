@@ -3,5 +3,5 @@ package leetcode
 package scala
 
 trait Token {
-  def tag: Tag.Value
+  val tag: Tag.Value
 }
