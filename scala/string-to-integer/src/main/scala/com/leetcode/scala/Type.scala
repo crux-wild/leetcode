@@ -6,7 +6,6 @@ abstract class Type extends Token {
   type T
 
   val tag = Tag.TYPE
-
   var value: T = 0.asInstanceOf[T]
 }
 
