@@ -2,11 +2,11 @@ package com
 package leetcode
 package scala
 
-class LiteralLexer[C]
+class IntegerLiteralLexer[C]
   (val lexemeBegin: Byte, val context: C) extends Lexer[C] {
 
   type P = Byte
-  type T = Type
+  type T = IntermedianRepresentations
 
   private var _token = null
 

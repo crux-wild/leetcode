@@ -2,7 +2,7 @@ package com
 package leetcode
 package scala
 
-class PrefixLexer(val lexemeBegin: Byte) extends Lexer {
+class PrefixLexer[C](val lexemeBegin: Byte, val context: C) extends Lexer[C] {
   type P = Byte
   type T = Radix
 
