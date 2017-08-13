@@ -8,6 +8,7 @@ trait Lexer {
   val context: String
   val lexemeBegin: Int
   var forward: Int = 0
+  var status = 0
 
   def nextChar: Char = {
     var index = lexemeBegin + forward
