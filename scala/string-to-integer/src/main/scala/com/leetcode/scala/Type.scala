@@ -12,7 +12,7 @@ abstract class Type extends Token {
 
 object Type {
   implicit def unit2type(unit: Unit): Type = new Type{
-                                                      type T = Int
-                                                       val lexeme = ""
-                                                     }
+                                                 type T = Int
+                                                 val lexeme = ""
+                                               }
 }
