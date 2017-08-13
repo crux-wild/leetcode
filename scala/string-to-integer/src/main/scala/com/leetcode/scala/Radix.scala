@@ -2,13 +2,13 @@ package com
 package leetcode
 package scala
 
-class Radix(val lexeme: String, val radix: Byte) extends Token {
+class Radix(val lexeme: String, val value: Byte)
+  extends Token {
+
   val tag = Tag.RADIX
+
 }
 
-object Radix extends Enumeration {
-  type Radix = Value
-  val OCT, HEX = Value
-
-  def isRadix(r: Radix) = !(r == OCT || r == HEX)
+object Radix {
+  implicit def unit2radix(unit: Unit): Radix = new Radix("", 10)
 }

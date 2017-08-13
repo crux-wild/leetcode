@@ -2,8 +2,7 @@ package com
 package leetcode
 package scala
 
-class InfixLexer[C](val lexemeBegin: Byte, val context: C) extends Lexer[C] {
-  type P = Byte
+class InfixLexer(val lexemeBegin: Int, val context: String) extends Lexer {
   type T = Notation
 
   private var _token = null

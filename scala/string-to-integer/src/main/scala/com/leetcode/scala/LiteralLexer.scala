@@ -2,10 +2,7 @@ package com
 package leetcode
 package scala
 
-class LiteralLexer[C]
-  (val lexemeBegin: Byte, val context: C) extends Lexer[C] {
-
-  type P = Byte
+class LiteralLexer(val lexemeBegin: Int, val context: String) extends Lexer {
   type T = Type
 
   private var _token = null

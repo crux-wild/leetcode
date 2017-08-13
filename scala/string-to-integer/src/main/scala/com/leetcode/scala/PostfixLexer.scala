@@ -2,8 +2,7 @@ package com
 package leetcode
 package scala
 
-class PostfixLexer[C](val lexemeBegin: Byte, val context: C) extends Lexer[C] {
-  type P = Byte
+class PostfixLexer(val lexemeBegin: Int, val context: String) extends Lexer {
   type T = Type
 
   private var _token = null
