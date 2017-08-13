@@ -120,7 +120,7 @@ class Area {
   }
 
   /**
-   * 获取区域总长度
+   * 获取区域一个片段
    * @public
    * @method
    */

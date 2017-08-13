@@ -108,6 +108,7 @@ class MedianOfTwoSortedArrays {
 
       while (areaClip.getTail() > tail) {
         if (areaClip.getTotal() <= 1) {
+          // 循环到不可分,还是无法匹配,返回空集
           areaClip = areaClip.getClip(new Section(NaN, NaN));
           break;
         }
@@ -119,6 +120,7 @@ class MedianOfTwoSortedArrays {
 
       while (areaClip.getHead() < head) {
         if (areaClip.getTotal() <= 1) {
+          // 循环到不可分,还是无法匹配,返回空集
           areaClip = areaClip.getClip(new Section(NaN, NaN));
           break;
         }
@@ -229,7 +231,7 @@ class MedianOfTwoSortedArrays {
       const end = length - 1 - after;
       const start = end - (medianCount - 1);
 
-      for (let index = end; index >= start; index--) {
+      for (let index = end; index >= start && index >= 0; index--) {
         const median = unionSet[index];
 
         medianValue.appendMedian(median);
@@ -241,7 +243,7 @@ class MedianOfTwoSortedArrays {
       const start = before;
       const end = start + medianCount - 1;
 
-      for (let index = start; index <= end && index <unionSet.length; index++) {
+      for (let index = start; index <= end && index < unionSet.length; index++) {
         const median = unionSet[index];
 
         medianValue.appendMedian(median);
