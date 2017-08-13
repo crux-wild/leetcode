@@ -18,8 +18,7 @@ trait Lexer {
     if (index < context.length)
       context.apply(index)
     else
-      // @TODO
-      '0'
+      throw new IndexOutOfBoundsException
   }
 
   def token: T

@@ -21,7 +21,7 @@ class DigitsLexer(val lexemeBegin: Int, val context: String) extends Lexer {
       val char = nextChar.toLower
       status match {
         case 0 => if (isMatch(char))
-                    status = 1 else LexicalParseFailException
+                    status = 1 else throw new LexicalParseFailException
         case 1 => if (isMatch(char))
                     status = 1 else status = 2
         case 2 => return new Digits(context.substring(lexemeBegin, forward - 1))
