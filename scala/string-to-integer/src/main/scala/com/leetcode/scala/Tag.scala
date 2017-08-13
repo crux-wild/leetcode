@@ -4,7 +4,7 @@ package scala
 
 object Tag extends Enumeration {
   type Tag = Value
-  val RADIX, TYPE, NOTATION = Value
+  val RADIX, TYPE, NOTATION, LITERAL = Value
 
-  def isTag(t: Tag) = !(t == RADIX || t == TYPE || t == NOTATION)
+  def isTag(t: Tag) = !(t == RADIX || t == TYPE || t == NOTATION || t == LITERAL)
 }

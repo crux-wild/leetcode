@@ -2,7 +2,9 @@ package com
 package leetcode
 package scala
 
-class Type[T](val lexeme: String) extends Token {
+abstract class Type(val lexeme: String) extends Token {
+  type T
+
   val tag = Tag.TYPE
 
   var value: T = 0.asInstanceOf[T]
