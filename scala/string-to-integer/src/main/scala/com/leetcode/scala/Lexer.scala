@@ -3,7 +3,7 @@ package leetcode
 package scala
 
 trait Lexer {
-  type T
+  type T <: Token
 
   val context: String
   val lexemeBegin: Int
