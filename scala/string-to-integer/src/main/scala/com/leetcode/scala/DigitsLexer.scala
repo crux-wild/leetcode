@@ -15,7 +15,6 @@ class DigitsLexer(val lexemeBegin: Int, val context: String) extends Lexer {
     else
       false
   }
-
   private def getToken: Digits = {
     while (true) {
       val char = nextChar.toLower
