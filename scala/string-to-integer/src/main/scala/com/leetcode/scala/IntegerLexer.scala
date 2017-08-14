@@ -11,13 +11,12 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
 
   override def token: T = _token
 
-  private def getIndex: Int = lexemeBegin + forward
-
   private def addSubtoken = (IntegerIntermedianRepresentations(_, _, _, _, _)).curried
+
+  private def getIndex: Int = lexemeBegin + forward
 
   private def updateIntermedian(token: Token): AnyRef = {
     if (token.lexeme != "") forward += token.lexeme.length
-
     addSubtoken(token)
   }
 
