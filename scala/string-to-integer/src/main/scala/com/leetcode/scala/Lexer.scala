@@ -10,11 +10,11 @@ trait Lexer {
   var forward: Int = 0
   var status = 0
 
+  def getIndex: Int = lexemeBegin + forward
+
   def nextChar: Char = {
-    var index = lexemeBegin + forward
-
-    index = index + 1
-
+    forward += 1
+    val index = getIndex
     if (index < context.length)
       context.apply(index)
     else
