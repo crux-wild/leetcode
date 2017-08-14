@@ -3,7 +3,7 @@ package leetcode
 package scala
 
 class Digits(val lexeme: String) extends Token {
-  val tag: Tag.Value = Tag.DIGITS
+  val tag: Tag.Value = Tag.Literal
 }
 
 object Digits {

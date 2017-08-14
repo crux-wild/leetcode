@@ -3,7 +3,7 @@ package leetcode
 package scala
 
 class Notation(val lexeme: String) extends Token {
-  val tag = Tag.NOTATION
+  val tag = Tag.Notation
 }
 
 object Notation {

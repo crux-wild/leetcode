@@ -5,8 +5,7 @@ package scala
 class Radix(val lexeme: String, val value: Byte)
   extends Token {
 
-  val tag = Tag.RADIX
-
+  val tag = Tag.Radix
 }
 
 object Radix {
