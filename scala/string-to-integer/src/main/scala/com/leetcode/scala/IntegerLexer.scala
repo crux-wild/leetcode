@@ -22,8 +22,9 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
     val type1 = getSubtoken(new PostfixLexer(getIndex, context).token)
 
     val lexeme = context.substring(lexemeBegin, forward)
-    val value = calculateIntegerValue(IntegerIntermedianRepresentations(
-      radix, digits1, notation, digits2, type1))
+    val intermedian = IntegerIntermedianRepresentations(
+      radix, digits1, notation, digits2, type1)
+    val value = calculateIntegerValue(intermedian)
 
     new IntegerLiteral(lexeme, value)
   }
