@@ -7,7 +7,7 @@ trait Lexer {
 
   val context: String
   val lexemeBegin: Int
-  var forward: Int = 0
+  var forward: Int = -1
   var status = 0
 
   def getIndex: Int = lexemeBegin + forward

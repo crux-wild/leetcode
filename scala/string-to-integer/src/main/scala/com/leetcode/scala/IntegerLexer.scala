@@ -9,22 +9,21 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
 
   override def token: T = _token
 
-  private def addSubtoken = (IntegerIntermedianRepresentations(_, _, _, _, _)).curried
-  private def updateIntermedian(token: Token): AnyRef = {
-    println(addSubtoken)
-    if (token.lexeme != "") forward += token.lexeme.length
-    addSubtoken(token)
+  private def getSubtoken[T](token: T with Token): T = {
+    forward += token.lexeme.length
+    token
   }
 
   private def getToken: IntegerLiteral = {
-    updateIntermedian(new PrefixLexer(getIndex, context).token)
-    updateIntermedian(new DigitsLexer(getIndex, context).token)
-    updateIntermedian(new InfixLexer(getIndex, context).token)
-    updateIntermedian(new DigitsLexer(getIndex, context).token)
+    val radix  = getSubtoken(new PrefixLexer(getIndex, context).token)
+    val digits1 = getSubtoken(new DigitsLexer(getIndex, context).token)
+    val notation = getSubtoken(new InfixLexer(getIndex, context).token)
+    val digits2 = getSubtoken(new DigitsLexer(getIndex, context).token)
+    val type1 = getSubtoken(new PostfixLexer(getIndex, context).token)
 
-    val intermedian = updateIntermedian(new PostfixLexer(getIndex, context).token)
     val lexeme = context.substring(lexemeBegin, forward)
-    val value = calculateIntegerValue(intermedian.asInstanceOf[IntegerIntermedianRepresentations])
+    val value = calculateIntegerValue(IntegerIntermedianRepresentations(
+      radix, digits1, notation, digits2, type1))
 
     new IntegerLiteral(lexeme, value)
   }
@@ -58,6 +57,7 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
   }
 
   private def calculateDigitsValue(digits: String, radix: Byte): Double = {
+    println(digits)
     var value = 0
     digits.foreach { digit =>
       if (radix == 10 && (digit >= '0' && digit <= '9'))

@@ -3,5 +3,5 @@ package leetcode
 package scala
 
 abstract class IntermedianRepresentations
-case class IntegerIntermedianRepresentations(radix: Token, digits1: Token,
-  notation: Token, digits2: Token, type1: Token)
+case class IntegerIntermedianRepresentations(radix: Radix, digits1: Digits,
+  notation: Notation, digits2: Digits, type1: Type)
