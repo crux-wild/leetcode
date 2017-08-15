@@ -7,18 +7,18 @@ trait Lexer {
 
   val context: String
   val lexemeBegin: Int
-  var forward: Int = -1
+  var forward: Int = 0
   var status = 0
 
   def getIndex: Int = lexemeBegin + forward
 
   def nextChar: Char = {
-    forward += 1
     val index = getIndex
+    var char = 0.toChar
     if (index < context.length)
-      context.apply(index)
-    else
-      throw new IndexOutOfBoundsException
+      char = context.apply(index)
+      forward = forward + 1
+    char
   }
 
   def token: T

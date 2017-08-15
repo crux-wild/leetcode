@@ -10,7 +10,7 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
   override def token: T = _token
 
   private def getSubtoken[T](token: T with Token): T = {
-    forward += token.lexeme.length
+    forward = forward + token.lexeme.length
     token
   }
 
