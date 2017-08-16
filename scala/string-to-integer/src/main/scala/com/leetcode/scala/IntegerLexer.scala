@@ -35,7 +35,6 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
     val radix = token1.value
     val long = token5.lexeme
     var container = 0.0
-
     if (notation != "e") {
       val base = getDigitsValue(digits1, radix)
       container = container + base
