@@ -38,10 +38,11 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
 
     // 使用科学计数法
     if (notation == "e") {
-      // 不包含幂值
+      // 不包含有效幂值
       if (digits2.length == 0) {
         new LexicalParseFailException
       } else {
+        // 包含有效幂值
         val power = getDigitsValue(digits2, radix)
         val base = getDigitsValue(digits1, radix)
         container = container + math.pow(10, power) + base
