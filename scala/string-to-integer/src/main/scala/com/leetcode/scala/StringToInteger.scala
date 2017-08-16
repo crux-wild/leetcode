@@ -4,7 +4,6 @@ package scala
 
 import _root_.scala.{ math }
 
-
 class StringToInteger(val literal: String) {
   private var _value: AnyVal = getValue
 

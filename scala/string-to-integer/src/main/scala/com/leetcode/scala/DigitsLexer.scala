@@ -21,12 +21,11 @@ class DigitsLexer(val lexemeBegin: Int, val context: String) extends Lexer {
       var char = nextChar.toLower
       status match {
         case 0 => if (isMatch(char))
-                    status = 1 else new Digits("")
+                    status = 1 else return new Digits("")
         case 1 => if (isMatch(char))
                     status = 1 else status = 2
         case 2 => return new Digits(
-                          context.substring(
-                                            lexemeBegin,
+                          context.substring(lexemeBegin,
                                             lexemeBegin + forward - 2))
       }
     }
