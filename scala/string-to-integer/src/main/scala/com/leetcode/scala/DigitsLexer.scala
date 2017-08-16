@@ -22,13 +22,11 @@ class DigitsLexer(val lexemeBegin: Int, val context: String,
   private def getToken: Digits = {
     while (true) {
       status match {
-        case 0 => if (isMatch(nextChar.toLower))
-                    status = 1 else return new Digits("")
-        case 1 => if (isMatch(nextChar.toLower))
-                    status = 1 else status = 2
-        case 2 => return new Digits(
-                          context.substring(lexemeBegin,
-                                            lexemeBegin + forward - 1))
+        case 0 => if (isMatch(nextChar.toLower)) status = 2 else status = 1
+        case 1=> return new Digits("")
+        case 2 => if (isMatch(nextChar.toLower)) status = 2 else status = 3
+        case 3 => return new Digits(context.substring(lexemeBegin,
+                                                      lexemeBegin + forward - 1))
       }
     }
   }

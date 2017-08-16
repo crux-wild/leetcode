@@ -11,16 +11,10 @@ class InfixLexer(val lexemeBegin: Int, val context: String) extends Lexer {
 
   private def getToken: Notation = {
     while (true) {
-      var char = '\0'
-      try {
-        char = nextChar.toLower
-      } catch {
-        case e: IndexOutOfBoundsException => return
-      }
       status match {
-        case 0 => if (char == 'e')
-                    status = 1 else return new Notation("")
-        case 1 => return new Notation("e")
+        case 0 => if (nextChar.toLower == 'e') status = 2 else status = 1
+        case 1 => return new Notation("")
+        case 2 => return new Notation("e")
       }
     }
   }
