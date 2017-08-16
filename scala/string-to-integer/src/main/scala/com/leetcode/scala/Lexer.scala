@@ -21,5 +21,10 @@ trait Lexer {
     char
   }
 
+  def currentChar: Char = {
+    val index = getIndex
+    context.apply(index)
+  }
+
   def token: T
 }

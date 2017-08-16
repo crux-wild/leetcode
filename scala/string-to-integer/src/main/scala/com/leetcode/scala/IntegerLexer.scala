@@ -10,21 +10,55 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
   override def token: T = _token
 
   private def getToken: IntegerLiteral = {
-    val radix =  new PrefixLexer(getIndex, context).token
-    forward = forward + radix.lexeme.length
-    val digits1 = new DigitsLexer(getIndex, context, radix.value).token
-    forward = forward + digits1.lexeme.length
-    val notation = new InfixLexer(getIndex, context).token
-    forward = forward + notation.lexeme.length
-    val digits2 = new DigitsLexer(getIndex, context, radix.value).token
-    forward = forward + digits2.lexeme.length
-    val type1 = new PostfixLexer(getIndex, context).token
-    forward = forward + type1.lexeme.length
+    while (true) {
+      status match {
+        case 0 => if (nextChar.toLower == 0) status = 1 else status = 14
+        case 1 => if (nextChar.toLower == 'x') status = 2 else status = 8
+        case 2 => if (isHexChar(nextChar.toLower)) status = 3 else stauts = 7
+        case 3 => if (isHexChar(nextChar.toLower)) status = 3 else stauts = 4
+        case 4 => if (nextChar.toLower == 'l') status = 5 else status = 6
+        case 5 => return calculateValue(getHexRadix, getDigits, null, null, getLongType)
+        case 6 => return calculateValue(getHexRadix, getDigits, null, null, null)
+        case 7 => throw new LexicalParseFailException
 
-    val value = calculateValue(radix, digits1, notation, digits2, type1)
-    val lexeme = context.substring(lexemeBegin, forward)
-    new IntegerLiteral(lexeme, value)
+        case 8 => if (isOctChar(nextChar.toLower)) status = 9 else status = 13
+        case 9 => if (isOctChar(nextChar.toLower)) status = 9 else status = 10
+        case 10 => if (nextChar.toLower == 'l') status = 11 else status = 12
+        case 11 => return calculateValue(getOctRadix, getDigits, null, null, getLongType)
+        case 12 => return calculateValue(getOctRadix, getDigits, null, null, null)
+        case 13 => throw new LexicalParseFailException
+
+        case 14 => if (isBcdChar(currentChar.toLower)) status = 15 else throw new LexicalParseFailException
+        case 15 => if (isBcdChar(nextChar.toLower)) status = 15 else status = 16
+        case 16 => if (currentChar.toLower == 'e') status = 17 else status = 23
+        case 17 => if (isBcdChar(nextChar.toLower)) status = 18 else status = 22
+        case 18 => if (isBcdChar(nextChar.toLower)) status = 18 else status = 19
+        case 19 => if (nextChar.toLower == 'l') status = 20 else status = 21
+        case 20 => return calculateValue(getBcdRadix, getDigits, null, null, getLongType)
+        case 21 => return calculateValue(getBcdRadix, getDigits, null, null, null)
+        case 22 => throw new LexicalParseFailException
+        case 23 => if (isBcdChar(currentChar.toLower)) status = 24 else status = 28
+        case 24 => if (isBcdChar(currentChar.toLower)) status = 24 else status = 25
+        case 25 => if (nextChar.toLower == 'l') status = 26 else status = 27
+        case 26 => return calculateValue(getBcdRadix, getDigits, null, null, getLongType)
+        case 27 => return calculateValue(getBcdRadix, getDigits, null, null, null)
+        case 28 => throw new LexicalParseFailException
+      }
+    }
+
+    //val value = calculateValue(radix, digits1, notation, digits2, type1)
+    //val lexeme = context.substring(lexemeBegin, forward)
+    //new IntegerLiteral(lexeme, value)
   }
+
+  private def isOctChar(char: Char): Boolean = (char <= '7' && char >= '0')
+  private def isBcdChar(char: Char): Boolean = (char <= '9' && char >= '0')
+  private def isHexChar(char: Char): Boolean =
+    ((char <= '9' && char >= '0') || (char <= 'f' && char >= 'a'))
+  private def getHexRadix: Radix = new Radix("0x", 16)
+  private def getLongType: Type = new Type("l")
+  private def getDigits(start = beginLexeme, end = forward): String
+    = context.substring(start, end)
 
   private def calculateValue(radix: Radix, digits1: Digits, notation: Notation,
     digits2: Digits, long: Type): AnyVal = {
