@@ -5,6 +5,7 @@
 | 1          | [Two Sum][Two Sum title]                                                                         | [Javascript][Two Sum solution]                          | Easy                                             |
 | 2          | [Add Two Numbers][Add Two Numbers title]                                                         | [Java][Add Two Numbers solution]                        | Medium                                           |
 | 2          | [Median of Two Sorted Arrays][Median of Two Sorted Arrays title]                                 | [Javascript][Median of Two Sorted Arrays solution]      | Hard                                             |
+| 8          | [String to Integer (atoi)][String to Integer (atoi) title]                                       | [Scala][String to Integer (atoi) solution]              | Hard                                             |
 
 [Two Sum title]: https://leetcode.com/problems/two-sum/#/description
 [Two Sum solution]: https://github.com/crux-wild/leetcode/blob/master/javascript/two-sum/src/two-sum.js
@@ -15,5 +16,5 @@
 [Median of Two Sorted Arrays title]: https://leetcode.com/problems/median-of-two-sorted-arrays/description/
 [Median of Two Sorted Arrays solution]: https://github.com/crux-wild/leetcode/blob/master/javascript/median-of-two-sorted-arrays/src/median-of-two-sorted-arrays.js
 
-[Substring with Concatenation of All Words title]: https://leetcode.com/problems/substring-with-concatenation-of-all-words/#/description
-[Substring with Concatenation of All Words solution]: https://github.com/crux-wild/leetcode/blob/master/c-language/find-substring/find-substring.c
+[String to Integer (atoi) title]: https://leetcode.com/problems/string-to-integer-atoi/description/
+[String to Integer (atoi) solution]: https://github.com/crux-wild/leetcode/blob/master/scala/string-to-integer/src/main/scala/com/leetcode/scala/StringToInteger.scala
