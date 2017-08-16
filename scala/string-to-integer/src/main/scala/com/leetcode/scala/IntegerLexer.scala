@@ -26,39 +26,37 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
     new IntegerLiteral(lexeme, value)
   }
 
-  private def calculateValue(radix: Radix, digits1: Digits, notation: Notation,
-    digits2: Digits, type1: Type): AnyVal = {
+  private def calculateValue(token1: Radix, token2: Digits, token3: Notation,
+    token4: Digits, token5: Type): AnyVal = {
 
-    // @TODO Need reconstruction
-    val hasE = (notation.lexeme == "e")
-    val radixValue = radix.value
-    val typeLexeme = type1.lexeme
-    val digitsLexeme1 = digits1.lexeme
-    val digitsLexeme2 = digits2.lexeme
-
+    val notation = token3.lexeme
+    val digits1 = token2.lexeme
+    val digits2 = token4.lexeme
+    val radix = token1.value
+    val long = token5.lexeme
     var container = 0.0
-    var base = 0.0
-    var power = 0.0
 
-    base = calculateDigitsValue(digitsLexeme1, radixValue)
-    if (hasE == true) {
-      if (digitsLexeme2.length == 0)
+    // 使用科学计数法
+    if (notation == "e") {
+      // 不包含幂值
+      if (digits2.length == 0) {
         new LexicalParseFailException
-      else
-        power = calculateDigitsValue(digitsLexeme2, radixValue)
+      } else {
+        val power = getDigitsValue(digits2, radix)
+        val base = getDigitsValue(digits1, radix)
         container = container + math.pow(10, power) + base
+      }
     } else {
+      val base = getDigitsValue(digits1, radix)
       container = container + base
     }
-
-    typeLexeme match {
-      case "l" => container.asInstanceOf[Long]
-      case _ => container.asInstanceOf[Int]
+    long match {
+      case "l" => container.toLong
+      case _ => container.toInt
     }
   }
 
-
-  private def calculateDigitsValue(digits: String, radix: Byte): Double = {
+  private def getDigitsValue(digits: String, radix: Byte): Double = {
     val reverseDigits = digits.reverse
     var value = 0.0
     for (index <- 0 to (digits.length - 1)) {
