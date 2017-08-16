@@ -26,38 +26,31 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
     new IntegerLiteral(lexeme, value)
   }
 
-  private def calculateValue(token1: Radix, token2: Digits, token3: Notation,
-    token4: Digits, token5: Type): AnyVal = {
+  private def calculateValue(radix: Radix, digits1: Digits, notation: Notation,
+    digits2: Digits, long: Type): AnyVal = {
 
-    val notation = token3.lexeme
-    val digits1 = token2.lexeme
-    val digits2 = token4.lexeme
-    val radix = token1.value
-    val long = token5.lexeme
-    var container = 0.0
-    if (notation != "e") {
-      val base = getDigitsValue(digits1, radix)
-      container = container + base
+    val container = if (notation.lexeme != "e") {
+      getDigitsValue(digits1.lexeme, radix.value)
     } else {
       // 不包含有效幂值
-      if (digits2.length == 0) {
-        new LexicalParseFailException
+      if (digits2.lexeme.length != 0) {
+        throw new LexicalParseFailException
       } else {
         // 包含有效幂值
-        val power = getDigitsValue(digits2, radix)
-        val base = getDigitsValue(digits1, radix)
-        container = container + math.pow(10, power) + base
+        val power = getDigitsValue(digits2.lexeme, radix.value)
+        val base = getDigitsValue(digits1.lexeme, radix.value)
+        math.pow(10, power) + base
       }
     }
-    long match {
+    long.lexeme match {
       case "l" => container.toLong
-      case _ => container.toInt
+      case "" => container.toInt
     }
   }
 
   private def getDigitsValue(digits: String, radix: Byte): Double = {
+    var value = if (digits.length == 0) Double.NaN else 0.0
     val reverseDigits = digits.reverse
-    var value = 0.0
     for (index <- 0 to (digits.length - 1)) {
       val digit = reverseDigits.apply(index)
       if (radix == 8)
