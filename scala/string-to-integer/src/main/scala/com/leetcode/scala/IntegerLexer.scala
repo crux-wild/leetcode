@@ -35,18 +35,20 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
     val digitsLexeme1 = digits1.lexeme
     val digitsLexeme2 = digits2.lexeme
 
-    val base: Double = calculateDigitsValue(digitsLexeme1, radixValue)
-    var power: Double = 0
-    var container: Double = 0
+    var container = 0.0
+    var base = 0.0
+    var power = 0.0
 
-    if (hasE == false)
-      container += base
-    else
+    base = calculateDigitsValue(digitsLexeme1, radixValue)
+    if (hasE == true) {
       if (digitsLexeme2.length == 0)
         new LexicalParseFailException
       else
         power = calculateDigitsValue(digitsLexeme2, radixValue)
-        container += (math.pow(10, power) + base)
+        container = container + math.pow(10, power) + base
+    } else {
+      container = container + base
+    }
 
     typeLexeme match {
       case "l" => container.asInstanceOf[Long]
@@ -54,24 +56,27 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
     }
   }
 
+
   private def calculateDigitsValue(digits: String, radix: Byte): Double = {
-    var value = 0
-    digits.foreach { digit =>
+    val reverseDigits = digits.reverse
+    var value = 0.0
+    for (index <- 0 to (digits.length - 1)) {
+      val digit = reverseDigits.apply(index)
       if (radix == 8)
         if (digit >= '0' && digit <= '7')
-          value += digit - '0'
+          value = value + (digit - '0') * math.pow(10, index)
         else
           throw new LexicalParseFailException
 
       if (radix == 10)
         if (digit >= '0' && digit <= '9')
-          value = value + digit - '0'
+          value = value + (digit - '0') * math.pow(10, index)
         else
           throw new LexicalParseFailException
 
       if (radix == 16)
         if (digit >= 'a' && digit <= 'f')
-          value += digit - 'a' + 10
+          value = value + (digit - '0') * math.pow(10, index)
         else
           throw new LexicalParseFailException
     }
