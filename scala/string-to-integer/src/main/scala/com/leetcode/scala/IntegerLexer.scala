@@ -29,6 +29,7 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
   private def calculateValue(radix: Radix, digits1: Digits, notation: Notation,
     digits2: Digits, type1: Type): AnyVal = {
 
+    // @TODO Need reconstruction
     val hasE = (notation.lexeme == "e")
     val radixValue = radix.value
     val typeLexeme = type1.lexeme
