@@ -16,6 +16,11 @@ class WholeLexer(val context: String, val lexemeBegin: Int) extends Lexer[Whole]
   private def isOctDigit(char: Char) = (char <= '7' && char >= '0')
 
   private def getToken: Whole = {
+    val value = getValue
+    new Whole(value)
+  }
+
+  private def getValue: AnyVal = {
     while (true) {
       status match {
         case 0 => if (nextChar.toLower == '0') status = 1 else status =
@@ -25,6 +30,5 @@ class WholeLexer(val context: String, val lexemeBegin: Int) extends Lexer[Whole]
         case 4 => if ()
       }
     }
-    new Whole(1)
   }
 }
