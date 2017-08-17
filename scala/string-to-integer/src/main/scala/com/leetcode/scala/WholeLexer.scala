@@ -23,6 +23,35 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
 
   private def getValue: AnyVal = {
     updateIntermediate
+    caculateIntermediateValue
+  }
+
+  private def caculateIntermediateValue: AnyVal = {
+  }
+
+  private def getDigitsValue(digits: String, radix: Byte): Double = {
+    val rDigits = digits.reverse
+    var value = Double.NaN
+    for (index <- 0 to (rDigits.length - 1)) {
+      val digit = rDigits.apply(index).toLower
+      val base = radix match {
+        case 8 if (isOctDigit(digit)) => bcdChar2Int(digit)
+        case 10 if (isBcdDigit(digit)) => bcdChar2Int(digit)
+        case 16 if (isHexDigit(digit)) => hexChar2Int(digit)
+        case _ => Double.NaN
+      }
+      if ((!base.isNaN) && (value.isNaN)) value = 0.0
+      value = value + base.toDouble * math.pow(radix, index)
+    }
+    value
+  }
+
+  private def bcdChar2Int(char: Char): Int = char - '0'
+  private def hexChar2Int(char: Char): Int = {
+    if (char <= 'f' && char >= 'a')
+      char - 'a' + 10
+    else
+      char - '0'
   }
 
   private def updateIntermediate: Unit = {
