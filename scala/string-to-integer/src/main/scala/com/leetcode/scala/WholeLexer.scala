@@ -10,10 +10,19 @@ class WholeLexer(val context: String, val lexemeBegin: Int) extends Lexer[Whole]
 
   def token = _token
 
+  private def isHexDigit(char: Char) =
+    ((char <= 'f' && char >= 'a') || (char <='9' && char >= '0'))
+  private def isBcdDigit(char: Char) = (char <= '9' && char >= '0')
+  private def isOctDigit(char: Char) = (char <= '7' && char >= '0')
+
   private def getToken: Whole = {
     while (true) {
       status match {
-        case 0 =>
+        case 0 => if (nextChar.toLower == '0') status = 1 else status =
+        case 1 => if (nextChar.toLower == 'x') status = 2 else status =
+        case 2 => if (isHexChar(nextChar.toLower)) status = 3 else status =
+        case 3 => if (isHexChar(nextChar.toLower)) status = 3 else status = 4
+        case 4 => if ()
       }
     }
     new Whole(1)
