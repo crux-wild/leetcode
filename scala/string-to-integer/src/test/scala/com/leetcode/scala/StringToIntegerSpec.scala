@@ -9,21 +9,21 @@ class StringToIntegerSpec extends FlatSpec {
     assert(new StringToInteger("100").value == 100)
   }
 
-  behavior of "Leetcode  8. String to Integer (atoi): [OCT case]"
+  //behavior of "Leetcode  8. String to Integer (atoi): [OCT case]"
 
-  it should "The \"0123\"[String] should convert to 83[Int]" in {
-    assert(new StringToInteger("0123").value == 83)
-  }
+  //it should "The \"0123\"[String] should convert to 83[Int]" in {
+    //assert(new StringToInteger("0123").value == 83)
+  //}
 
-  behavior of "Leetcode  8. String to Integer (atoi): [Hex case]"
+  //behavior of "Leetcode  8. String to Integer (atoi): [Hex case]"
 
-  it should "The \"0xfff\"[String] should convert to 4905[Int]" in {
-    assert(new StringToInteger("0xfff").value == 4095)
-  }
+  //it should "The \"0xfff\"[String] should convert to 4905[Int]" in {
+    //assert(new StringToInteger("0xfff").value == 4095)
+  //}
 
-  behavior of "Leetcode  8. String to Integer (atoi): [E notation case]"
+  //behavior of "Leetcode  8. String to Integer (atoi): [E notation case]"
 
-  it should "The \"44e2\"[String] should convert to 4400[Int]" in {
-    assert(new StringToInteger("44e2").value == 4400)
-  }
+  //it should "The \"44e2\"[String] should convert to 4400[Int]" in {
+    //assert(new StringToInteger("44e2").value == 4400)
+  //}
 }

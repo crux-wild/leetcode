@@ -16,8 +16,10 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
 
   private def getValue(): AnyVal = {
     while (true) {
+      println("status: " +  status)
+      println("char: " + currentChar)
       status match {
-        case 0 => if (nextChar.toLower == 0) status = 1 else status = 14
+        case 0 => if (nextChar.toLower == '0') status = 1 else status = 14
         case 1 => if (nextChar.toLower == 'x') status = 2 else status = 8
         case 2 => if (isHexChar(nextChar.toLower)) status = 3 else status = 7
         case 3 => if (isHexChar(nextChar.toLower)) status = 3 else status = 4
@@ -35,19 +37,13 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
 
         case 14 => if (isBcdChar(currentChar.toLower)) status = 15 else throw new LexicalParseFailException
         case 15 => if (isBcdChar(nextChar.toLower)) status = 15 else status = 16
-        case 16 => if (currentChar.toLower == 'e') status = 17 else status = 23
+        case 16 => if (currentChar.toLower == 'e') status = 17 else status = 19
         case 17 => if (isBcdChar(nextChar.toLower)) status = 18 else status = 22
         case 18 => if (isBcdChar(nextChar.toLower)) status = 18 else status = 19
-        case 19 => if (nextChar.toLower == 'l') status = 20 else status = 21
+        case 19 => if (currentChar.toLower == 'l') status = 20 else status = 21
         case 20 => return calculateValue(getBcdRadix, getDigits(), null, null, getLongType)
         case 21 => return calculateValue(getBcdRadix, getDigits(), null, null, null)
         case 22 => throw new LexicalParseFailException
-        case 23 => if (isBcdChar(currentChar.toLower)) status = 24 else status = 28
-        case 24 => if (isBcdChar(currentChar.toLower)) status = 24 else status = 25
-        case 25 => if (nextChar.toLower == 'l') status = 26 else status = 27
-        case 26 => return calculateValue(getBcdRadix, getDigits(), null, null, getLongType)
-        case 27 => return calculateValue(getBcdRadix, getDigits(), null, null, null)
-        case 28 => throw new LexicalParseFailException
       }
     }
   }
@@ -60,8 +56,8 @@ class IntegerLexer (val lexemeBegin: Int, val context: String) extends Lexer {
   private def getBcdRadix: Radix = new Radix("", 10)
   private def getOctRadix: Radix = new Radix("0", 8)
   private def getLongType: Type = new Type("l")
-  private def getDigits(start: Int = lexemeBegin, end: Int = forward): Digits
-    = new Digits(context.substring(start, end))
+  private def getDigits(start: Int = lexemeBegin, offset: Int = forward): Digits
+    = new Digits(context.substring(start, start + offset - 1))
 
   private def calculateValue(radix: Radix, digits1: Digits, notation: Notation,
     digits2: Digits, long: Type): AnyVal = {

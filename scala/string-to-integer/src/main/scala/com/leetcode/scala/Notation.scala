@@ -7,5 +7,9 @@ class Notation(val lexeme: String) extends Token {
 }
 
 object Notation {
-  implicit def unit2notaion(unit: Unit): Notation = new Notation("")
+  implicit def null2notation(anyRef : AnyRef): Notation = {
+    if (anyRef == null) new Notation("")
+  }
+
+  implicit def unit2notation(unit: Unit): Notation = new Notation("")
 }
