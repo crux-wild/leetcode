@@ -3,10 +3,10 @@ package leetcode
 package scala
 
 trait Lexer[T <: Token] {
-  val lexemeBegin: Int
+  var lexemeBegin: Int
   var forward = -1
   val context: String
-  val status = 0
+  var status = 0
 
   def token: T
 
