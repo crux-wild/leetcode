@@ -104,7 +104,6 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
     lexemeBegin = lexemeBegin + forward + offset
     forward = 0
   }
-
   private def getLexeme(offset: Int = 0): String = {
     context.substring(lexemeBegin, lexemeBegin + forward + offset)
   }
