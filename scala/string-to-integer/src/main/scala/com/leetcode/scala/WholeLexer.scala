@@ -44,7 +44,6 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
       }
     }
   }
-
   private def caculateIntermediateValue: AnyVal = {
     val radix = _intermediate.prefix.value
     val digits1 = _intermediate.digits1.lexeme
@@ -181,7 +180,6 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
             moveLexemeBegin(-1)
           }
         }
-
         case 11 => {
           if (currentChar.toLower == 'l') {
             tokenList += new Long("l")
