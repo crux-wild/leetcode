@@ -2,6 +2,9 @@ package com
 package leetcode
 package scala
 
+/**
+ * @constructor 对整数字面量求值的中间表示
+ */
 class Intermediate {
   private var _prefix = new Radix(10)
   private var _digits1 = new Digits("")

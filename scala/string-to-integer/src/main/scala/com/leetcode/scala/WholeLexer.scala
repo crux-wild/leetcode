@@ -5,16 +5,16 @@ package scala
 import _root_.scala.collection.mutable.{ ListBuffer }
 import _root_.scala.{ math }
 
+/**
+ * @constructor 整数字面量词法分析器
+ * @param context 词法解析的上下文
+ * @param lexemeBegin 词法单元的开始指针
+ */
 class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole] {
   private val _intermediate = new Intermediate()
   private val _token = getToken
 
   def token = _token
-
-  private def isHexDigit(char: Char) =
-    ((char <= 'f' && char >= 'a') || (char <='9' && char >= '0'))
-  private def isBcdDigit(char: Char) = (char <= '9' && char >= '0')
-  private def isOctDigit(char: Char) = (char <= '7' && char >= '0')
 
   private def getToken: Whole = {
     val value = getValue
@@ -24,6 +24,25 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
   private def getValue: AnyVal = {
     updateIntermediate
     caculateIntermediateValue
+  }
+
+  private def updateIntermediate: Unit = {
+    var digitsCount = 0
+    getTokenList.foreach { token =>
+      token match {
+        case radix: Radix => _intermediate.prefix = radix
+        case digits: Digits => {
+          if (digitsCount == 0) {
+            _intermediate.digits1 = digits
+            digitsCount = digitsCount + 1
+          } else if (digitsCount == 1) {
+            _intermediate.digits2 = digits
+          }
+        }
+        case notation: Notation => _intermediate.infix = notation
+        case long: Long => _intermediate.suffix = long
+      }
+    }
   }
 
   private def caculateIntermediateValue: AnyVal = {
@@ -51,6 +70,11 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
     }
   }
 
+  private def isHexDigit(char: Char) =
+    ((char <= 'f' && char >= 'a') || (char <='9' && char >= '0'))
+  private def isBcdDigit(char: Char) = (char <= '9' && char >= '0')
+  private def isOctDigit(char: Char) = (char <= '7' && char >= '0')
+
   private def getDigitsValue(digits: String, radix: Byte): Double = {
     val rDigits = digits.reverse
     var value = Double.NaN
@@ -76,29 +100,11 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
       char - '0'
   }
 
-  private def updateIntermediate: Unit = {
-    var digitsCount = 0
-    getTokenList.foreach { token =>
-      token match {
-        case radix: Radix => _intermediate.prefix = radix
-        case digits: Digits => {
-          if (digitsCount == 0) {
-            _intermediate.digits1 = digits
-            digitsCount = digitsCount + 1
-          } else if (digitsCount == 1) {
-            _intermediate.digits2 = digits
-          }
-        }
-        case notation: Notation => _intermediate.infix = notation
-        case long: Long => _intermediate.suffix = long
-      }
-    }
-  }
-
   private def moveLexemeBegin(offset: Int = 0): Unit = {
     lexemeBegin = lexemeBegin + forward + offset
     forward = 0
   }
+
   private def getLexeme(offset: Int = 0): String = {
     context.substring(lexemeBegin, lexemeBegin + forward + offset)
   }
