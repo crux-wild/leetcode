@@ -84,8 +84,8 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
         case digits: Digits => {
           if (digitsCount == 0) {
             _intermediate.digits1 = digits
-            digitsCount += 1
-          } else {
+            digitsCount = digitsCount + 1
+          } else if (digitsCount == 1) {
             _intermediate.digits2 = digits
           }
         }
@@ -97,6 +97,7 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
 
   private def moveLexemeBegin(offset: Int = 0): Unit = {
     lexemeBegin = lexemeBegin + forward + offset
+    forward = 0
   }
   private def getLexeme(offset: Int = 0): String = {
     context.substring(lexemeBegin, lexemeBegin + forward + offset)
@@ -106,30 +107,79 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
     val tokenList = new ListBuffer[Token]()
     while (true) {
       status match {
-        case 0 => if (nextChar.toLower == '0') status = 1 else status = 1000
+        case 0 => if (nextChar.toLower == '0') status = 1 else status = 6
         case 1 =>  {
           if (nextChar.toLower == 'x') {
             status = 2
             tokenList += new Radix(16)
             moveLexemeBegin(1)
           } else {
+            status = 5
             tokenList += new Radix(8)
             moveLexemeBegin(-1)
           }
         }
-        case 2 => if (isHexDigit(nextChar.toLower)) status = 3 else status = 1000
+        case 2 => if (isHexDigit(nextChar.toLower)) status = 3 else status = 11
         case 3 => {
           if (isHexDigit(nextChar.toLower)) {
             status = 3
           } else {
-            status = 4
+            status = 11
             tokenList += new Digits(getLexeme(0))
             moveLexemeBegin(-1)
           }
         }
-        case 4 => {
-          if (currentChar.toLower == 'l') {
+        case 4 => if (isOctDigit(nextChar.toLower)) status = 6 else status = 11
+        case 5 => {
+          if (isOctDigit(nextChar.toLower)) {
             status = 5
+          } else {
+            status = 11
+            tokenList += new Digits(getLexeme(0))
+            moveLexemeBegin(-1)
+          }
+        }
+        case 6 => if (isBcdDigit(currentChar.toLower)) status = 7 else status = 11
+        case 7 => {
+          if (isBcdDigit(nextChar.toLower)) {
+            status = 7
+          } else {
+            status = 8
+            tokenList += new Digits(getLexeme(0))
+            moveLexemeBegin(-1)
+          }
+        }
+        case 8 => {
+          if (nextChar.toLower == 'e') {
+            tokenList += new Notation("e")
+            moveLexemeBegin(1)
+            status = 9
+          } else {
+            status = 11
+          }
+        }
+        case 9 => {
+          if (isBcdDigit(currentChar.toLower)) {
+            status = 10
+          } else {
+            tokenList += new Digits(getLexeme(0))
+            moveLexemeBegin(-1)
+            status = 11
+          }
+        }
+        case 10 => {
+          if (isBcdDigit(nextChar.toLower)) {
+            status = 10
+          } else {
+            status = 11
+            tokenList += new Digits(getLexeme(0))
+            moveLexemeBegin(-1)
+          }
+        }
+
+        case 11 => {
+          if (currentChar.toLower == 'l') {
+            status = 1000
             tokenList += new Long("l")
             moveLexemeBegin(0)
             return tokenList

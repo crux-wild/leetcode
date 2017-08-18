@@ -10,15 +10,16 @@ trait Lexer[T <: Token] {
 
   def token: T
 
+  def currentIndex: Int = lexemeBegin + forward
+
   def nextChar: Char = {
     forward = forward + 1
     currentChar
   }
 
   def currentChar: Char = {
-    val index = lexemeBegin + forward
-    if ((index < context.length) && (index >= 0))
-      context.apply(index)
+    if ((currentIndex < context.length) && (currentIndex >= 0))
+      context.apply(currentIndex)
     else
       0.toChar
   }
