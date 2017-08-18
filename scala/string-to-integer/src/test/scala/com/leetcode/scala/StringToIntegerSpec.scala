@@ -1,8 +1,8 @@
-//import _root_.org.scalatest.{ FlatSpec }
+import _root_.org.scalatest.{ FlatSpec }
 
-//import _root_.com.leetcode.scala.{ StringToInteger }
+import _root_.com.leetcode.scala.{ StringToInteger }
 
-//class StringToIntegerSpec extends FlatSpec {
+class StringToIntegerSpec extends FlatSpec {
   //behavior of "Leetcode  8. String to Integer (atoi): [BCD case]"
 
   //it should "The \"100\"[String] should convert to 100[Int]" in {
@@ -17,13 +17,13 @@
 
   //behavior of "Leetcode  8. String to Integer (atoi): [Hex case]"
 
-  //it should "The \"0xfff\"[String] should convert to 4905[Int]" in {
-    //assert(new StringToInteger("0xfff").value == 4095)
-  //}
+  it should "The \"0xfff\"[String] should convert to 4905[Int]" in {
+    assert(new StringToInteger("0xfff").value == 4095)
+  }
 
   //behavior of "Leetcode  8. String to Integer (atoi): [E notation case]"
 
   //it should "The \"44e2\"[String] should convert to 4400[Int]" in {
     //assert(new StringToInteger("44e2").value == 4400)
   //}
-//}
+}

@@ -2,6 +2,6 @@ package com
 package leetcode
 package scala
 
-class Radix(val radix: Byte) extends Token {
+class Radix(val value: Byte) extends Token {
   val tag = Tag.Radix
 }

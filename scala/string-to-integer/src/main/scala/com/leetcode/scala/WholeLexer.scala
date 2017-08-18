@@ -3,6 +3,7 @@ package leetcode
 package scala
 
 import _root_.scala.collection.mutable.{ ListBuffer }
+import _root_.scala.{ math }
 
 class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole] {
   private val _tokenList = new ListBuffer[Token]()
@@ -27,6 +28,28 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
   }
 
   private def caculateIntermediateValue: AnyVal = {
+    val radix = _intermediate.prefix.value
+    val digits1 = _intermediate.digits1.lexeme
+    val notation = _intermediate.infix.lexeme
+    val digits2 = _intermediate.digits2.lexeme
+    val long = _intermediate.suffix.lexeme
+
+    val base = getDigitsValue(digits1, radix)
+    val value = radix match {
+      case 8 => base
+      case 16 => base
+      case 10 => notation match {
+        case "e" => {
+          val power = getDigitsValue(digits2, radix)
+          base * math.pow(10, power)
+        }
+        case _ => base
+      }
+    }
+    long match {
+      case "l" if (!value.isNaN) => value.toLong
+      case _ if (!value.isNaN) => value.toInt
+    }
   }
 
   private def getDigitsValue(digits: String, radix: Byte): Double = {
