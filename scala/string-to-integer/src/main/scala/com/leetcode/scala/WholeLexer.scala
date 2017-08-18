@@ -6,7 +6,6 @@ import _root_.scala.collection.mutable.{ ListBuffer }
 import _root_.scala.{ math }
 
 class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole] {
-  private val _tokenList = new ListBuffer[Token]()
   private val _intermediate = new Intermediate()
   private val _token = getToken
 
@@ -47,8 +46,8 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
       }
     }
     long match {
-      case "l" if (!value.isNaN) => value.toLong
-      case _ if (!value.isNaN) => value.toInt
+      case "l" => if (!value.isNaN) value.toLong else value
+      case "" => if (!value.isNaN) value.toInt else value
     }
   }
 
@@ -79,15 +78,16 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
 
   private def updateIntermediate: Unit = {
     var digitsCount = 0
-    fillTokenList
-    _tokenList.foreach { token =>
+    getTokenList.foreach { token =>
       token match {
         case radix: Radix => _intermediate.prefix = radix
         case digits: Digits => {
-          if (digitsCount == 0)
+          if (digitsCount == 0) {
             _intermediate.digits1 = digits
-          else
+            digitsCount += 1
+          } else {
             _intermediate.digits2 = digits
+          }
         }
         case notation: Notation => _intermediate.infix = notation
         case long: Long => _intermediate.suffix = long
@@ -95,46 +95,50 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
     }
   }
 
-  private def moveLexemeBegin(recall: Int = 0): Unit = {
-    lexemeBegin = lexemeBegin + forward - recall
+  private def moveLexemeBegin(offset: Int = 0): Unit = {
+    lexemeBegin = lexemeBegin + forward + offset
+  }
+  private def getLexeme(offset: Int = 0): String = {
+    context.substring(lexemeBegin, lexemeBegin + forward + offset)
   }
 
-  private def getLexeme(recall: Int = 0): String
-    = context.substring(lexemeBegin, lexemeBegin + forward + recall)
-
-  private def fillTokenList: Unit = {
+  private def getTokenList: ListBuffer[Token] = {
+    val tokenList = new ListBuffer[Token]()
     while (true) {
       status match {
         case 0 => if (nextChar.toLower == '0') status = 1 else status = 1000
         case 1 =>  {
           if (nextChar.toLower == 'x') {
             status = 2
-            _tokenList += new Radix(16)
-            moveLexemeBegin(0)
+            tokenList += new Radix(16)
+            moveLexemeBegin(1)
           } else {
-            _tokenList += new Radix(8)
+            tokenList += new Radix(8)
             moveLexemeBegin(-1)
           }
         }
         case 2 => if (isHexDigit(nextChar.toLower)) status = 3 else status = 1000
         case 3 => {
-          if (isHexDigit(nextChar.toLower))
+          if (isHexDigit(nextChar.toLower)) {
             status = 3
-          else
+          } else {
             status = 4
-            _tokenList += new Digits(getLexeme(0))
+            tokenList += new Digits(getLexeme(0))
             moveLexemeBegin(-1)
+          }
         }
         case 4 => {
-          if (nextChar.toLower == 'l') {
-            status = 4
-            _tokenList += new Long("l")
+          if (currentChar.toLower == 'l') {
+            status = 5
+            tokenList += new Long("l")
             moveLexemeBegin(0)
+            return tokenList
           } else {
-            status = 1000
+            return tokenList
           }
         }
       }
     }
+    tokenList
   }
 }

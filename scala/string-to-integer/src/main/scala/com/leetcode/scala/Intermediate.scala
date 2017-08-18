@@ -16,7 +16,7 @@ class Intermediate {
 
   def digits1 = _digits1
   def digits1_= (digits: Digits): Unit ={
-    _digits1 = digits1
+    _digits1 = digits
   }
 
   def infix = _infix
@@ -26,7 +26,7 @@ class Intermediate {
 
   def digits2 = _digits2
   def digits2_= (digits: Digits): Unit = {
-    _digits2 = digits2
+    _digits2 = digits
   }
 
   def suffix = _suffix
