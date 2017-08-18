@@ -179,7 +179,6 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
 
         case 11 => {
           if (currentChar.toLower == 'l') {
-            status = 1000
             tokenList += new Long("l")
             moveLexemeBegin(0)
             return tokenList
