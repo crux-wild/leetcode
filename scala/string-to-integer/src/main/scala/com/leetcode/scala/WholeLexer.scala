@@ -11,7 +11,6 @@ import _root_.scala.{ math }
  * @param lexemeBegin 词法单元的开始指针
  */
 class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole] {
-  private val _intermediate = new Intermediate()
   private val _token = getToken
 
   def token = _token
@@ -22,34 +21,35 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
   }
 
   private def getValue: AnyVal = {
-    updateIntermediate
-    caculateIntermediateValue
+    val intermediate = new Intermediate()
+    updateIntermediate(intermediate)
+    caculateIntermediateValue(intermediate)
   }
 
-  private def updateIntermediate: Unit = {
+  private def updateIntermediate(intermediate: Intermediate): Unit = {
     var digitsCount = 0
     getTokenList.foreach { token =>
       token match {
-        case radix: Radix => _intermediate.prefix = radix
+        case radix: Radix => intermediate.prefix = radix
         case digits: Digits => {
           if (digitsCount == 0) {
-            _intermediate.digits1 = digits
+            intermediate.digits1 = digits
             digitsCount = digitsCount + 1
           } else if (digitsCount == 1) {
-            _intermediate.digits2 = digits
+            intermediate.digits2 = digits
           }
         }
-        case notation: Notation => _intermediate.infix = notation
-        case long: Long => _intermediate.suffix = long
+        case notation: Notation => intermediate.infix = notation
+        case long: Long => intermediate.suffix = long
       }
     }
   }
-  private def caculateIntermediateValue: AnyVal = {
-    val radix = _intermediate.prefix.value
-    val digits1 = _intermediate.digits1.lexeme
-    val notation = _intermediate.infix.lexeme
-    val digits2 = _intermediate.digits2.lexeme
-    val long = _intermediate.suffix.lexeme
+  private def caculateIntermediateValue(intermediate: Intermediate): AnyVal = {
+    val radix = intermediate.prefix.value
+    val digits1 = intermediate.digits1.lexeme
+    val notation = intermediate.infix.lexeme
+    val digits2 = intermediate.digits2.lexeme
+    val long = intermediate.suffix.lexeme
 
     val base = getDigitsValue(digits1, radix)
     val value = radix match {
@@ -143,7 +143,12 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
             moveLexemeBegin(-1)
           }
         }
-        case 6 => if (isBcdDigit(currentChar.toLower)) status = 7 else status = 11
+        case 6 => {
+          if (isBcdDigit(currentChar.toLower))
+            status = 7
+          else
+            status = 11
+        }
         case 7 => {
           if (isBcdDigit(nextChar.toLower)) {
             status = 7
