@@ -26,6 +26,11 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
     caculateIntermediateValue(intermediate)
   }
 
+  /**
+   * 根据上下文解析得到词法单位流,是确定有穷状态机提供的机制
+   * 而根据词法单位流更新中间表示是对整数字面量求值的机制
+   * 使用中间表示可以分离机制与策略
+   */
   private def updateIntermediate(intermediate: Intermediate): Unit = {
     var digitsCount = 0
     getTokenList.foreach { token =>
@@ -68,12 +73,6 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
       case "" => if (!value.isNaN) value.toInt else value
     }
   }
-
-  private def isHexDigit(char: Char) =
-    ((char <= 'f' && char >= 'a') || (char <='9' && char >= '0'))
-  private def isBcdDigit(char: Char) = (char <= '9' && char >= '0')
-  private def isOctDigit(char: Char) = (char <= '7' && char >= '0')
-
   private def getDigitsValue(digits: String, radix: Byte): Double = {
     val rDigits = digits.reverse
     var value = Double.NaN
@@ -91,6 +90,12 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
     value
   }
 
+  private def isHexDigit(char: Char) =
+    ((char <= 'f' && char >= 'a') || (char <='9' && char >= '0'))
+  private def isBcdDigit(char: Char) = (char <= '9' && char >= '0')
+  private def isOctDigit(char: Char) = (char <= '7' && char >= '0')
+
+
   private def bcdChar2Int(char: Char): Int = char - '0'
   private def hexChar2Int(char: Char): Int = {
     if (char <= 'f' && char >= 'a')
@@ -99,14 +104,18 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
       char - '0'
   }
 
-  private def moveLexemeBegin(offset: Int = 0): Unit = {
-    lexemeBegin = lexemeBegin + forward + offset
-    forward = 0
-  }
-  private def getLexeme(offset: Int = 0): String = {
-    context.substring(lexemeBegin, lexemeBegin + forward + offset)
-  }
-
+  /**
+   * ## 不同数制的正则表达式
+   *
+   * **Oct RegExp**: /^0[0-7]+$/
+   * **Hex RegExp**: /^0x[0-9a-f]+$/
+   * **Bcd RegExp**: /^([0-9]+)(e[0-9]+)*$/
+   *
+   * ## 与正则方案比较
+   *
+   * 确定有穷状态机和正则表达式相比可以匹配相同的词法单元,但是正则需要解释执行,
+   * 相对确定有穷状态机需要更多运行时性能消耗
+   */
   private def getTokenList: ListBuffer[Token] = {
     val tokenList = new ListBuffer[Token]()
     while (true) {
@@ -197,5 +206,12 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
       }
     }
     tokenList
+  }
+  private def moveLexemeBegin(offset: Int = 0): Unit = {
+    lexemeBegin = lexemeBegin + forward + offset
+    forward = 0
+  }
+  private def getLexeme(offset: Int = 0): String = {
+    context.substring(lexemeBegin, lexemeBegin + forward + offset)
   }
 }
