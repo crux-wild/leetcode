@@ -95,6 +95,13 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
   private def isBcdDigit(char: Char) = (char <= '9' && char >= '0')
   private def isOctDigit(char: Char) = (char <= '7' && char >= '0')
 
+  private def moveLexemeBegin(offset: Int = 0): Unit = {
+    lexemeBegin = lexemeBegin + forward + offset
+    forward = 0
+  }
+  private def getLexeme(offset: Int = 0): String = {
+    context.substring(lexemeBegin, lexemeBegin + forward + offset)
+  }
 
   private def bcdChar2Int(char: Char): Int = char - '0'
   private def hexChar2Int(char: Char): Int = {
@@ -206,12 +213,5 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
       }
     }
     tokenList
-  }
-  private def moveLexemeBegin(offset: Int = 0): Unit = {
-    lexemeBegin = lexemeBegin + forward + offset
-    forward = 0
-  }
-  private def getLexeme(offset: Int = 0): String = {
-    context.substring(lexemeBegin, lexemeBegin + forward + offset)
   }
 }
