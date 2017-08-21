@@ -43,28 +43,22 @@ class WordMatrix:
          transpose_matrix[col][row] = matrix[row][col]
     return transpose_matrix
 
-class WordText:
+class TransposeFile:
   def __init__(self, file_path):
     path = Path(file_path)
     self.path = path.resolve()
 
-  def get_text(self):
+    word_matrix = WordMatrix(text=self.get_file_content())
+    transpose_matrix = word_matrix.get_transpose()
+    self.transpose_content = WordMatrix.format_output_matrix(transpose_matrix)
+
+  def get_file_content(self):
     path = self.path
     if (path.is_file()):
       file = path.open()
       text = file.read()
       file.close()
       return text
-
-class TransposeFile:
-  def __init__(self, file_path):
-    word_text = WordText(file_path)
-    word_matrix = WordMatrix(text=word_text.get_text())
-    transpose_matrix = word_matrix.get_transpose()
-    self.transpose_text = WordMatrix.format_output_matrix(transpose_matrix)
-
-  def get_transpose_text(self):
-    return self.transpose_text
 
 def main():
   parser = argparse.ArgumentParser(
@@ -74,7 +68,7 @@ def main():
   args = parser.parse_args()
 
   transpose_file = TransposeFile(file_path=args.file[0])
-  text = transpose_file.get_transpose_text()
+  text = transpose_file.transpose_content
   sys.stdout.write(text)
 
 main()
