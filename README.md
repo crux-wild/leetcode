@@ -4,7 +4,7 @@
 | ---------- | -------------------------------------------------------------------------------------------------| --------------------------------------------------------| -------------------------------------------------|
 | 1          | [Two Sum][Two Sum title]                                                                         | [Javascript][Two Sum solution]                          | Easy                                             |
 | 2          | [Add Two Numbers][Add Two Numbers title]                                                         | [Java][Add Two Numbers solution]                        | Medium                                           |
-| 2          | [Median of Two Sorted Arrays][Median of Two Sorted Arrays title]                                 | [Javascript][Median of Two Sorted Arrays solution]      | Hard                                             |
+| 4          | [Median of Two Sorted Arrays][Median of Two Sorted Arrays title]                                 | [Javascript][Median of Two Sorted Arrays solution]      | Hard                                             |
 | 8          | [String to Integer (atoi)][String to Integer (atoi) title]                                       | [Scala][String to Integer (atoi) solution]              | Medium                                           |
 
 [Two Sum title]: https://leetcode.com/problems/two-sum/#/description
