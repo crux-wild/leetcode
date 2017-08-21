@@ -20,5 +20,5 @@
 [String to Integer (atoi) title]: https://leetcode.com/problems/string-to-integer-atoi/description/
 [String to Integer (atoi) solution]: https://github.com/crux-wild/leetcode/blob/master/scala/string-to-integer/src/main/scala/com/leetcode/scala/StringToInteger.scala
 
-[Transpose File title]: https://leetcode.com/problems/string-to-integer-atoi/description/
+[Transpose File title]: https://leetcode.com/problems/transpose-file/description/
 [Transpose File solution]: https://github.com/crux-wild/leetcode/blob/master/scala/string-to-integer/src/main/scala/com/leetcode/scala/StringToInteger.scala
