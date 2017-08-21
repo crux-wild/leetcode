@@ -28,7 +28,7 @@ class WholeLexer(val context: String, var lexemeBegin: Int) extends Lexer[Whole]
 
   /**
    * 根据上下文解析得到词法单位流,是确定有穷状态机提供的机制
-   * 而根据词法单位流更新中间表示是对整数字面量求值的机制
+   * 而根据词法单位流更新中间表示是对整数字面量求值的策略
    * 使用中间表示可以分离机制与策略
    */
   private def updateIntermediate(intermediate: Intermediate): Unit = {
