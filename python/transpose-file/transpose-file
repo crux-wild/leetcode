@@ -43,7 +43,6 @@ class WordMatrix:
          transpose_matrix[col][row] = matrix[row][col]
     return transpose_matrix
 
-
 class WordText:
   def __init__(self, file_path):
     path = Path(file_path)
