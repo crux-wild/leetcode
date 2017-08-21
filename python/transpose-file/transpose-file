@@ -19,25 +19,37 @@ class WordMatrix:
       words = line.split(" ")
       self.matrix.append(words)
 
-  def get_number_of_rows(self):
-    return len(self.matrix)
+  @staticmethod
+  def get_number_of_rows(matrix):
+    return len(matrix)
 
-  def get_number_of_cols(self):
-    return len(self.matrix[0])
+  @staticmethod
+  def get_number_of_cols(matrix):
+    return len(matrix[0])
+
+  @staticmethod
+  def format_output_matrix(matrix):
+    rows = self.get_number_Of_rows(matrix)
+    cols = self.get_number_Of_cols(matrix)
+    for col in range(row):
+      "{0}, {1}, {2}".format(matrix[row])
+      print("{0}, {1}, {2}".format(matrix[row]))
 
   def get_transpose(self):
-    rows = self.get_number_Of_rows()
-    cols = self.get_number_Of_cols()
+    matrix = self.matrix
+    rows = WordMatrix.get_number_of_rows(matrix)
+    cols = WordMatrix.get_number_of_cols(matrix)
     transpose_matrix = [[]] * cols
     for col in range(cols):
       matrix[col] = [ None ] * rows
       for row in range(rows):
-        transpose_matrix[col][row] = self.matrix[row][col]
+        transpose_matrix[col][row] = matrix[row][col]
     return matrix
+
 
 class WordText:
   def __init__(self, file_path):
-    path = Path(path_string)
+    path = Path(file_path)
     self.path = path.resolve()
 
   def get_text(self):
@@ -50,8 +62,9 @@ class WordText:
 
 class TransposeFile:
   def __init__(self):
-    wordText = WordText(file_path=args.file[0])
-    text = wordText.get_text()
-    wordMatrix = WordMatrix(text)
+    word_text = WordText(file_path=args.file[0])
+    word_matrix = WordMatrix(text=word_text.get_text())
+    transpose_matrix = word_matrix.get_transpose()
+    WordText.format_output_matrix
 
 transposeFile = TransposeFile()
