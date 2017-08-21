@@ -21,4 +21,4 @@
 [String to Integer (atoi) solution]: https://github.com/crux-wild/leetcode/blob/master/scala/string-to-integer/src/main/scala/com/leetcode/scala/StringToInteger.scala
 
 [Transpose File title]: https://leetcode.com/problems/transpose-file/description/
-[Transpose File solution]: https://github.com/crux-wild/leetcode/blob/master/python/transpose-file/transpose-file
+[Transpose File solution]: https://github.com/crux-wild/leetcode/blob/master/python/transpose-file/src/transpose-file
