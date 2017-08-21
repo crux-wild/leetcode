@@ -5,12 +5,6 @@ from pathlib import Path
 import argparse
 import sys
 
-parser = argparse.ArgumentParser(
-  description="Given a [FILE], transpose its content.")
-parser.add_argument("file", metavar="FILE", type=str, nargs=1,
-  help="A directory of a given [FILE]")
-args = parser.parse_args()
-
 class WordMatrix:
   matrix = []
 
@@ -74,6 +68,12 @@ class TransposeFile:
     return self.transpose_text
 
 def main():
+  parser = argparse.ArgumentParser(
+    description="Given a [FILE], transpose its content.")
+  parser.add_argument("file", metavar="FILE", type=str, nargs=1,
+    help="A directory of a given [FILE]")
+  args = parser.parse_args()
+
   transpose_file = TransposeFile(file_path=args.file[0])
   text = transpose_file.get_transpose_text()
   sys.stdout.write(text)
