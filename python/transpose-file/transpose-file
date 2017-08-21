@@ -3,6 +3,7 @@
 
 from pathlib import Path
 import argparse
+import sys
 
 parser = argparse.ArgumentParser(
   description="Given a [FILE], transpose its content.")
@@ -16,8 +17,9 @@ class WordMatrix:
   def __init__(self, text):
     lines = text.split("\n")
     for line in lines:
-      words = line.split(" ")
-      self.matrix.append(words)
+      if line != "":
+        words = line.split(" ")
+        self.matrix.append(words)
 
   @staticmethod
   def get_number_of_rows(matrix):
@@ -29,11 +31,12 @@ class WordMatrix:
 
   @staticmethod
   def format_output_matrix(matrix):
-    rows = self.get_number_Of_rows(matrix)
-    cols = self.get_number_Of_cols(matrix)
-    for col in range(row):
-      "{0}, {1}, {2}".format(matrix[row])
-      print("{0}, {1}, {2}".format(matrix[row]))
+    list = []
+    rows = WordMatrix.get_number_of_rows(matrix)
+    cols = WordMatrix.get_number_of_cols(matrix)
+    for row in range(rows):
+      list.append(" ".join(matrix[row]))
+    return "\n".join(list)
 
   def get_transpose(self):
     matrix = self.matrix
@@ -41,10 +44,10 @@ class WordMatrix:
     cols = WordMatrix.get_number_of_cols(matrix)
     transpose_matrix = [[]] * cols
     for col in range(cols):
-      matrix[col] = [ None ] * rows
+      transpose_matrix[col] = [ None ] * rows
       for row in range(rows):
-        transpose_matrix[col][row] = matrix[row][col]
-    return matrix
+         transpose_matrix[col][row] = matrix[row][col]
+    return transpose_matrix
 
 
 class WordText:
@@ -61,10 +64,18 @@ class WordText:
       return text
 
 class TransposeFile:
-  def __init__(self):
-    word_text = WordText(file_path=args.file[0])
+  def __init__(self, file_path):
+    word_text = WordText(file_path)
     word_matrix = WordMatrix(text=word_text.get_text())
     transpose_matrix = word_matrix.get_transpose()
-    WordText.format_output_matrix
+    self.transpose_text = WordMatrix.format_output_matrix(transpose_matrix)
 
-transposeFile = TransposeFile()
+  def get_transpose_text(self):
+    return self.transpose_text
+
+def main():
+  transpose_file = TransposeFile(file_path=args.file[0])
+  text = transpose_file.get_transpose_text()
+  sys.stdout.write(text)
+
+main()
