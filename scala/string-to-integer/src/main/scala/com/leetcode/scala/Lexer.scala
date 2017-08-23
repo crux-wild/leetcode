@@ -18,8 +18,9 @@ trait Lexer[T <: Token] {
   }
 
   def currentChar: Char = {
-    if ((currentIndex < context.length) && (currentIndex >= 0))
-      context.apply(currentIndex)
+    val index = currentIndex
+    if ((index < context.length) && (index >= 0))
+      context.apply(index)
     else
       0.toChar
   }
