@@ -8,7 +8,7 @@ lazy val commonSettings = Seq(
 
 lazy val root = (project in file("."))
   .settings(
-    name := "8. String to Integer (atoi)",
+    name := "224. Basic Calculator",
     commonSettings,
     libraryDependencies ++= Seq(
       "org.scalatest" %% "scalatest" % "3.0.1" % "test"
