@@ -58,7 +58,7 @@ class WordMatrix:
         rows = WordMatrix.get_number_of_rows(matrix)
         for row in range(rows):
             lines.append(" ".join(matrix[row]))
-        return "\n".join(lines)
+        return "\n".join(lines) + "\n"
 
     def get_transpose(self):
         """获取当前矩阵数据转置
@@ -122,4 +122,5 @@ def main():
     text = transpose_file.transpose_content
     sys.stdout.write(text)
 
-main()
+if __name__ == "__main__":
+    main()
