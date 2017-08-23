@@ -22,3 +22,6 @@
 
 [Transpose File title]: https://leetcode.com/problems/transpose-file/description/
 [Transpose File solution]: https://github.com/crux-wild/leetcode/blob/master/python/transpose-file/src/transpose_file.py
+
+[Basic Calculator title]: https://leetcode.com/problems/basic-calculator/description/
+[Basic Calculator solution]: https://github.com/crux-wild/leetcode/blob/master/scala/basic-calculator/src/main/scala/com/leetcode/scala/BasicCalculator.scala
