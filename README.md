@@ -7,6 +7,7 @@
 | 4          | [Median of Two Sorted Arrays][Median of Two Sorted Arrays title]                                 | [Javascript][Median of Two Sorted Arrays solution]      | Hard                                             |
 | 8          | [String to Integer (atoi)][String to Integer (atoi) title]                                       | [Scala][String to Integer (atoi) solution]              | Medium                                           |
 | 194        | [Transpose File][Transpose File title]                                                           | [Python][Transpose File solution]                       | Medium                                           |
+| 224        | [Basic Calculator][Basic Calculator title]                                                       | [scala][Basic Calculator title solution]                | Hard                                             |
 
 [Two Sum title]: https://leetcode.com/problems/two-sum/#/description
 [Two Sum solution]: https://github.com/crux-wild/leetcode/blob/master/javascript/two-sum/src/two-sum.js
