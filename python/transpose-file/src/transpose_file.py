@@ -20,52 +20,52 @@ class WordMatrix:
                 words = line.split(" ")
                 self.matrix.append(words)
 
-    """获取矩阵的总行数
-
-    Args:
-      matrix: 一个矩阵实例数据
-
-    Returns:
-       返回给定矩阵的总行数的整数值
-    """
     @staticmethod
     def get_number_of_rows(matrix):
+        """获取矩阵的总行数
+
+        Args:
+          matrix: 一个矩阵实例数据
+
+        Returns:
+           返回给定矩阵的总行数的整数值
+        """
         return len(matrix)
 
-    """获取矩阵的总列数
-
-    Args:
-      matrix: 一个矩阵实例数据
-
-    Returns:
-       返回给定矩阵的总列数的整数值
-    """
     @staticmethod
     def get_number_of_cols(matrix):
+        """获取矩阵的总列数
+
+        Args:
+          matrix: 一个矩阵实例数据
+
+        Returns:
+           返回给定矩阵的总列数的整数值
+        """
         return len(matrix[0])
 
-    """根据矩阵格式化输入单词组合文本
-
-    Args:
-      matrix: 一个矩阵实例数据
-
-    Returns:
-       返回给定矩阵的格式化输入字符串k
-    """
     @staticmethod
     def format_output_matrix(matrix):
+        """根据矩阵格式化输入单词组合文本
+
+        Args:
+          matrix: 一个矩阵实例数据
+
+        Returns:
+           返回给定矩阵的格式化输入字符串k
+        """
         lines = []
         rows = WordMatrix.get_number_of_rows(matrix)
         for row in range(rows):
             lines.append(" ".join(matrix[row]))
         return "\n".join(lines)
 
-    """获取当前矩阵数据转置
-
-    Returns:
-        返回表示当前转置的矩阵
-    """
     def get_transpose(self):
+        """获取当前矩阵数据转置
+
+        Returns:
+            返回表示当前转置的矩阵
+        """
         matrix = self.matrix
         rows = WordMatrix.get_number_of_rows(matrix)
         cols = WordMatrix.get_number_of_cols(matrix)
@@ -92,6 +92,11 @@ class TransposeFile:
         self.transpose_content = WordMatrix.format_output_matrix(transpose_matrix)
 
     def get_file_content(self):
+        """根据命令行参数获取文件内容
+
+        Returns:
+          返回含有文件内容的字符串
+        """
         path = self.path
         if (path.is_file()):
             file = path.open()
@@ -99,14 +104,14 @@ class TransposeFile:
             file.close()
             return text
 
-"""脚本执行主方法
-
-根据用户传入路径获取文件内容,并进行倒转,结果输入的`stdout`中
-
-Returns:
-  没有返回结果
-"""
 def main():
+    """脚本执行主方法
+
+    根据用户传入路径获取文件内容,并进行倒转,结果输入的`stdout`中
+
+    Returns:
+      没有返回结果
+    """
     parser = argparse.ArgumentParser(
         description="Given a [FILE], transpose its content.")
     parser.add_argument("file", metavar="FILE", type=str, nargs=1,
