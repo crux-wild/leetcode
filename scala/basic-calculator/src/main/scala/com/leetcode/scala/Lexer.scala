@@ -2,14 +2,16 @@ package com
 package leetcode
 package scala
 
-trait Lexer[T <: Token] {
+import _root_.scala.collection.mutable.{ ListBuffer }
+
+trait Lexer {
   val rblank = raw"[\s\S]".r
   var lexemeBegin: Int
   var forward: Int = -1
   val context: String
   var status = 0
 
-  def token: T
+  def tokenList: ListBuffer[Token]
 
   def currentIndex: Int = lexemeBegin + forward
 

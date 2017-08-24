@@ -2,5 +2,5 @@ package com
 package leetcode
 package scala
 
-class BasicCalcuator {
+class BasicCalcuator(expressionString: String) {
 }
