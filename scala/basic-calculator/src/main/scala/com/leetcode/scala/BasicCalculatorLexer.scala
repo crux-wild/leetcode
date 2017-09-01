@@ -7,19 +7,23 @@ import _root_.scala.collection.mutable.{ ListBuffer }
 class BasicCalculatorLexer(val context: String, var lexemeBegin: Int)
   extends Lexer {
 
-  def tokenList = _scan
+  def tokenList = _tokenList
 
-  private val integerPattern = raw"[0-9]{1,}".r
+  override def toString: String = {
+    ""
+  }
 
-  private def isBcdChar(char: Char) = (char >= '0' && char <= '9')
+  private val _tokenList = scan()
+  private val _integerPattern = raw"[0-9]{1,}".r
 
-  private def _scan: ListBuffer[Token] = {
+  private def isBcdChar(char: Char) = char >= '0' && char <= '9'
+  private def scan: ListBuffer[Token] = {
     val tokenList = new ListBuffer[Token]()
     while (nextChar != 0) {
       // 匹配整数的情况
       if (isBcdChar(currentChar)) {
         val surplusContext = context.substring(lexemeBegin)
-        val lexeme = integerPattern.findFirstIn(surplusContext) match {
+        val lexeme = _integerPattern.findFirstIn(surplusContext) match {
           case Some(lexeme) => lexeme
           case None => ""
         }
