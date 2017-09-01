@@ -10,7 +10,9 @@ class BasicCalculatorLexer(val context: String, var lexemeBegin: Int)
   def tokenList = _scan
 
   private val integerPattern = raw"[0-9]{1,}".r
+
   private def isBcdChar(char: Char) = (char >= '0' && char <= '9')
+
   private def _scan: ListBuffer[Token] = {
     val tokenList = new ListBuffer[Token]()
     while (nextChar != 0) {
