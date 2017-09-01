@@ -7,5 +7,5 @@ package scala
  */
 object Tag extends Enumeration {
   type Tag = Value
-  val Number, Operate = Value
+  val Num, Op = Value
 }
