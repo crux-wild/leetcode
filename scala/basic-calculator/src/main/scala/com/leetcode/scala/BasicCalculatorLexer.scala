@@ -24,6 +24,7 @@ class BasicCalculatorLexer(val context: String, var lexemeBegin: Int)
     val tokenList = new ListBuffer[Token]()
     val integerPattern = "[0-9]{1,}".r
     while (nextChar != 0) {
+      println("currentChar: " + currentChar)
       // 匹配整数的情况
       if (isBcdChar(currentChar)) {
         val surplusContext = context.substring(lexemeBegin)

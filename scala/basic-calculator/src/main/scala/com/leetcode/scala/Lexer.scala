@@ -6,7 +6,7 @@ import _root_.scala.collection.mutable.{ ListBuffer }
 import _root_.scala.util.matching.{ Regex }
 
 trait Lexer {
-  val blankPattern: Regex = raw"[\s\S]{1,}".r
+  val blankPattern: Regex = raw"[\s]{1,}".r
   var lexemeBegin: Int
   var forward: Int = -1
   val context: String
@@ -18,8 +18,12 @@ trait Lexer {
 
   def nextChar: Char = {
     forward = forward + 1
-    while (blankPattern.findFirstIn(Array(currentChar)) == None)
+    var string: String = new String(Array(currentChar))
+    var char: Char = currentChar
+    while (blankPattern.findFirstIn(string) != None) {
       forward = forward + 1
+      string = new String(Array(currentChar))
+    }
     currentChar
   }
 

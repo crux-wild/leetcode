@@ -18,7 +18,7 @@ class BasicCalculatorLexerSpec extends FlatSpec {
   behavior of "basic calculator lexer"
 
   it should "return the specified content;" in {
-    val context = "100()+-*/%"
+    val context = " 100 (  ) + - * / %"
     val basicCalculatorLexer = new BasicCalculatorLexer(context, 0)
 
     val serialization = s"$num $lBracket $rBracket $plus $minus $multiply $divide $aliquot"
