@@ -11,10 +11,9 @@ class BasicCalculatorLexer(val context: String, var lexemeBegin: Int)
   def tokenList = _tokenList
 
   override def toString(): String = {
-    val serializeList = _tokenList.map((token) => {
+    _tokenList.map((token) => {
       token.toString()
-    })
-    serializeList.mkString(" ")
+    }).mkString(" ")
   }
 
   private val _tokenList = scan()
