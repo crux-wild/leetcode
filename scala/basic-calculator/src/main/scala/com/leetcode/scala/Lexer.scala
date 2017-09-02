@@ -3,9 +3,10 @@ package leetcode
 package scala
 
 import _root_.scala.collection.mutable.{ ListBuffer }
+import _root_.scala.util.matching.{ Regex }
 
 trait Lexer {
-  val rblank = raw"[\s\S]".r
+  val blankPattern: Regex = raw"[\s\S]{1,}".r
   var lexemeBegin: Int
   var forward: Int = -1
   val context: String
@@ -17,7 +18,7 @@ trait Lexer {
 
   def nextChar: Char = {
     forward = forward + 1
-    while (rblank.findFirstMatchIn(Array(currentChar)) == None)
+    while (blankPattern.findFirstIn(Array(currentChar)) == None)
       forward = forward + 1
     currentChar
   }

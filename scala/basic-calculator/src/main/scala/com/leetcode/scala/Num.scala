@@ -11,6 +11,11 @@ class Num(val lexeme: String) extends Token {
 
   def value = _value
 
+  override def toString(): String = {
+    val value = _value
+    s"<num, $value>"
+  }
+
   private val _value = getValue
 
   private def getValue: AnyVal = {
