@@ -13,15 +13,15 @@ class BasicCalculatorLexerSpec extends FlatSpec {
   private val multiply = "<op, multiply>"
   private val divide = "<op, division>"
   private val aliquot = "<op, aliquot>"
-  private val num = "<num, 1>"
+  private val num = "<num, 100>"
 
   behavior of "basic calculator lexer"
 
   it should "return the specified content;" in {
-    val context = "()+-*/%1"
+    val context = "100()+-*/%"
     val basicCalculatorLexer = new BasicCalculatorLexer(context, 0)
 
-    val serialization = s"$lBracket $rBracket $plus $minus $multiply $divide $aliquot $num"
+    val serialization = s"$num $lBracket $rBracket $plus $minus $multiply $divide $aliquot"
     assert(basicCalculatorLexer.toString == serialization)
   }
 }

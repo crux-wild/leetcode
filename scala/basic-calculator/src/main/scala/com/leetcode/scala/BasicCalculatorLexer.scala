@@ -32,7 +32,7 @@ class BasicCalculatorLexer(val context: String, var lexemeBegin: Int)
           case None => ""
         }
         tokenList += new Num(lexeme)
-        forward = forward + lexeme.length
+        forward = forward + lexeme.length - 1
       } else {
         // 匹配操作数和其他的情况
         val opVal = currentChar match {
