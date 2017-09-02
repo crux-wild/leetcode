@@ -16,9 +16,9 @@ class BasicCalculatorLexer(val context: String, var lexemeBegin: Int)
     }).mkString(" ")
   }
 
-  private val _tokenList = scan()
-
   private def isBcdChar(char: Char) = char >= '0' && char <= '9'
+
+  private val _tokenList = scan()
 
   private def scan(): ListBuffer[Token] = {
     val tokenList = new ListBuffer[Token]()
